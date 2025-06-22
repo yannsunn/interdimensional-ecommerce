@@ -22,52 +22,44 @@
 
 ## 🚀 セットアップ
 
-### 1. リポジトリのクローン
+### 自動セットアップ（推奨）
 
 ```bash
-git clone https://github.com/yourusername/interdimensional-shop.git
-cd interdimensional-shop
+# プロジェクトをクローン
+git clone https://github.com/yourusername/interdimensional-ecommerce.git
+cd interdimensional-ecommerce
+
+# 自動セットアップスクリプト実行
+./setup.sh
 ```
 
-### 2. 依存関係のインストール
+### 手動セットアップ
 
 ```bash
+# 1. 依存関係インストール
 npm install
-```
 
-### 3. 環境変数の設定
-
-`.env.local.example` を `.env.local` にコピーして、必要な値を設定してください：
-
-```bash
+# 2. 環境変数設定
 cp .env.local.example .env.local
-```
+# .env.local を編集して必要な値を設定
 
-必要な環境変数：
-- `DATABASE_URL`: PostgreSQLの接続URL
-- `NEXTAUTH_SECRET`: NextAuth用のシークレットキー
-- `STRIPE_PUBLIC_KEY` & `STRIPE_SECRET_KEY`: Stripeのキー
-
-### 4. データベースのセットアップ
-
-```bash
-# Prismaクライアントの生成
+# 3. データベースセットアップ
 npm run prisma:generate
-
-# マイグレーションの実行
 npm run prisma:migrate
-
-# シードデータの投入
 npm run prisma:seed
-```
 
-### 5. 開発サーバーの起動
-
-```bash
+# 4. 開発サーバー起動
 npm run dev
 ```
 
-ブラウザで `http://localhost:3000` を開いてください。
+### Vercelデプロイ
+
+詳細は `VERCEL_DEPLOY.md` を参照してください。
+
+1. GitHubリポジトリ作成
+2. Vercelでプロジェクトインポート
+3. 環境変数設定
+4. 自動デプロイ完了
 
 ## 🔑 デフォルトアカウント
 
