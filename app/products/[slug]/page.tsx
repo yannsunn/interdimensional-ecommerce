@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       title: product.name,
       description: product.description,
       images: product.images,
-      type: 'product',
+      type: 'website',
     },
     twitter: {
       card: 'summary_large_image',

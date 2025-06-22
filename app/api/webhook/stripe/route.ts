@@ -40,21 +40,21 @@ export async function POST(req: NextRequest) {
               stripePaymentIntentId: session.payment_intent as string,
               // 配送先住所を保存
               shippingAddress: session.shipping_details ? {
-                name: session.shipping_details.name || null,
+                name: session.shipping_details.name || undefined,
                 address: {
-                  line1: session.shipping_details.address?.line1 || null,
-                  line2: session.shipping_details.address?.line2 || null,
-                  city: session.shipping_details.address?.city || null,
-                  state: session.shipping_details.address?.state || null,
-                  postal_code: session.shipping_details.address?.postal_code || null,
-                  country: session.shipping_details.address?.country || null,
+                  line1: session.shipping_details.address?.line1 || undefined,
+                  line2: session.shipping_details.address?.line2 || undefined,
+                  city: session.shipping_details.address?.city || undefined,
+                  state: session.shipping_details.address?.state || undefined,
+                  postal_code: session.shipping_details.address?.postal_code || undefined,
+                  country: session.shipping_details.address?.country || undefined,
                 },
               } : undefined,
               // 請求先住所を保存
               billingAddress: session.customer_details ? {
-                name: session.customer_details.name || null,
-                email: session.customer_details.email || null,
-                address: session.customer_details.address || null,
+                name: session.customer_details.name || undefined,
+                email: session.customer_details.email || undefined,
+                address: session.customer_details.address ? JSON.parse(JSON.stringify(session.customer_details.address)) : undefined,
               } : undefined,
             },
           })
