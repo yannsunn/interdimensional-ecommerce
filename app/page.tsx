@@ -39,57 +39,74 @@ export default async function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative z-10 min-h-screen flex items-center justify-center text-center px-4">
-        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+      <section className="relative z-10 min-h-screen flex items-center justify-center text-center px-4 py-20">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
           {/* Hero Image */}
-          <div className="flex-1 relative">
-            <div className="relative w-full max-w-lg mx-auto aspect-square">
+          <div className="flex-1 relative order-2 lg:order-1">
+            <div className="relative w-full max-w-2xl mx-auto aspect-square">
               <Image
                 src="/images/hero-main.jpg"
                 alt="異次元通販 - 宇宙の叡智"
                 fill
-                className="object-contain drop-shadow-2xl"
+                className="object-contain drop-shadow-2xl filter brightness-110 contrast-110"
                 priority
               />
-              {/* Glowing Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-transparent to-cyan-500/20 rounded-full blur-xl animate-pulse" />
+              {/* Multi-layered Glowing Effects */}
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/30 via-pink-500/20 to-cyan-500/30 rounded-full blur-2xl animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 via-transparent to-blue-400/10 rounded-full blur-3xl animate-ping" style={{animationDuration: '3s'}} />
+              {/* Rotating Energy Ring */}
+              <div className="absolute inset-0 border-4 border-transparent bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 rounded-full animate-spin opacity-30" style={{animationDuration: '8s', mask: 'conic-gradient(transparent 30deg, black 60deg, transparent 90deg)'}} />
             </div>
           </div>
           
           {/* Hero Text */}
-          <div className="flex-1">
-            <GlowingText className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-cyan-400 bg-clip-text text-transparent">
+          <div className="flex-1 order-1 lg:order-2 text-center lg:text-left">
+            <GlowingText className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-8 bg-gradient-to-r from-purple-400 via-pink-500 to-cyan-400 bg-clip-text text-transparent leading-tight">
               異次元通販
             </GlowingText>
           
-            <GlitchText className="text-xl md:text-2xl mb-6 text-cyan-400">
+            <GlitchText className="text-2xl md:text-3xl lg:text-4xl mb-8 text-cyan-400 font-medium">
               〜 宇宙と古代の叡智があなたの運命を変える！ 〜
             </GlitchText>
 
-            <div className="bg-red-600 text-white py-3 px-6 rounded-lg mb-6 animate-pulse border-2 border-yellow-400">
-              <div className="text-lg font-bold">
-                ⚡ 緊急放送中！！本日限り、異次元からの特別価格でご提供！！ ⚡
+            <div className="bg-gradient-to-r from-red-600 to-red-700 text-white py-4 px-8 rounded-xl mb-8 animate-pulse border-2 border-yellow-400 shadow-2xl">
+              <div className="text-xl font-bold flex items-center justify-center gap-2">
+                <span className="animate-bounce">⚡</span>
+                緊急放送中！！本日限り、異次元からの特別価格でご提供！！
+                <span className="animate-bounce">⚡</span>
               </div>
             </div>
 
-            <p className="text-lg text-gray-300 mb-6 max-w-xl">
-              量子レベルで人生を変える商品を異次元からお届け。
-              龍神の加護、宇宙エネルギー、古代の叡智が今ここに！
+            <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl leading-relaxed">
+              量子レベルで人生を変える商品を異次元からお届け。<br />
+              <span className="text-yellow-400 font-semibold">龍神の加護</span>、
+              <span className="text-cyan-400 font-semibold">宇宙エネルギー</span>、
+              <span className="text-pink-400 font-semibold">古代の叡智</span>が今ここに！
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
               <a
                 href="#products"
-                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+                className="group relative bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 text-white px-10 py-5 rounded-full font-bold text-xl hover:from-purple-700 hover:via-pink-700 hover:to-purple-700 transform hover:scale-110 transition-all duration-300 shadow-2xl"
               >
-                <span className="relative z-10">運命の商品を見つける！</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <span className="animate-pulse">🔮</span>
+                  運命の商品を見つける！
+                  <span className="animate-pulse">✨</span>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-full" />
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-300" />
               </a>
               <a
                 href="/products"
-                className="border-2 border-cyan-400 text-cyan-400 px-8 py-4 rounded-full font-bold text-lg hover:bg-cyan-400 hover:text-black transition-all duration-300"
+                className="group border-3 border-cyan-400 text-cyan-400 px-10 py-5 rounded-full font-bold text-xl hover:bg-cyan-400 hover:text-black transition-all duration-300 relative overflow-hidden shadow-2xl"
               >
-                全商品を見る
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <span>🌌</span>
+                  全商品を見る
+                  <span>→</span>
+                </span>
+                <div className="absolute inset-0 bg-cyan-400/10 group-hover:bg-cyan-400 transition-all duration-300" />
               </a>
             </div>
           </div>
