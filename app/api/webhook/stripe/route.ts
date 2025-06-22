@@ -40,22 +40,22 @@ export async function POST(req: NextRequest) {
               stripePaymentIntentId: session.payment_intent as string,
               // 配送先住所を保存
               shippingAddress: session.shipping_details ? {
-                name: session.shipping_details.name,
+                name: session.shipping_details.name || null,
                 address: {
-                  line1: session.shipping_details.address?.line1,
-                  line2: session.shipping_details.address?.line2,
-                  city: session.shipping_details.address?.city,
-                  state: session.shipping_details.address?.state,
-                  postal_code: session.shipping_details.address?.postal_code,
-                  country: session.shipping_details.address?.country,
+                  line1: session.shipping_details.address?.line1 || null,
+                  line2: session.shipping_details.address?.line2 || null,
+                  city: session.shipping_details.address?.city || null,
+                  state: session.shipping_details.address?.state || null,
+                  postal_code: session.shipping_details.address?.postal_code || null,
+                  country: session.shipping_details.address?.country || null,
                 },
-              } : null,
+              } : undefined,
               // 請求先住所を保存
               billingAddress: session.customer_details ? {
-                name: session.customer_details.name,
-                email: session.customer_details.email,
-                address: session.customer_details.address,
-              } : null,
+                name: session.customer_details.name || null,
+                email: session.customer_details.email || null,
+                address: session.customer_details.address || null,
+              } : undefined,
             },
           })
 
