@@ -5,6 +5,7 @@ import { ProductCard } from '@/components/shop/ProductCard'
 import { Header } from '@/components/layout/Header'
 import { prisma } from '@/lib/db'
 import { generateMysteryMessage } from '@/lib/utils'
+import Image from 'next/image'
 
 async function getFeaturedProducts() {
   return await prisma.product.findMany({
@@ -21,6 +22,16 @@ export default async function HomePage() {
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
       {/* Background Effects */}
       <div className="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-black to-pink-900/20 animate-gradient-shift" />
+      {/* Interdimensional Portal Background */}
+      <div className="fixed inset-0 z-0 opacity-30">
+        <Image
+          src="/images/portal-bg.jpg"
+          alt="Interdimensional Portal Background"
+          fill
+          className="object-cover object-center"
+          priority
+        />
+      </div>
       <Portal />
       <FloatingElements />
       
@@ -29,40 +40,58 @@ export default async function HomePage() {
 
       {/* Hero Section */}
       <section className="relative z-10 min-h-screen flex items-center justify-center text-center px-4">
-        <div className="max-w-4xl mx-auto">
-          <GlowingText className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-cyan-400 bg-clip-text text-transparent">
-            異次元通販
-          </GlowingText>
-          
-          <GlitchText className="text-2xl md:text-3xl mb-8 text-cyan-400">
-            〜 宇宙と古代の叡智があなたの運命を変える！ 〜
-          </GlitchText>
-
-          <div className="bg-red-600 text-white py-4 px-8 rounded-lg mb-8 animate-pulse border-2 border-yellow-400">
-            <div className="text-xl font-bold">
-              ⚡ 緊急放送中！！本日限り、異次元からの特別価格でご提供！！ ⚡
+        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+          {/* Hero Image */}
+          <div className="flex-1 relative">
+            <div className="relative w-full max-w-lg mx-auto aspect-square">
+              <Image
+                src="/images/hero-main.jpg"
+                alt="異次元通販 - 宇宙の叡智"
+                fill
+                className="object-contain drop-shadow-2xl"
+                priority
+              />
+              {/* Glowing Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-transparent to-cyan-500/20 rounded-full blur-xl animate-pulse" />
             </div>
           </div>
+          
+          {/* Hero Text */}
+          <div className="flex-1">
+            <GlowingText className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-cyan-400 bg-clip-text text-transparent">
+              異次元通販
+            </GlowingText>
+          
+            <GlitchText className="text-xl md:text-2xl mb-6 text-cyan-400">
+              〜 宇宙と古代の叡智があなたの運命を変える！ 〜
+            </GlitchText>
 
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            量子レベルで人生を変える商品を異次元からお届け。
-            龍神の加護、宇宙エネルギー、古代の叡智が今ここに！
-          </p>
+            <div className="bg-red-600 text-white py-3 px-6 rounded-lg mb-6 animate-pulse border-2 border-yellow-400">
+              <div className="text-lg font-bold">
+                ⚡ 緊急放送中！！本日限り、異次元からの特別価格でご提供！！ ⚡
+              </div>
+            </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="#products"
-              className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 relative overflow-hidden group"
-            >
-              <span className="relative z-10">運命の商品を見つける！</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-            </a>
-            <a
-              href="/products"
-              className="border-2 border-cyan-400 text-cyan-400 px-8 py-4 rounded-full font-bold text-lg hover:bg-cyan-400 hover:text-black transition-all duration-300"
-            >
-              全商品を見る
-            </a>
+            <p className="text-lg text-gray-300 mb-6 max-w-xl">
+              量子レベルで人生を変える商品を異次元からお届け。
+              龍神の加護、宇宙エネルギー、古代の叡智が今ここに！
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <a
+                href="#products"
+                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+              >
+                <span className="relative z-10">運命の商品を見つける！</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              </a>
+              <a
+                href="/products"
+                className="border-2 border-cyan-400 text-cyan-400 px-8 py-4 rounded-full font-bold text-lg hover:bg-cyan-400 hover:text-black transition-all duration-300"
+              >
+                全商品を見る
+              </a>
+            </div>
           </div>
         </div>
       </section>
