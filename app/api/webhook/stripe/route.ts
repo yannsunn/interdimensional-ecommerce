@@ -5,6 +5,12 @@ import type { AddressData, ShippingData, BillingData } from '@/types/stripe'
 import Stripe from 'stripe'
 
 export async function POST(req: NextRequest) {
+  // 開発環境では一時的にWebhook処理をスキップ
+  if (process.env.NODE_ENV === 'development' || !process.env.STRIPE_SECRET_KEY) {
+    console.log('⚠️ Stripe webhook skipped in development/build mode')
+    return NextResponse.json({ received: true, message: 'Development mode - webhook skipped' })
+  }
+
   const body = await req.text()
   const signature = req.headers.get('stripe-signature')
 
