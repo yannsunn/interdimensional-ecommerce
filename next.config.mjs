@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Force new build ID to bypass Vercel cache
+  generateBuildId: async () => {
+    return `ultra-sync-${Date.now()}`
+  },
   // React Strict Mode for better development experience
   reactStrictMode: true,
   
