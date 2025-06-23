@@ -3,29 +3,48 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { formatPrice, getMysteryLevelText, getMysteryLevelColor } from '@/lib/utils'
+import { getSafeImageUrl, calculateDiscount, hasItems } from '@/lib/type-utils'
 import { useCartStore } from '@/store/cartStore'
-import { Product } from '@prisma/client'
+import { ProductWithRelations } from '@/types'
 import { ShoppingCart } from 'lucide-react'
 
 interface ProductCardProps {
-  product: Product
+  product: ProductWithRelations
   index?: number
+  variant?: 'default' | 'compact' | 'featured'
+  onAddToCart?: (productId: string) => void
+  showAddToCart?: boolean
 }
 
-export function ProductCard({ product, index = 0 }: ProductCardProps) {
+export function ProductCard({ 
+  product, 
+  index = 0, 
+  variant = 'default',
+  onAddToCart,
+  showAddToCart = true 
+}: ProductCardProps) {
   const { addItem } = useCartStore()
+  
+  // Type-safe image handling
+  const productImage = getSafeImageUrl(product.images || [], '/placeholder-product.jpg')
+  
+  // Type-safe discount calculation
   const discountPercentage = product.originalPrice 
-    ? Math.round((1 - product.price / product.originalPrice) * 100)
+    ? calculateDiscount(product.originalPrice, product.price)
     : 0
 
   const handleAddToCart = () => {
-    addItem({
-      productId: product.id,
-      name: product.name,
-      price: product.price,
-      mysteryLevel: product.mysteryLevel,
-      image: product.images[0],
-    })
+    if (onAddToCart) {
+      onAddToCart(product.id)
+    } else {
+      addItem({
+        productId: product.id as string,
+        name: product.name,
+        price: product.price,
+        mysteryLevel: product.mysteryLevel,
+        image: productImage,
+      })
+    }
   }
 
   return (
@@ -48,9 +67,14 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           </div>
         )}
 
-        {/* Product Image Placeholder */}
-        <div className="w-full h-48 bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-xl mb-4 flex items-center justify-center text-6xl">
-          🔮
+        {/* Product Image */}
+        <div className="w-full h-48 bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
+          <img
+            src={productImage}
+            alt={product.name}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            loading="lazy"
+          />
         </div>
 
         {/* Product Title */}
@@ -69,7 +93,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         </p>
 
         {/* Effects */}
-        {product.effects.length > 0 && (
+        {hasItems(product.effects) && (
           <div className="mb-4">
             <h4 className="text-yellow-400 text-sm font-semibold mb-2">期待される効果:</h4>
             <div className="flex flex-wrap gap-1">
@@ -117,13 +141,16 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
           </Link>
           
-          <button
-            onClick={handleAddToCart}
-            disabled={product.stock <= 0}
-            className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-3 rounded-2xl font-bold hover:from-green-700 hover:to-emerald-700 transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-          >
-            <ShoppingCart size={20} />
-          </button>
+          {showAddToCart && (
+            <button
+              onClick={handleAddToCart}
+              disabled={product.stock <= 0}
+              className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-3 rounded-2xl font-bold hover:from-green-700 hover:to-emerald-700 transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              aria-label={`${product.name}をカートに追加`}
+            >
+              <ShoppingCart size={20} />
+            </button>
+          )}
         </div>
 
         {product.stock <= 0 && (
@@ -133,7 +160,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         )}
 
         {/* Testimonial Preview */}
-        {product.testimonials.length > 0 && (
+        {hasItems(product.testimonials) && (
           <div className="mt-4 text-xs text-gray-400 italic">
             "{product.testimonials[0].slice(0, 50)}..."
           </div>

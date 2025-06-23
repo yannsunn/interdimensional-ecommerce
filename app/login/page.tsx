@@ -1,35 +1,53 @@
 'use client'
 
-import { useState } from 'react'
 import { signIn, getSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Portal } from '@/components/effects/Portal'
 import { GlowingText } from '@/components/effects/GlowingText'
-import { Eye, EyeOff, User, Lock } from 'lucide-react'
+import { EmailFormField, PasswordFormField } from '@/components/forms/FormField'
+import { LoadingButton } from '@/components/ui/LoadingSpinner'
+import { Alert } from '@/components/ui/Alert'
+import { useFormValidation, createEmailField, createPasswordField } from '@/hooks/useFormValidation'
+import { validateEmail } from '@/lib/type-utils'
+
+interface LoginFormData {
+  email: string
+  password: string
+}
 
 export default function LoginPage() {
   const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
+  
+  // Form validation setup
+  const form = useFormValidation<LoginFormData>([
+    createEmailField('email', true),
+    createPasswordField('password', true)
+  ], {
+    validateOnChange: true,
+    validateOnBlur: true
+  })
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsLoading(true)
-    setError('')
-
+    
+    // Validate form
+    if (!form.validateForm()) {
+      form.setTouchedAll()
+      return
+    }
+    
+    form.setSubmitting(true)
+    
     try {
       const result = await signIn('credentials', {
-        email,
-        password,
+        email: form.values.email,
+        password: form.values.password,
         redirect: false,
       })
 
       if (result?.error) {
-        setError('メールアドレスまたはパスワードが正しくありません')
+        form.setError('email', 'メールアドレスまたはパスワードが正しくありません')
       } else {
         // ログイン成功後、セッションを取得してリダイレクト
         const session = await getSession()
@@ -40,9 +58,9 @@ export default function LoginPage() {
         }
       }
     } catch (error) {
-      setError('ログイン中にエラーが発生しました')
+      form.setError('email', 'ログイン中にエラーが発生しました')
     } finally {
-      setIsLoading(false)
+      form.setSubmitting(false)
     }
   }
 
@@ -80,81 +98,46 @@ export default function LoginPage() {
           </div>
 
           {/* Error Message */}
-          {error && (
-            <div className="bg-red-500/20 border border-red-400 rounded-lg p-4 mb-6">
-              <p className="text-red-300 text-sm">{error}</p>
-            </div>
+          {(form.errors.email || form.errors.password) && (
+            <Alert
+              type="error"
+              variant="mystical"
+              message={form.errors.email?.[0] || form.errors.password?.[0] || 'エラーが発生しました'}
+              className="mb-6"
+            />
           )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                異次元メールアドレス
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-3 py-3 bg-black/50 border border-purple-500/50 rounded-lg text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 focus:outline-none transition-all"
-                  placeholder="your@email.com"
-                />
-              </div>
-            </div>
+            <EmailFormField
+              {...form.getFieldProps('email')}
+              label="異次元メールアドレス"
+              placeholder="your@email.com"
+              variant="mystical"
+              required
+            />
 
             {/* Password Field */}
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
-                秘密の呪文
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 bg-black/50 border border-purple-500/50 rounded-lg text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 focus:outline-none transition-all"
-                  placeholder="••••••••"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-300"
-                >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                </button>
-              </div>
-            </div>
+            <PasswordFormField
+              {...form.getFieldProps('password')}
+              label="秘密の呪文"
+              placeholder="••••••••"
+              variant="mystical"
+              required
+            />
 
             {/* Submit Button */}
-            <button
+            <LoadingButton
               type="submit"
-              disabled={isLoading}
+              isLoading={form.isSubmitting}
+              loadingText="異次元接続中..."
+              disabled={!form.isValid && form.isDirty}
               className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-bold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden"
             >
-              {isLoading ? (
-                <span className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  異次元接続中...
-                </span>
-              ) : (
-                <>
-                  <span className="relative z-10">✨ 異次元にログイン ✨</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-1000" />
-                </>
-              )}
-            </button>
+              <span className="relative z-10">✨ 異次元にログイン ✨</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-1000" />
+            </LoadingButton>
           </form>
 
           {/* Register Link */}
@@ -183,11 +166,12 @@ export default function LoginPage() {
 
         {/* Mystery Message */}
         <div className="mt-6 text-center">
-          <div className="bg-gradient-to-r from-yellow-400/20 to-orange-400/20 border border-yellow-400 rounded-lg p-3">
-            <p className="text-yellow-400 text-sm animate-pulse">
-              🔮 龍神があなたのログインを見守っています 🔮
-            </p>
-          </div>
+          <Alert
+            type="info"
+            variant="mystical"
+            message="🔮 龍神があなたのログインを見守っています 🔮"
+            className="animate-pulse"
+          />
         </div>
       </div>
     </div>
