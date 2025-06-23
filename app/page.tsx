@@ -7,6 +7,9 @@ import { prisma } from '@/lib/db'
 import { generateMysteryMessage } from '@/lib/utils'
 import Image from 'next/image'
 
+// Force dynamic rendering for database-dependent content
+export const dynamic = 'force-dynamic'
+
 async function getFeaturedProducts() {
   if (!process.env.DATABASE_URL) {
     console.warn('⚠️ DATABASE_URL not available - returning empty featured products')

@@ -5,6 +5,9 @@ import { GlowingText } from '@/components/effects/GlowingText'
 import { Header } from '@/components/layout/Header'
 import { prisma } from '@/lib/db'
 
+// Force dynamic rendering for database-dependent content
+export const dynamic = 'force-dynamic'
+
 async function getProducts() {
   if (!process.env.DATABASE_URL) {
     console.warn('⚠️ DATABASE_URL not available - returning empty products')

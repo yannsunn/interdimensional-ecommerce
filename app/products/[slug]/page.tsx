@@ -3,6 +3,9 @@ import { Metadata } from 'next'
 import { prisma } from '@/lib/db'
 import { ProductDetailClient } from '@/components/shop/ProductDetailClient'
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic'
+
 interface ProductPageProps {
   params: {
     slug: string
@@ -98,24 +101,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
   )
 }
 
-// 静的生成用のパス生成
+// 静的生成用のパス生成 - ビルド時は無効化し完全に動的レンダリングに依存
 export async function generateStaticParams() {
-  // ビルド時にデータベースが利用できない場合は空配列を返す
-  if (!process.env.DATABASE_URL) {
-    console.warn('⚠️ DATABASE_URL not available during build - skipping static generation')
-    return []
-  }
-
-  try {
-    const products = await prisma.product.findMany({
-      select: { slug: true }
-    })
-
-    return products.map((product) => ({
-      slug: product.slug,
-    }))
-  } catch (error) {
-    console.warn('⚠️ Failed to generate static params - falling back to dynamic rendering', error)
-    return []
-  }
+  // ビルド時は常に空配列を返してISR/動的レンダリングに委ねる
+  console.warn('⚠️ Static generation disabled for build compatibility - using dynamic rendering')
+  return []
 }
