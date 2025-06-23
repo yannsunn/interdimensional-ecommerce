@@ -8,11 +8,21 @@ import { generateMysteryMessage } from '@/lib/utils'
 import Image from 'next/image'
 
 async function getFeaturedProducts() {
-  return await prisma.product.findMany({
-    where: { featured: true },
-    take: 6,
-    orderBy: { mysteryLevel: 'desc' },
-  })
+  if (!process.env.DATABASE_URL) {
+    console.warn('⚠️ DATABASE_URL not available - returning empty featured products')
+    return []
+  }
+
+  try {
+    return await prisma.product.findMany({
+      where: { featured: true },
+      take: 6,
+      orderBy: { mysteryLevel: 'desc' },
+    })
+  } catch (error) {
+    console.error('Database error:', error)
+    return []
+  }
 }
 
 export default async function HomePage() {

@@ -6,27 +6,47 @@ import { Header } from '@/components/layout/Header'
 import { prisma } from '@/lib/db'
 
 async function getProducts() {
-  return await prisma.product.findMany({
-    orderBy: [
-      { featured: 'desc' },
-      { mysteryLevel: 'desc' },
-      { createdAt: 'desc' }
-    ],
-  })
+  if (!process.env.DATABASE_URL) {
+    console.warn('⚠️ DATABASE_URL not available - returning empty products')
+    return []
+  }
+
+  try {
+    return await prisma.product.findMany({
+      orderBy: [
+        { featured: 'desc' },
+        { mysteryLevel: 'desc' },
+        { createdAt: 'desc' }
+      ],
+    })
+  } catch (error) {
+    console.error('Database error:', error)
+    return []
+  }
 }
 
 async function getCategories() {
-  const categories = await prisma.product.groupBy({
-    by: ['category'],
-    _count: {
-      category: true,
-    },
-  })
-  
-  return categories.map(cat => ({
-    name: cat.category,
-    count: cat._count.category,
-  }))
+  if (!process.env.DATABASE_URL) {
+    console.warn('⚠️ DATABASE_URL not available - returning empty categories')
+    return []
+  }
+
+  try {
+    const categories = await prisma.product.groupBy({
+      by: ['category'],
+      _count: {
+        category: true,
+      },
+    })
+    
+    return categories.map(cat => ({
+      name: cat.category,
+      count: cat._count.category,
+    }))
+  } catch (error) {
+    console.error('Database error:', error)
+    return []
+  }
 }
 
 export default async function ProductsPage() {

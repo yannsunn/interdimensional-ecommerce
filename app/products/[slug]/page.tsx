@@ -10,29 +10,50 @@ interface ProductPageProps {
 }
 
 async function getProduct(slug: string) {
-  const product = await prisma.product.findUnique({
-    where: { slug },
-  })
-
-  if (!product) {
+  // ビルド時はモックデータを返す
+  if (!process.env.DATABASE_URL) {
+    console.warn('⚠️ DATABASE_URL not available - using mock data')
     notFound()
   }
 
-  return product
+  try {
+    const product = await prisma.product.findUnique({
+      where: { slug },
+    })
+
+    if (!product) {
+      notFound()
+    }
+
+    return product
+  } catch (error) {
+    console.error('Database error:', error)
+    notFound()
+  }
 }
 
 // 関連商品を取得
 async function getRelatedProducts(productId: string, category: string) {
-  return await prisma.product.findMany({
-    where: {
-      AND: [
-        { id: { not: productId } },
-        { category }
-      ]
-    },
-    take: 4,
-    orderBy: { mysteryLevel: 'desc' }
-  })
+  if (!process.env.DATABASE_URL) {
+    console.warn('⚠️ DATABASE_URL not available - returning empty related products')
+    return []
+  }
+
+  try {
+    return await prisma.product.findMany({
+      where: {
+        AND: [
+          { id: { not: productId } },
+          { category }
+        ]
+      },
+      take: 4,
+      orderBy: { mysteryLevel: 'desc' }
+    })
+  } catch (error) {
+    console.error('Database error:', error)
+    return []
+  }
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
@@ -79,11 +100,22 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
 // 静的生成用のパス生成
 export async function generateStaticParams() {
-  const products = await prisma.product.findMany({
-    select: { slug: true }
-  })
+  // ビルド時にデータベースが利用できない場合は空配列を返す
+  if (!process.env.DATABASE_URL) {
+    console.warn('⚠️ DATABASE_URL not available during build - skipping static generation')
+    return []
+  }
 
-  return products.map((product) => ({
-    slug: product.slug,
-  }))
+  try {
+    const products = await prisma.product.findMany({
+      select: { slug: true }
+    })
+
+    return products.map((product) => ({
+      slug: product.slug,
+    }))
+  } catch (error) {
+    console.warn('⚠️ Failed to generate static params - falling back to dynamic rendering', error)
+    return []
+  }
 }
