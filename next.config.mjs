@@ -1,13 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Force new build ID to bypass Vercel cache - ULTRA SYNC VERSION 2.0
-  generateBuildId: async () => {
-    return `ultra-sync-v2-${Date.now()}-${Math.random().toString(36).substring(2)}`
-  },
-  
-  // Add cache busting
+  // Simple, reliable configuration
   poweredByHeader: false,
-  compress: true,
   // React Strict Mode for better development experience
   reactStrictMode: true,
   

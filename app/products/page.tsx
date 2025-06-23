@@ -3,14 +3,54 @@ import { Portal } from '@/components/effects/Portal'
 import { FloatingElements } from '@/components/effects/FloatingElements'
 import { GlowingText } from '@/components/effects/GlowingText'
 import { Header } from '@/components/layout/Header'
-import SafeDatabase from '@/lib/db-safe'
 
-// Force dynamic rendering for database-dependent content
+// Force dynamic rendering
 export const dynamic = 'force-dynamic'
 
+async function getProducts() {
+  if (!process.env.DATABASE_URL) {
+    return []
+  }
+  
+  try {
+    const { prisma } = await import('@/lib/db')
+    return await prisma.product.findMany({
+      orderBy: [
+        { featured: 'desc' },
+        { mysteryLevel: 'desc' },
+        { createdAt: 'desc' }
+      ],
+    })
+  } catch (error) {
+    console.error('Database error:', error)
+    return []
+  }
+}
+
+async function getCategories() {
+  if (!process.env.DATABASE_URL) {
+    return []
+  }
+  
+  try {
+    const { prisma } = await import('@/lib/db')
+    const categories = await prisma.product.groupBy({
+      by: ['category'],
+      _count: { category: true },
+    })
+    return categories.map(cat => ({
+      name: cat.category,
+      count: cat._count.category,
+    }))
+  } catch (error) {
+    console.error('Database error:', error)
+    return []
+  }
+}
+
 export default async function ProductsPage() {
-  const products = await SafeDatabase.getProducts()
-  const categories = await SafeDatabase.getCategories()
+  const products = await getProducts()
+  const categories = await getCategories()
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">

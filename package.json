@@ -1,6 +1,6 @@
 {
-  "name": "interdimensional-shop-v2-ultra",
-  "version": "3.0.0-transcendent",
+  "name": "interdimensional-shop",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
