@@ -3,33 +3,15 @@ import { FloatingElements } from '@/components/effects/FloatingElements'
 import { GlowingText, GlitchText } from '@/components/effects/GlowingText'
 import { ProductCard } from '@/components/shop/ProductCard'
 import { Header } from '@/components/layout/Header'
-import { prisma } from '@/lib/db'
+import SafeDatabase from '@/lib/db-safe'
 import { generateMysteryMessage } from '@/lib/utils'
 import Image from 'next/image'
 
 // Force dynamic rendering for database-dependent content
 export const dynamic = 'force-dynamic'
 
-async function getFeaturedProducts() {
-  if (!process.env.DATABASE_URL) {
-    console.warn('⚠️ DATABASE_URL not available - returning empty featured products')
-    return []
-  }
-
-  try {
-    return await prisma.product.findMany({
-      where: { featured: true },
-      take: 6,
-      orderBy: { mysteryLevel: 'desc' },
-    })
-  } catch (error) {
-    console.error('Database error:', error)
-    return []
-  }
-}
-
 export default async function HomePage() {
-  const featuredProducts = await getFeaturedProducts()
+  const featuredProducts = await SafeDatabase.getFeaturedProducts()
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">

@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
-import { prisma } from '@/lib/db'
+import SafeDatabase from '@/lib/db-safe'
 import { ProductDetailClient } from '@/components/shop/ProductDetailClient'
 
 // Force dynamic rendering for this page
@@ -12,55 +12,15 @@ interface ProductPageProps {
   }
 }
 
-async function getProduct(slug: string) {
-  // ビルド時はモックデータを返す
-  if (!process.env.DATABASE_URL) {
-    console.warn('⚠️ DATABASE_URL not available - using mock data')
-    notFound()
-  }
-
-  try {
-    const product = await prisma.product.findUnique({
-      where: { slug },
-    })
-
-    if (!product) {
-      notFound()
-    }
-
-    return product
-  } catch (error) {
-    console.error('Database error:', error)
-    notFound()
-  }
-}
-
-// 関連商品を取得
-async function getRelatedProducts(productId: string, category: string) {
-  if (!process.env.DATABASE_URL) {
-    console.warn('⚠️ DATABASE_URL not available - returning empty related products')
-    return []
-  }
-
-  try {
-    return await prisma.product.findMany({
-      where: {
-        AND: [
-          { id: { not: productId } },
-          { category }
-        ]
-      },
-      take: 4,
-      orderBy: { mysteryLevel: 'desc' }
-    })
-  } catch (error) {
-    console.error('Database error:', error)
-    return []
-  }
-}
-
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const product = await getProduct(params.slug)
+  const product = await SafeDatabase.getProductBySlug(params.slug)
+  
+  if (!product) {
+    return {
+      title: '商品が見つかりません | 異次元通販',
+      description: '指定された商品は異次元の彼方に消えてしまったようです。'
+    }
+  }
 
   return {
     title: `${product.name} | 異次元通販`,
@@ -90,8 +50,13 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const product = await getProduct(params.slug)
-  const relatedProducts = await getRelatedProducts(product.id, product.category)
+  const product = await SafeDatabase.getProductBySlug(params.slug)
+  
+  if (!product) {
+    notFound()
+  }
+  
+  const relatedProducts = await SafeDatabase.getRelatedProducts(product.id, product.category)
 
   return (
     <ProductDetailClient 
@@ -101,9 +66,4 @@ export default async function ProductPage({ params }: ProductPageProps) {
   )
 }
 
-// 静的生成用のパス生成 - ビルド時は無効化し完全に動的レンダリングに依存
-export async function generateStaticParams() {
-  // ビルド時は常に空配列を返してISR/動的レンダリングに委ねる
-  console.warn('⚠️ Static generation disabled for build compatibility - using dynamic rendering')
-  return []
-}
+// generateStaticParams を完全に削除 - 100%動的レンダリング
