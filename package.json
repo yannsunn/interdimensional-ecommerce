@@ -1,6 +1,6 @@
 {
   "name": "interdimensional-shop",
-  "version": "0.1.0",
+  "version": "2.0.0-ultra-sync",
   "private": true,
   "scripts": {
     "dev": "next dev",
