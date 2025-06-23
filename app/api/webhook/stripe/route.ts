@@ -1,28 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 import { prisma } from '@/lib/db'
+import type { AddressData, ShippingData, BillingData } from '@/types/stripe'
 import Stripe from 'stripe'
-
-// 住所型定義
-interface AddressData {
-  line1?: string
-  line2?: string | null
-  city?: string
-  state?: string | null
-  postal_code?: string
-  country?: string
-}
-
-interface ShippingData {
-  name?: string
-  address?: AddressData
-}
-
-interface BillingData {
-  name?: string
-  email?: string
-  address?: AddressData
-}
 
 export async function POST(req: NextRequest) {
   const body = await req.text()
@@ -53,38 +33,32 @@ export async function POST(req: NextRequest) {
         console.log('🎉 異次元決済完了:', session.id)
         
         if (session.metadata?.orderId) {
-          // 配送先住所データの準備
-          let shippingData: ShippingData | undefined = undefined
-          if (session.shipping_details) {
-            shippingData = {
-              name: session.shipping_details.name || undefined,
-              address: session.shipping_details.address ? {
-                line1: session.shipping_details.address.line1 || undefined,
-                line2: session.shipping_details.address.line2 || undefined,
-                city: session.shipping_details.address.city || undefined,
-                state: session.shipping_details.address.state || undefined,
-                postal_code: session.shipping_details.address.postal_code || undefined,
-                country: session.shipping_details.address.country || undefined,
-              } : undefined
-            }
-          }
+          // 配送先住所データの準備（型安全性向上）
+          const shippingData: ShippingData | null = session.shipping_details ? {
+            name: session.shipping_details.name || null,
+            address: session.shipping_details.address ? {
+              line1: session.shipping_details.address.line1 || null,
+              line2: session.shipping_details.address.line2 || null,
+              city: session.shipping_details.address.city || null,
+              state: session.shipping_details.address.state || null,
+              postal_code: session.shipping_details.address.postal_code || null,
+              country: session.shipping_details.address.country || null,
+            } : null
+          } : null
 
-          // 請求先住所データの準備
-          let billingData: BillingData | undefined = undefined
-          if (session.customer_details) {
-            billingData = {
-              name: session.customer_details.name || undefined,
-              email: session.customer_details.email || undefined,
-              address: session.customer_details.address ? {
-                line1: session.customer_details.address.line1 || undefined,
-                line2: session.customer_details.address.line2 || undefined,
-                city: session.customer_details.address.city || undefined,
-                state: session.customer_details.address.state || undefined,
-                postal_code: session.customer_details.address.postal_code || undefined,
-                country: session.customer_details.address.country || undefined,
-              } : undefined
-            }
-          }
+          // 請求先住所データの準備（型安全性向上）
+          const billingData: BillingData | null = session.customer_details ? {
+            name: session.customer_details.name || null,
+            email: session.customer_details.email || null,
+            address: session.customer_details.address ? {
+              line1: session.customer_details.address.line1 || null,
+              line2: session.customer_details.address.line2 || null,
+              city: session.customer_details.address.city || null,
+              state: session.customer_details.address.state || null,
+              postal_code: session.customer_details.address.postal_code || null,
+              country: session.customer_details.address.country || null,
+            } : null
+          } : null
 
           // 注文ステータスを更新
           await prisma.order.update({
@@ -92,9 +66,9 @@ export async function POST(req: NextRequest) {
             data: {
               status: 'PAID',
               stripePaymentIntentId: session.payment_intent as string,
-              // JSON形式で住所データを保存
-              shippingAddress: shippingData as any,
-              billingAddress: billingData as any,
+              // JSON形式で住所データを保存（型安全性確保）
+              ...(shippingData && { shippingAddress: shippingData }),
+              ...(billingData && { billingAddress: billingData }),
             },
           })
 
