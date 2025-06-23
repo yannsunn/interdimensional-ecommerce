@@ -1,0 +1,55 @@
+name: ⚡ Auto Sync to Vercel - Ultimate Edition
+
+on:
+  push:
+    branches: [ main ]
+  repository_dispatch:
+    types: [force-deploy]
+  schedule:
+    - cron: '*/30 * * * *'  # 30分ごとに同期チェック
+
+jobs:
+  sync-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout latest code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 🔍 Get current commit
+        id: commit
+        run: |
+          echo "COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+          echo "COMMIT_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: 📡 Trigger Vercel webhook
+        run: |
+          curl -X POST ${{ secrets.VERCEL_DEPLOY_HOOK }} \
+            -H "Content-Type: application/json" \
+            -d '{"force": true, "commit": "'$COMMIT_SHA'"}'
+
+      - name: 🔄 Force sync via API
+        if: always()
+        run: |
+          curl -X POST https://api.vercel.com/v13/deployments \
+            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "name": "interdimensional-ecommerce",
+              "gitSource": {
+                "type": "github",
+                "repo": "yannsunn/interdimensional-ecommerce",
+                "ref": "main",
+                "sha": "'$COMMIT_SHA'"
+              },
+              "target": "production",
+              "force": true
+            }'
+
+      - name: ✅ Sync complete
+        run: |
+          echo "🎉 Ultra sync completed!"
+          echo "📌 Commit: $COMMIT_SHORT"
+          echo "🌌 異次元通販 auto-deployed!"
