@@ -1,25 +1,26 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Noto_Sans_JP } from 'next/font/google'
+// フォントを一時的に無効化してビルドエラーを回避
+// import { Inter, Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 
-// Font optimization with variable fonts
-const inter = Inter({ 
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-  preload: true,
-})
+// Font optimization with variable fonts - 一時的に無効化
+// const inter = Inter({ 
+//   subsets: ['latin'],
+//   display: 'swap',
+//   variable: '--font-inter',
+//   preload: true,
+// })
 
-const notoSansJP = Noto_Sans_JP({ 
-  subsets: ['latin'],
-  weight: ['400', '500', '700', '900'],
-  display: 'swap',
-  variable: '--font-noto-sans-jp',
-  preload: true,
-})
+// const notoSansJP = Noto_Sans_JP({ 
+//   subsets: ['latin'],
+//   weight: ['400', '500', '700', '900'],
+//   display: 'swap',
+//   variable: '--font-noto-sans-jp',
+//   preload: true,
+// })
 
 // Enhanced metadata for SEO
 export const metadata: Metadata = {
@@ -113,7 +114,6 @@ export default function RootLayout({
   return (
     <html 
       lang="ja" 
-      className={`${inter.variable} ${notoSansJP.variable}`}
       suppressHydrationWarning
     >
       <head>

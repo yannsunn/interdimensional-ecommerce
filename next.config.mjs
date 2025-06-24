@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // FORCE VERCEL RECOGNITION - NUCLEAR OPTION
-  generateBuildId: () => `build-${Date.now()}-FORCE-REBUILD`,
+  // Clean, simple configuration for Vercel
   poweredByHeader: false,
   // React Strict Mode for better development experience
   reactStrictMode: true,

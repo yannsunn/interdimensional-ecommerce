@@ -1,6 +1,6 @@
 {
   "name": "interdimensional-shop",
-  "version": "2.0.0-FORCE-VERCEL-NOW",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
