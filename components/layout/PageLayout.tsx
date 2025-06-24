@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { Portal } from '@/components/effects/Portal'
-import { FloatingElements } from '@/components/effects/FloatingElements'
+import { OptimizedFloatingElements } from '@/components/effects/OptimizedFloatingElements'
 import { Header } from '@/components/layout/Header'
 import Image from 'next/image'
 
@@ -41,7 +41,7 @@ export function PageLayout({
       {showEffects && (
         <>
           <Portal />
-          <FloatingElements />
+          <OptimizedFloatingElements />
         </>
       )}
       

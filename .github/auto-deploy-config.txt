@@ -1,5 +1,0 @@
-# 異次元通販 自動デプロイ設定
-VERCEL_ORG_ID=
-VERCEL_PROJECT_ID=
-VERCEL_DEPLOY_HOOK=
-# この値を GitHub Secrets に設定してください

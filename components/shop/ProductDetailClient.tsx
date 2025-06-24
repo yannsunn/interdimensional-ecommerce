@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Portal } from '@/components/effects/Portal'
-import { FloatingElements } from '@/components/effects/FloatingElements'
+import { OptimizedFloatingElements } from '@/components/effects/OptimizedFloatingElements'
 import { GlowingText, GlitchText } from '@/components/effects/GlowingText'
 import { Header } from '@/components/layout/Header'
 import { ProductCard } from '@/components/shop/ProductCard'
@@ -69,7 +69,7 @@ export function ProductDetailClient({ product, relatedProducts }: ProductDetailC
       {/* Background Effects */}
       <div className="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-black to-pink-900/20 animate-gradient-shift" />
       <Portal />
-      <FloatingElements />
+      <OptimizedFloatingElements />
       
       <Header />
 

@@ -1,5 +1,5 @@
 import { Portal } from '@/components/effects/Portal'
-import { FloatingElements } from '@/components/effects/FloatingElements'
+import { OptimizedFloatingElements } from '@/components/effects/OptimizedFloatingElements'
 import { GlowingText, GlitchText } from '@/components/effects/GlowingText'
 import { ProductCard } from '@/components/shop/ProductCard'
 import { Header } from '@/components/layout/Header'
@@ -45,7 +45,7 @@ export default async function HomePage() {
         />
       </div>
       <Portal />
-      <FloatingElements />
+      <OptimizedFloatingElements />
       
       {/* Header */}
       <Header />
