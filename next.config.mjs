@@ -18,12 +18,8 @@ const nextConfig = {
   
   // Experimental features for better performance
   experimental: {
-    // Enable optimized CSS loading
-    optimizeCss: true,
     // Server Components optimization
     serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs'],
-    // Enable partial prerendering for better performance
-    ppr: true,
   },
   
   // Headers for security and performance
