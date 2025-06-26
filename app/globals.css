@@ -55,14 +55,28 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
   }
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   
-  /* Ensure proper stacking context */
-  body {
-    overflow-x: hidden;
+  /* Fix layout issues and ensure proper stacking */
+  main {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Prevent horizontal scroll */
+  body, html {
+    max-width: 100vw;
+  }
+  
+  /* Improve image rendering */
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
