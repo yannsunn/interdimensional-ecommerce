@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Portal } from '@/components/effects/Portal'
-import { OptimizedFloatingElements } from '@/components/effects/OptimizedFloatingElements'
-import { GlowingText, GlitchText } from '@/components/effects/GlowingText'
+import { Portal } from '@/components/ultra-dimensional/Portal'
+import { OptimizedFloatingElements } from '@/components/ultra-dimensional/OptimizedFloatingElements'
+import { GlowingText, GlitchText } from '@/components/ultra-dimensional/GlowingText'
 import { Header } from '@/components/layout/Header'
 import { ProductCard } from '@/components/shop/ProductCard'
 import { useCartStore } from '@/store/cartStore'

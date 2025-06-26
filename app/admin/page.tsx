@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/db'
-import { GlowingText } from '@/components/effects/GlowingText'
+import { GlowingText } from '@/components/ultra-dimensional/GlowingText'
 import { 
   Package, 
   ShoppingCart, 

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import { ShoppingCart, User, LogOut, Menu } from 'lucide-react'
-import { GlowingText } from '@/components/effects/GlowingText'
+import { GlowingText } from '@/components/ultra-dimensional/GlowingText'
 import { CartDrawer } from '@/components/shop/CartDrawer'
 import { useCartStore } from '@/store/cartStore'
 import { useState } from 'react'

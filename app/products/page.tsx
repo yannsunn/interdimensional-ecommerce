@@ -1,7 +1,7 @@
 import { ProductCard } from '@/components/shop/ProductCard'
-import { Portal } from '@/components/effects/Portal'
-import { OptimizedFloatingElements } from '@/components/effects/OptimizedFloatingElements'
-import { GlowingText } from '@/components/effects/GlowingText'
+import { Portal } from '@/components/ultra-dimensional/Portal'
+import { OptimizedFloatingElements } from '@/components/ultra-dimensional/OptimizedFloatingElements'
+import { GlowingText } from '@/components/ultra-dimensional/GlowingText'
 import { Header } from '@/components/layout/Header'
 
 // Force dynamic rendering

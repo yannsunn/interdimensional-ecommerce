@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
-import { Portal } from '@/components/effects/Portal'
-import { OptimizedFloatingElements } from '@/components/effects/OptimizedFloatingElements'
+import { Portal } from '@/components/ultra-dimensional/Portal'
+import { OptimizedFloatingElements } from '@/components/ultra-dimensional/OptimizedFloatingElements'
 import { Header } from '@/components/layout/Header'
 import Image from 'next/image'
 

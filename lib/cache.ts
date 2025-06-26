@@ -22,8 +22,8 @@ export const CACHE_TIMES = {
 // Product cache with automatic revalidation
 export const getCachedProducts = unstable_cache(
   async () => {
-    const { SafeDatabase } = await import('./db-safe')
-    return SafeDatabase.getProducts()
+    const { UltraSyncDatabase } = await import('./db')
+    return UltraSyncDatabase.getProducts()
   },
   ['all-products'],
   {
@@ -35,8 +35,8 @@ export const getCachedProducts = unstable_cache(
 // Featured products cache
 export const getCachedFeaturedProducts = unstable_cache(
   async () => {
-    const { SafeDatabase } = await import('./db-safe')
-    return SafeDatabase.getFeaturedProducts()
+    const { UltraSyncDatabase } = await import('./db')
+    return UltraSyncDatabase.getFeaturedProducts()
   },
   ['featured-products'],
   {
@@ -48,8 +48,8 @@ export const getCachedFeaturedProducts = unstable_cache(
 // Single product cache
 export const getCachedProduct = unstable_cache(
   async (slug: string) => {
-    const { SafeDatabase } = await import('./db-safe')
-    return SafeDatabase.getProductBySlug(slug)
+    const { UltraSyncDatabase } = await import('./db')
+    return UltraSyncDatabase.getProductBySlug(slug)
   },
   ['product-by-slug'],
   {
@@ -61,8 +61,8 @@ export const getCachedProduct = unstable_cache(
 // Categories cache
 export const getCachedCategories = unstable_cache(
   async () => {
-    const { SafeDatabase } = await import('./db-safe')
-    return SafeDatabase.getCategories()
+    const { UltraSyncDatabase } = await import('./db')
+    return UltraSyncDatabase.getCategories()
   },
   ['all-categories'],
   {

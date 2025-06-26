@@ -158,16 +158,6 @@ export const validateQuantity = (quantity: number, max?: number): string | null 
 // === Price Utilities ===
 
 /**
- * Format price with Japanese Yen
- */
-export const formatPrice = (price: number): string => {
-  return new Intl.NumberFormat('ja-JP', {
-    style: 'currency',
-    currency: 'JPY',
-  }).format(price)
-}
-
-/**
  * Calculate discount percentage
  */
 export const calculateDiscount = (originalPrice: number, currentPrice: number): number => {

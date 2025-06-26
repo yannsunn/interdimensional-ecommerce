@@ -14,7 +14,7 @@ import {
   TrendingUp,
   Eye
 } from 'lucide-react'
-import { GlowingText } from '@/components/effects/GlowingText'
+import { GlowingText } from '@/components/ultra-dimensional/GlowingText'
 import { cn } from '@/lib/utils'
 
 const navigation = [
