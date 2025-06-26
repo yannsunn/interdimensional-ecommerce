@@ -79,6 +79,20 @@
     height: auto;
   }
   
+  /* XS breakpoint custom classes */
+  @media (min-width: 475px) {
+    .xs\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+    .xs\:text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+    .xs\:text-base { font-size: 1rem; line-height: 1.5rem; }
+    .xs\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+    .xs\:py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+    .xs\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .xs\:py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+    .xs\:gap-4 { gap: 1rem; }
+    .xs\:space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
+    .xs\:flex-row { flex-direction: row; }
+  }
+
   /* PC-specific optimizations */
   @media (min-width: 1024px) {
     .container {
