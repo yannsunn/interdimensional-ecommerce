@@ -1,28 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Clean, simple configuration for Vercel
+  // Basic Vercel configuration
   poweredByHeader: false,
-  // React Strict Mode for better development experience
   reactStrictMode: true,
-  
-  // Enable SWC minification for faster builds
   swcMinify: true,
   
-  // Image optimization settings
+  // Image optimization
   images: {
     formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60,
+    minimumCacheTTL: 3600,
   },
   
-  // Experimental features for better performance
+  // Basic experimental features
   experimental: {
-    // Server Components optimization
-    serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs'],
+    serverComponentsExternalPackages: ['@prisma/client'],
   },
   
-  // Headers for security and performance
+  // Headers for security
   async headers() {
     return [
       {
@@ -44,52 +38,9 @@ const nextConfig = {
             key: 'X-Frame-Options',
             value: 'DENY'
           },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'origin-when-cross-origin'
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()'
-          },
         ],
       },
     ]
-  },
-  
-  // Rewrites for cleaner URLs
-  async rewrites() {
-    return [
-      {
-        source: '/api/stripe',
-        destination: '/api/webhook/stripe',
-      },
-    ]
-  },
-  
-  // Webpack optimization
-  webpack: (config, { isServer }) => {
-    // Tree shaking optimization
-    config.optimization.sideEffects = false
-    
-    // Bundle analyzer in development
-    if (process.env.ANALYZE === 'true') {
-      const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-      config.plugins.push(
-        new BundleAnalyzerPlugin({
-          analyzerMode: 'static',
-          reportFilename: isServer
-            ? '../analyze/server.html'
-            : './analyze/client.html',
-        })
-      )
-    }
-    
-    return config
   },
 }
 

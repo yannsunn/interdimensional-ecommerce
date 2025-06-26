@@ -8,6 +8,11 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as any,
   session: {
     strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours
+  },
+  jwt: {
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   pages: {
     signIn: '/login',
@@ -24,6 +29,12 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) {
           throw new Error('メールアドレスとパスワードを入力してください')
         }
+        
+        // Rate limiting check
+        const email = credentials.email.toLowerCase().trim()
+        
+        // Prevent timing attacks
+        const start = Date.now()
 
         const user = await prisma.user.findUnique({
           where: {

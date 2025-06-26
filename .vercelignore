@@ -1,0 +1,11 @@
+*.md
+!README.md
+.env*
+*.log
+.DS_Store
+Thumbs.db
+*.test.*
+*.spec.*
+test/
+tests/
+scripts/
