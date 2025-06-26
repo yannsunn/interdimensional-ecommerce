@@ -13,7 +13,7 @@ import { CreditCard, Lock, Zap } from 'lucide-react'
 export default function CheckoutPage() {
   const router = useRouter()
   const { data: session } = useSession()
-  const { items, getTotalPrice, clearCart } = useCartStore()
+  const { items, getTotalPrice } = useCartStore()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 

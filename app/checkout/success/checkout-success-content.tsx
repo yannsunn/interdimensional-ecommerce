@@ -13,8 +13,8 @@ export default function CheckoutSuccessContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { clearCart } = useCartStore()
-  const [order, setOrder] = useState<any>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [, setOrder] = useState<any>(null)
+  const [, setIsLoading] = useState(true)
   const [windowWidth, setWindowWidth] = useState(1200)
 
   const sessionId = searchParams.get('session_id')

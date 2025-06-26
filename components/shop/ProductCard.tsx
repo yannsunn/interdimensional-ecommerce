@@ -1,9 +1,10 @@
 'use client'
 
+import { memo } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { formatPrice, getMysteryLevelText, getMysteryLevelColor } from '@/lib/utils'
-import { getSafeImageUrl, calculateDiscount, hasItems } from '@/lib/type-utils'
+import { productUtils, uiUtils } from '@/lib/utils'
+import { getSafeImageUrl, hasItems } from '@/lib/type-utils'
 import { useCartStore } from '@/store/cartStore'
 import { ProductWithRelations } from '@/types'
 import { ShoppingCart } from 'lucide-react'
@@ -16,7 +17,7 @@ interface ProductCardProps {
   showAddToCart?: boolean
 }
 
-export function ProductCard({ 
+export const ProductCard = memo(function ProductCard({ 
   product, 
   index = 0, 
   variant = 'default',
@@ -25,13 +26,14 @@ export function ProductCard({
 }: ProductCardProps) {
   const { addItem } = useCartStore()
   
-  // Type-safe image handling
+  // 統合ユーティリティを使用
   const productImage = getSafeImageUrl(product.images || [], '/placeholder-product.jpg')
-  
-  // Type-safe discount calculation
+  const mysteryLevel = productUtils.getMysteryLevel(product.mysteryLevel)
   const discountPercentage = product.originalPrice 
-    ? calculateDiscount(product.originalPrice, product.price)
+    ? productUtils.calculateDiscount(product.originalPrice, product.price)
     : 0
+  const isOutOfStock = !productUtils.isInStock(product.stock)
+  const isLowStock = product.stock <= 5 && product.stock > 0
 
   const handleAddToCart = () => {
     if (onAddToCart) {
@@ -47,6 +49,13 @@ export function ProductCard({
     }
   }
 
+  // バリアント別のスタイリング
+  const cardStyles = {
+    default: 'bg-gradient-to-br from-purple-900/20 to-black/40 border-2 border-purple-500 rounded-3xl p-6',
+    compact: 'bg-gradient-to-br from-purple-900/30 to-black/50 border border-purple-400 rounded-2xl p-4',
+    featured: 'bg-gradient-to-br from-yellow-900/20 to-purple-900/20 border-2 border-yellow-500 rounded-3xl p-8 shadow-2xl'
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -54,23 +63,29 @@ export function ProductCard({
       transition={{ delay: index * 0.1 }}
       className="group relative"
     >
-      <div className="relative bg-gradient-to-br from-purple-900/20 to-black/40 border-2 border-purple-500 rounded-3xl p-6 backdrop-blur-sm hover:border-pink-500 transition-all duration-300 animate-float">
+      <div className={uiUtils.cn(
+        cardStyles[variant],
+        'backdrop-blur-sm hover:border-pink-500 transition-all duration-300 animate-float'
+      )}>
         {/* Mystery Level Badge */}
         <div className="absolute -top-3 -right-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-3 py-1 rounded-full text-sm font-bold transform rotate-12 shadow-lg animate-shake">
-          {getMysteryLevelText(product.mysteryLevel)}
+          {mysteryLevel.text}
         </div>
 
         {/* Stock Warning */}
-        {product.stock <= 5 && product.stock > 0 && (
+        {isLowStock && (
           <div className="absolute -top-3 -left-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold animate-pulse">
             残り{product.stock}個!
           </div>
         )}
 
         {/* Product Image */}
-        <div className="w-full h-48 bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
+        <div className={uiUtils.cn(
+          "w-full bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-xl mb-4 flex items-center justify-center overflow-hidden",
+          variant === 'compact' ? 'h-32' : variant === 'featured' ? 'h-56' : 'h-48'
+        )}>
           <img
-            src={productImage}
+            src={uiUtils.getOptimizedImageUrl(productImage, variant === 'featured' ? 1200 : 800)}
             alt={product.name}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             loading="lazy"
@@ -78,26 +93,31 @@ export function ProductCard({
         </div>
 
         {/* Product Title */}
-        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400 group-hover:bg-clip-text transition-all duration-300">
-          {product.name}
+        <h3 className={uiUtils.cn(
+          "font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400 group-hover:bg-clip-text transition-all duration-300",
+          variant === 'featured' ? 'text-2xl' : variant === 'compact' ? 'text-lg' : 'text-xl'
+        )}>
+          {uiUtils.truncateText(product.name, variant === 'compact' ? 30 : 50)}
         </h3>
 
         {/* Mystery Level */}
-        <div className={`text-sm mb-2 ${getMysteryLevelColor(product.mysteryLevel)}`}>
-          {getMysteryLevelText(product.mysteryLevel)} ★×{product.mysteryLevel}
+        <div className={uiUtils.cn("text-sm mb-2", mysteryLevel.color)}>
+          {mysteryLevel.text} ★×{product.mysteryLevel}
         </div>
 
-        {/* Description */}
-        <p className="text-gray-300 text-sm line-clamp-3 mb-4">
-          {product.description}
-        </p>
+        {/* Description - compact版では非表示 */}
+        {variant !== 'compact' && (
+          <p className="text-gray-300 text-sm line-clamp-3 mb-4">
+            {uiUtils.truncateText(product.description, 120)}
+          </p>
+        )}
 
         {/* Effects */}
-        {hasItems(product.effects) && (
+        {hasItems(product.effects) && variant !== 'compact' && (
           <div className="mb-4">
             <h4 className="text-yellow-400 text-sm font-semibold mb-2">期待される効果:</h4>
             <div className="flex flex-wrap gap-1">
-              {product.effects.slice(0, 3).map((effect, i) => (
+              {product.effects.slice(0, variant === 'featured' ? 5 : 3).map((effect, i) => (
                 <span
                   key={i}
                   className="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded-full"
@@ -105,8 +125,10 @@ export function ProductCard({
                   {effect}
                 </span>
               ))}
-              {product.effects.length > 3 && (
-                <span className="text-xs text-gray-400">+{product.effects.length - 3}個</span>
+              {product.effects.length > (variant === 'featured' ? 5 : 3) && (
+                <span className="text-xs text-gray-400">
+                  +{product.effects.length - (variant === 'featured' ? 5 : 3)}個
+                </span>
               )}
             </div>
           </div>
@@ -117,7 +139,7 @@ export function ProductCard({
           <div className="flex items-center justify-between">
             {product.originalPrice && (
               <span className="text-gray-400 line-through text-lg">
-                {formatPrice(product.originalPrice)}
+                {productUtils.formatPrice(product.originalPrice)}
               </span>
             )}
             {discountPercentage > 0 && (
@@ -126,8 +148,11 @@ export function ProductCard({
               </span>
             )}
           </div>
-          <div className="text-3xl font-bold text-yellow-400 animate-price-glow">
-            {formatPrice(product.price)}
+          <div className={uiUtils.cn(
+            "font-bold text-yellow-400 animate-price-glow",
+            variant === 'featured' ? 'text-4xl' : variant === 'compact' ? 'text-2xl' : 'text-3xl'
+          )}>
+            {productUtils.formatPrice(product.price)}
           </div>
         </div>
 
@@ -144,8 +169,13 @@ export function ProductCard({
           {showAddToCart && (
             <button
               onClick={handleAddToCart}
-              disabled={product.stock <= 0}
-              className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-3 rounded-2xl font-bold hover:from-green-700 hover:to-emerald-700 transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              disabled={isOutOfStock}
+              className={uiUtils.cn(
+                "px-4 py-3 rounded-2xl font-bold transform transition-all duration-300",
+                isOutOfStock 
+                  ? "opacity-50 cursor-not-allowed bg-gray-600" 
+                  : "bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700 hover:scale-105"
+              )}
               aria-label={`${product.name}をカートに追加`}
             >
               <ShoppingCart size={20} />
@@ -153,19 +183,21 @@ export function ProductCard({
           )}
         </div>
 
-        {product.stock <= 0 && (
+        {isOutOfStock && (
           <div className="text-center text-red-400 font-bold">
             在庫切れ - 異次元で補充中
           </div>
         )}
 
-        {/* Testimonial Preview */}
-        {hasItems(product.testimonials) && (
+        {/* Testimonial Preview - featured版のみ */}
+        {hasItems(product.testimonials) && variant === 'featured' && (
           <div className="mt-4 text-xs text-gray-400 italic">
-            "{product.testimonials[0].slice(0, 50)}..."
+            "{uiUtils.truncateText(product.testimonials[0], 80)}..."
           </div>
         )}
       </div>
     </motion.div>
   )
-}
+})
+
+ProductCard.displayName = 'ProductCard'

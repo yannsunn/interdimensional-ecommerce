@@ -9,7 +9,6 @@ import { EmailFormField, PasswordFormField } from '@/components/forms/FormField'
 import { LoadingButton } from '@/components/ui/LoadingSpinner'
 import { Alert } from '@/components/ui/Alert'
 import { useFormValidation, createEmailField, createPasswordField } from '@/hooks/useFormValidation'
-import { validateEmail } from '@/lib/type-utils'
 
 interface LoginFormData {
   email: string

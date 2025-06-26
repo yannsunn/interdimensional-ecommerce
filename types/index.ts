@@ -1,126 +1,74 @@
+// 型定義のエントリーポイント - 全ての型をエクスポート
+export * from './core'
+export * from './product'
+export * from './cart'
+
+// Next.js and Prisma specific types
 import { Product as PrismaProduct, User as PrismaUser, Order as PrismaOrder } from '@prisma/client'
 
-// === Core Types ===
+// 旧式の互換性のためにPrisma型も再エクスポート
+export type { PrismaProduct, PrismaUser, PrismaOrder }
 
-// Branded types for type safety
-export type ProductId = string & { readonly __brand: 'ProductId' }
-export type UserId = string & { readonly __brand: 'UserId' }
-export type OrderId = string & { readonly __brand: 'OrderId' }
+// === User and Order Types ===
 
-// Mystery level with strict typing
-export type MysteryLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+import { UserId, OrderId, ProductId, OrderStatus, UserRole, PaymentMethod, ShippingMethod } from './core'
+import { Address } from './cart'
 
-// Order status with all possible states
-export type OrderStatus = 'PENDING' | 'PAID' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED' | 'REFUNDED'
+export interface User {
+  id: UserId
+  email: string
+  name: string
+  role: UserRole
+  avatar?: string
+  createdAt: Date
+  updatedAt: Date
+}
 
-// User roles
-export type UserRole = 'USER' | 'ADMIN' | 'MODERATOR'
-
-// === Extended Product Types ===
-
-// Forward declare OrderItem to resolve circular dependency
-interface OrderItem {
+export interface OrderItem {
   id: string
+  orderId: OrderId
   productId: ProductId
   quantity: number
   price: number
-}
-
-export interface ProductWithRelations extends PrismaProduct {
-  reviews?: Review[]
-  orderItems?: OrderItem[]
-  _count?: {
-    reviews: number
-    orderItems: number
+  product?: {
+    name: string
+    images: string[]
+    slug: string
   }
 }
 
-export interface ProductFormData {
-  name: string
-  description: string
-  price: number
-  originalPrice?: number
-  stock: number
-  mysteryLevel: MysteryLevel
-  effects: string[]
-  warnings: string[]
-  testimonials: string[]
-  images: string[]
-  featured: boolean
-  tags?: string[]
+export interface Order {
+  id: OrderId
+  userId: UserId
+  status: OrderStatus
+  total: number
+  subtotal: number
+  tax: number
+  shipping: number
+  paymentMethod: PaymentMethod
+  shippingMethod: ShippingMethod
+  items: OrderItem[]
+  shippingAddress: Address
+  billingAddress?: Address
+  createdAt: Date
+  updatedAt: Date
+  user?: User
 }
 
-// === Cart Types ===
-
-export interface CartItem {
-  productId: ProductId
-  name: string
-  price: number
-  quantity: number
-  image?: string
-  mysteryLevel: MysteryLevel
-  maxQuantity?: number
-}
-
-export interface CartState {
-  items: CartItem[]
-  totalItems: number
-  totalPrice: number
-  isLoading: boolean
-}
-
-// === API Response Types ===
-
-export interface ApiResponse<T> {
-  data: T
-  status: number
-  message?: string
-  timestamp: string
-  error?: string
-}
-
-export interface PaginatedResponse<T> {
-  data: T[]
-  pagination: {
-    page: number
-    limit: number
-    total: number
-    pages: number
-    hasNext: boolean
-    hasPrev: boolean
-  }
-}
-
-// === Search and Filter Types ===
-
-export interface ProductFilters {
-  category?: string
-  mysteryLevel?: MysteryLevel[]
-  priceRange?: {
-    min: number
-    max: number
-  }
-  inStock?: boolean
-  featured?: boolean
-  tags?: string[]
-  sortBy?: 'name' | 'price' | 'mysteryLevel' | 'createdAt'
-  sortOrder?: 'asc' | 'desc'
-}
-
-export interface SearchParams {
-  q?: string
-  filters?: ProductFilters
-  page?: number
-  limit?: number
-}
 
 // === Form Types ===
 
-export interface FormState<T = any> {
-  data: T
-  errors: Record<string, string[]>
-  isSubmitting: boolean
-  isValid: boolean
+export interface LoginFormData {
+  email: string
+  password: string
+  remember?: boolean
+}
+
+export interface RegisterFormData {
+  name: string
+  email: string
+  password: string
+  confirmPassword: string
 }
 
 export interface ContactFormData {
@@ -128,30 +76,45 @@ export interface ContactFormData {
   email: string
   subject: string
   message: string
-  mysteryLevel?: MysteryLevel
 }
 
-export interface NewsletterFormData {
-  email: string
-  interests?: string[]
+// === UI Component Types ===
+
+export interface NavItem {
+  label: string
+  href: string
+  icon?: React.ComponentType
+  children?: NavItem[]
 }
 
-// === Animation and UI Types ===
-
-export interface AnimationVariants {
-  initial: Record<string, any>
-  animate: Record<string, any>
-  exit?: Record<string, any>
-  transition?: Record<string, any>
+export interface BreadcrumbItem {
+  label: string
+  href?: string
 }
 
-export interface ThemeColors {
-  primary: string
-  secondary: string
-  accent: string
-  background: string
-  text: string
-  muted: string
+export interface ModalProps {
+  isOpen: boolean
+  onClose: () => void
+  title?: string
+  children: React.ReactNode
+}
+
+// === Search and Filter Types ===
+
+export interface SearchParams {
+  q?: string
+  category?: string
+  sort?: string
+  page?: string
+  limit?: string
+}
+
+export interface SearchResult<T> {
+  items: T[]
+  total: number
+  query: string
+  filters: Record<string, any>
+  facets?: Record<string, Array<{ value: string; count: number }>>
 }
 
 // === Error Types ===
@@ -160,124 +123,69 @@ export interface AppError {
   code: string
   message: string
   details?: Record<string, any>
-  timestamp: string
+  timestamp: Date
 }
 
-export type ErrorBoundaryFallback = {
-  error: Error
-  resetErrorBoundary: () => void
-}
-
-// === Utility Types ===
-
-export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
-export type RequiredBy<T, K extends keyof T> = T & Required<Pick<T, K>>
-
-// Make certain properties required
-export type RequiredProductData = RequiredBy<ProductFormData, 'name' | 'price' | 'description'>
-
-// === Event Types ===
-
-export interface CustomEvent<T = any> {
-  type: string
-  payload: T
-  timestamp: number
-}
-
-export interface ProductViewEvent extends CustomEvent<{
-  productId: ProductId
-  userId?: UserId
-  source: 'list' | 'search' | 'featured' | 'direct'
-}> {
-  type: 'product_view'
-}
-
-export interface AddToCartEvent extends CustomEvent<{
-  productId: ProductId
-  quantity: number
-  price: number
-}> {
-  type: 'add_to_cart'
-}
-
-// === SEO and Metadata Types ===
-
-export interface SEOData {
-  title: string
-  description: string
-  keywords?: string[]
-  image?: string
-  url?: string
-  type?: 'website' | 'article' | 'product'
-}
-
-export interface BreadcrumbItem {
-  label: string
-  href: string
-  current?: boolean
-}
-
-// === Review System Types ===
-
-export interface Review {
-  id: string
-  userId: UserId
-  productId: ProductId
-  rating: 1 | 2 | 3 | 4 | 5
-  title?: string
-  content: string
-  verified: boolean
-  helpful: number
-  createdAt: Date
-  updatedAt: Date
-  user: {
-    name: string
-    avatar?: string
-  }
-}
-
-export interface ReviewFormData {
-  rating: 1 | 2 | 3 | 4 | 5
-  title?: string
-  content: string
-}
-
-// === Notification Types ===
-
-export interface Notification {
-  id: string
-  type: 'success' | 'error' | 'warning' | 'info'
-  title: string
+export interface FieldError {
+  field: string
   message: string
-  duration?: number
-  action?: {
-    label: string
-    onClick: () => void
+}
+
+export interface ValidationErrors {
+  [field: string]: string[]
+}
+
+// === Analytics Types ===
+
+export interface AnalyticsEvent {
+  name: string
+  properties?: Record<string, any>
+  userId?: UserId
+  sessionId?: string
+  timestamp: Date
+}
+
+export interface ProductAnalytics {
+  productId: ProductId
+  views: number
+  addToCart: number
+  purchases: number
+  revenue: number
+  conversionRate: number
+}
+
+// === Configuration Types ===
+
+export interface AppConfig {
+  site: {
+    name: string
+    description: string
+    url: string
+    logo: string
+  }
+  api: {
+    baseUrl: string
+    timeout: number
+  }
+  features: {
+    analytics: boolean
+    paypal: boolean
+    stripe: boolean
+    guestCheckout: boolean
   }
 }
 
-// === Performance Types ===
+// === Cache Types ===
 
-export interface PerformanceMetrics {
-  loadTime: number
-  renderTime: number
-  interactionTime: number
-  bundleSize: number
+export interface CacheOptions {
+  ttl: number
+  tags: string[]
+  revalidate?: number
 }
 
-export interface LazyComponentProps {
-  fallback?: React.ComponentType
-  delay?: number
-}
-
-// Export commonly used combined types
-export type ProductCardProps = {
-  product: ProductWithRelations
-  index?: number
-  variant?: 'default' | 'compact' | 'featured'
-}
-
-export type PageProps<T = {}> = {
-  params: T
-  searchParams: Record<string, string | string[] | undefined>
+export interface CachedData<T> {
+  data: T
+  cachedAt: Date
+  expiresAt: Date
+  tags: string[]
 }

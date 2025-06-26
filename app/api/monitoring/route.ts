@@ -4,7 +4,7 @@ import { headers } from 'next/headers'
 // export const runtime = 'nodejs'  // Let Vercel auto-detect
 
 // Monitoring endpoint for uptime checks
-export async function GET(request: Request) {
+export async function GET() {
   const headersList = headers()
   const authHeader = headersList.get('authorization')
   
