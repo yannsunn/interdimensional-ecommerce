@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 
-export const runtime = 'nodejs'
+// export const runtime = 'nodejs'  // Let Vercel auto-detect
 
 // Monitoring endpoint for uptime checks
 export async function GET(request: Request) {

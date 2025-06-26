@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { checkDatabaseConnection } from '@/lib/db-optimized'
 
-export const runtime = 'nodejs'
+// export const runtime = 'nodejs'  // Let Vercel auto-detect
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
