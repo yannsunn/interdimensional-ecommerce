@@ -5,7 +5,7 @@ import { prisma } from '@/lib/db'
 import bcrypt from 'bcryptjs'
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma) as any,
+  adapter: process.env.DATABASE_URL ? PrismaAdapter(prisma) as any : undefined,
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -18,6 +18,7 @@ export const authOptions: NextAuthOptions = {
     signIn: '/login',
     error: '/login',
   },
+  debug: process.env.NODE_ENV === 'development',
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -26,40 +27,54 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
+        // Build-time or missing database handling
+        if (!process.env.DATABASE_URL) {
+          console.warn('⚠️ NextAuth: DATABASE_URL not set - authentication disabled')
+          return null
+        }
+
         if (!credentials?.email || !credentials?.password) {
           throw new Error('メールアドレスとパスワードを入力してください')
         }
         
-        // Rate limiting check
-        const email = credentials.email.toLowerCase().trim()
-        
-        // Prevent timing attacks
-        const start = Date.now()
+        try {
+          // Rate limiting check
+          const email = credentials.email.toLowerCase().trim()
+          
+          // Prevent timing attacks
+          const start = Date.now()
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        })
+          const user = await prisma.user.findUnique({
+            where: {
+              email: credentials.email,
+            },
+          })
 
-        if (!user || !user.password) {
-          throw new Error('メールアドレスまたはパスワードが正しくありません')
-        }
+          if (!user || !user.password) {
+            throw new Error('メールアドレスまたはパスワードが正しくありません')
+          }
 
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        )
+          const isPasswordValid = await bcrypt.compare(
+            credentials.password,
+            user.password
+          )
 
-        if (!isPasswordValid) {
-          throw new Error('メールアドレスまたはパスワードが正しくありません')
-        }
+          if (!isPasswordValid) {
+            throw new Error('メールアドレスまたはパスワードが正しくありません')
+          }
 
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+          }
+        } catch (error) {
+          console.error('NextAuth authorize error:', error)
+          if (error instanceof Error) {
+            throw error
+          }
+          throw new Error('認証中にエラーが発生しました')
         }
       },
     }),

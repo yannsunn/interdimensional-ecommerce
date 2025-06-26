@@ -43,16 +43,17 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
           {/* Hero Image */}
           <div className="flex-1 relative order-2 lg:order-1">
-            <div className="relative w-full max-w-lg lg:max-w-2xl mx-auto aspect-square">
+            <div className="relative w-full max-w-md lg:max-w-lg mx-auto h-64 lg:h-80">
               <Image
                 src="/images/hero-main.jpg"
                 alt="異次元通販 - 宇宙の叡智"
                 fill
-                className="object-contain drop-shadow-2xl filter brightness-75 contrast-90 opacity-80"
+                className="object-contain drop-shadow-2xl filter brightness-75 contrast-90 opacity-80 z-10"
                 priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
               {/* Simple Shadow */}
-              <div className="absolute inset-0 bg-purple-500/20 rounded-full blur-xl" />
+              <div className="absolute inset-0 bg-purple-500/20 rounded-full blur-xl z-0" />
             </div>
           </div>
           
