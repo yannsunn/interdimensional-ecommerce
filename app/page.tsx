@@ -32,76 +32,78 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-slate-900 text-white overflow-x-hidden">
-      {/* Simple Background */}
+      {/* Ultra-Sync Background */}
       <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+      <div className="fixed inset-0 bg-gradient-to-t from-purple-900/20 via-transparent to-transparent pointer-events-none" />
       
       {/* Header */}
       <Header />
 
       {/* Hero Section */}
-      <section className="relative z-10 min-h-screen flex items-center justify-center text-center px-4 py-16">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
-          {/* Hero Image */}
-          <div className="flex-1 relative order-2 lg:order-1">
-            <div className="relative w-full max-w-md lg:max-w-lg mx-auto h-64 lg:h-80">
-              <Image
-                src="/images/hero-main.jpg"
-                alt="異次元通販 - 宇宙の叡智"
-                fill
-                className="object-contain drop-shadow-2xl filter brightness-75 contrast-90 opacity-80 z-10"
-                priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              />
-              {/* Simple Shadow */}
-              <div className="absolute inset-0 bg-purple-500/20 rounded-full blur-xl z-0" />
-            </div>
-          </div>
-          
-          {/* Hero Text */}
-          <div className="flex-1 order-1 lg:order-2 text-center lg:text-left">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white leading-tight">
-              異次元通販
-            </h1>
-          
-            <p className="text-lg md:text-xl lg:text-2xl mb-6 text-gray-200 font-medium">
-              〜 宇宙と古代の叡智があなたの運命を変える！ 〜
-            </p>
+      <section className="relative py-8 md:py-12 lg:py-16">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 min-h-[70vh] lg:min-h-[80vh]">
+            {/* Hero Text */}
+            <div className="flex-1 text-center lg:text-left order-1">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white leading-tight">
+                異次元通販
+              </h1>
+            
+              <p className="text-lg md:text-xl lg:text-2xl mb-6 text-gray-200 font-medium">
+                〜 宇宙と古代の叡智があなたの運命を変える！ 〜
+              </p>
 
-            <div className="bg-red-600 text-white py-3 px-6 rounded-lg mb-6 border-2 border-yellow-400">
-              <div className="text-lg font-semibold text-center">
-                ⚡ 緊急放送中！！本日限り、特別価格でご提供！！ ⚡
+              <div className="bg-red-600 text-white py-3 px-6 rounded-lg mb-6 border-2 border-yellow-400">
+                <div className="text-lg font-semibold text-center">
+                  ⚡ 緊急放送中！！本日限り、特別価格でご提供！！ ⚡
+                </div>
+              </div>
+
+              <p className="text-lg md:text-xl text-gray-100 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                量子レベルで人生を変える商品を異次元からお届け。<br />
+                <span className="text-yellow-200 font-semibold">龍神の加護</span>、
+                <span className="text-cyan-200 font-semibold">宇宙エネルギー</span>、
+                <span className="text-pink-200 font-semibold">古代の叡智</span>が今ここに！
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+                <a
+                  href="#products"
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 shadow-lg"
+                >
+                  🔮 運命の商品を見つける！ ✨
+                </a>
+                <a
+                  href="/products"
+                  className="border-2 border-cyan-400 text-cyan-300 hover:text-white hover:bg-cyan-400 px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 shadow-lg"
+                >
+                  🌌 全商品を見る →
+                </a>
               </div>
             </div>
-
-            <p className="text-lg md:text-xl text-gray-100 mb-8 max-w-2xl leading-relaxed">
-              量子レベルで人生を変える商品を異次元からお届け。<br />
-              <span className="text-yellow-200 font-semibold">龍神の加護</span>、
-              <span className="text-cyan-200 font-semibold">宇宙エネルギー</span>、
-              <span className="text-pink-200 font-semibold">古代の叡智</span>が今ここに！
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
-              <a
-                href="#products"
-                className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 shadow-lg"
-              >
-                🔮 運命の商品を見つける！ ✨
-              </a>
-              <a
-                href="/products"
-                className="border-2 border-cyan-400 text-cyan-300 hover:text-white hover:bg-cyan-400 px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 shadow-lg"
-              >
-                🌌 全商品を見る →
-              </a>
+            
+            {/* Hero Image */}
+            <div className="flex-1 order-2 max-w-md lg:max-w-lg mx-auto lg:mx-0">
+              <div className="relative w-full h-80 lg:h-96">
+                <div className="absolute -inset-4 bg-purple-500/20 rounded-full blur-2xl opacity-60"></div>
+                <Image
+                  src="/images/hero-main.jpg"
+                  alt="異次元通販 - 宇宙の叡智"
+                  fill
+                  className="object-contain drop-shadow-2xl filter brightness-75 contrast-90 opacity-90 relative"
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Mystery Message */}
-      <section className="relative z-10 py-6">
+      <section className="relative py-6">
         <div className="container mx-auto px-4 max-w-4xl">
-          <div className="bg-yellow-900/30 border border-yellow-400 rounded-lg p-4 text-center">
+          <div className="bg-yellow-900/30 border border-yellow-400 rounded-lg p-4 text-center backdrop-blur-sm">
             <div className="text-yellow-200 text-base md:text-lg font-medium">
               {generateMysteryMessage()}
             </div>
@@ -110,7 +112,7 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section id="products" className="relative z-10 py-12">
+      <section id="products" className="relative py-12">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold mb-3 text-white">
@@ -139,7 +141,7 @@ export default async function HomePage() {
       </section>
 
       {/* Special Features */}
-      <section className="relative z-10 py-12 bg-gradient-to-r from-purple-900/20 to-pink-900/20">
+      <section className="relative py-12 bg-gradient-to-r from-purple-900/20 to-pink-900/20">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white">
@@ -179,9 +181,9 @@ export default async function HomePage() {
       </section>
 
       {/* Warning Section */}
-      <section className="relative z-10 py-6">
+      <section className="relative py-6">
         <div className="container mx-auto px-4 max-w-4xl">
-          <div className="bg-yellow-900/30 border border-yellow-400 rounded-lg p-4 text-center">
+          <div className="bg-yellow-900/30 border border-yellow-400 rounded-lg p-4 text-center backdrop-blur-sm">
             <div className="text-yellow-200 text-xs md:text-sm leading-relaxed">
               ⚠️ 異次元通販の商品は全て異次元の技術を使用しています。<br />
               現次元の物理法則に従わない場合がございます。効果には個人差があります。
@@ -191,7 +193,7 @@ export default async function HomePage() {
       </section>
 
       {/* Final CTA */}
-      <section className="relative z-10 py-12 text-center">
+      <section className="relative py-12 text-center">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white">
             今すぐお電話を！異次元のオペレーターが24時間待機中！
@@ -212,7 +214,7 @@ export default async function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 bg-black/60 border-t border-purple-500/30 py-6 backdrop-blur-sm">
+      <footer className="relative bg-black/60 border-t border-purple-500/30 py-6 backdrop-blur-sm">
         <div className="container mx-auto px-4 text-center max-w-4xl">
           <h3 className="text-xl font-bold text-white mb-3">
             異次元通販
