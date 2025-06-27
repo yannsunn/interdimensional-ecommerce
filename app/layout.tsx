@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
-import { Providers } from '@/components/Providers'
+import { Providers } from '../components/Providers'
 
 // クリーンなメタデータ設定
 export const metadata: Metadata = {

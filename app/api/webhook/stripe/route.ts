@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { stripe, webhookSecret } from '@/lib/stripe'
-import { prisma } from '@/lib/db'
-import type { ShippingData, BillingData } from '@/types/stripe'
+import { stripe, webhookSecret } from '../../../../lib/stripe'
+import { prisma } from '../../../../lib/db'
+import type { ShippingData, BillingData } from '../../../../types/stripe'
 import Stripe from 'stripe'
 
 export async function POST(req: NextRequest) {

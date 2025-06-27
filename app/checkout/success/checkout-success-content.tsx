@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Portal } from '@/components/ultra-dimensional/Portal'
-import { GlowingText } from '@/components/ultra-dimensional/GlowingText'
-import { Header } from '@/components/layout/Header'
-import { useCartStore } from '@/store/cartStore'
+import { Portal } from '../../../components/ultra-dimensional/Portal'
+import { GlowingText } from '../../../components/ultra-dimensional/GlowingText'
+import { Header } from '../../../components/layout/Header'
+import { useCartStore } from '../../../store/cartStore'
 import { CheckCircle, Package, Zap, Home } from 'lucide-react'
 import { motion } from 'framer-motion'
 

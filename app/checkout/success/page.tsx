@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import dynamic from 'next/dynamic'
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+import { LoadingSpinner } from '../../../components/ui/LoadingSpinner'
 
 // Dynamic import to avoid SSR issues
 const CheckoutSuccessContent = dynamic(

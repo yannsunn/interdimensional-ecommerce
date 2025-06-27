@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { checkDatabaseConnection } from '@/lib/db'
+import { checkDatabaseConnection } from '../../../lib/db'
 
 // export const runtime = 'nodejs'  // Let Vercel auto-detect
 export const dynamic = 'force-dynamic'

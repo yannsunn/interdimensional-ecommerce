@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { ProductDetailClient } from '@/components/shop/ProductDetailClient'
+import { ProductDetailClient } from '../../../components/shop/ProductDetailClient'
 
 // ABSOLUTE DYNAMIC - NO STATIC EVER
 export const dynamic = 'force-dynamic'

@@ -1,16 +1,26 @@
-// TypeScript module declarations for next-auth
+import 'next-auth'
+
 declare module 'next-auth' {
-  export * from 'next-auth'
+  interface Session {
+    user: {
+      id: string
+      email: string
+      name: string
+      role: string
+    }
+  }
+
+  interface User {
+    id: string
+    email: string
+    name: string
+    role: string
+  }
 }
 
-declare module 'next-auth/react' {
-  export * from 'next-auth/react'
-}
-
-declare module 'next-auth/providers/credentials' {
-  export * from 'next-auth/providers/credentials'
-}
-
-declare module 'framer-motion' {
-  export * from 'framer-motion'
+declare module 'next-auth/jwt' {
+  interface JWT {
+    id: string
+    role: string
+  }
 }
