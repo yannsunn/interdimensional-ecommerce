@@ -13,7 +13,7 @@ export function HeroSection() {
   return (
     <section className="relative overflow-hidden">
       {/* 高度な背景エフェクト */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 -z-50">
         <div className={cn('absolute inset-0 bg-gradient-to-br', gradients.bgDark)} />
         <div className={cn('absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))]', gradients.radial)} />
         <div className={cn(
@@ -23,13 +23,13 @@ export function HeroSection() {
         )} />
       </div>
       
-      <div className={cn(layout.section.lg, 'relative min-h-screen flex items-center')}>
+      <div className={cn(layout.section.lg, 'relative min-h-screen flex items-center z-10')}>
         <div className={layout.container.lg}>
           {/* レスポンシブグリッドレイアウト */}
           <div className={cn(layout.grid.cols2, 'gap-8 md:gap-12 lg:gap-20 items-center')}>
             
-            {/* ヒーローコンテンツ */}
-            <div className="text-center lg:text-left space-y-6 md:space-y-8 order-2 lg:order-1 relative">
+            {/* ヒーローコンテンツ - 前面レイヤー */}
+            <div className="text-center lg:text-left space-y-6 md:space-y-8 order-2 lg:order-1 relative z-20">
               {/* 装飾的要素 */}
               <FloatingOrb className="-top-8 -left-8" color="from-yellow-400/20 to-orange-500/20" />
               
@@ -46,7 +46,7 @@ export function HeroSection() {
               <CTAButtons />
             </div>
             
-            {/* ヒーロー画像 */}
+            {/* ヒーロー画像 - 背面レイヤー */}
             <HeroImage />
             
           </div>
@@ -230,8 +230,8 @@ function HeroImage() {
   return (
     <div className="order-1 lg:order-2 w-full flex justify-center relative">
       <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
-        {/* 多層背景エフェクト */}
-        <div className="absolute -inset-8 md:-inset-12 lg:-inset-16">
+        {/* 多層背景エフェクト - 背面レイヤー */}
+        <div className="absolute -inset-8 md:-inset-12 lg:-inset-16 -z-20">
           <div className={cn(
             'absolute inset-0',
             'bg-gradient-to-r', gradients.glow,
@@ -255,8 +255,8 @@ function HeroImage() {
           />
         </div>
         
-        {/* プレミアム画像コンテナ */}
-        <div className="relative aspect-square w-full group">
+        {/* プレミアム画像コンテナ - 背面レイヤー */}
+        <div className="relative aspect-square w-full group -z-10">
           <div className={cn(
             'absolute inset-0',
             'bg-gradient-to-br from-white/5 to-white/10',
@@ -280,10 +280,10 @@ function HeroImage() {
           </div>
         </div>
         
-        {/* フローティングオーブ */}
-        <FloatingOrb className="-top-4 -right-4 hidden lg:block" size="lg" color="from-yellow-400/30 to-orange-500/30" />
-        <FloatingOrb className="-bottom-8 -left-8 hidden lg:block" size="md" color="from-cyan-400/30 to-blue-500/30" delay="2s" />
-        <FloatingOrb className="top-1/2 -right-8 hidden lg:block" size="sm" color="from-pink-400/30 to-purple-500/30" delay="3s" />
+        {/* フローティングオーブ - 背面レイヤー */}
+        <FloatingOrb className="-top-4 -right-4 hidden lg:block -z-30" size="lg" color="from-yellow-400/30 to-orange-500/30" />
+        <FloatingOrb className="-bottom-8 -left-8 hidden lg:block -z-30" size="md" color="from-cyan-400/30 to-blue-500/30" delay="2s" />
+        <FloatingOrb className="top-1/2 -right-8 hidden lg:block -z-30" size="sm" color="from-pink-400/30 to-purple-500/30" delay="3s" />
       </div>
     </div>
   )
