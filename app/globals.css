@@ -92,6 +92,58 @@
     .xs\:space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
     .xs\:flex-row { flex-direction: row; }
   }
+  
+  /* Modern animations and effects */
+  .animate-spin-slow {
+    animation: spin 60s linear infinite;
+  }
+  
+  .animate-glow {
+    animation: glow 3s ease-in-out infinite alternate;
+  }
+  
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+  
+  @keyframes glow {
+    from {
+      filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.4));
+    }
+    to {
+      filter: drop-shadow(0 0 40px rgba(168, 85, 247, 0.8));
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  /* Enhanced glass morphism */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Smooth transitions */
+  * {
+    scroll-behavior: smooth;
+  }
+  
+  /* Hardware acceleration for better performance */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-opacity {
+    will-change: opacity;
+  }
 
   /* PC-specific optimizations */
   @media (min-width: 1024px) {
