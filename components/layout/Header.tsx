@@ -10,9 +10,9 @@ import { useState } from 'react'
 
 export function Header() {
   const { data: session } = useSession()
-  const { getTotalItems, toggleCart } = useCartStore()
+  const { getComputedValues, toggleCart } = useCartStore()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const totalItems = getTotalItems()
+  const { totalItems } = getComputedValues()
 
   return (
     <header className="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b-2 border-purple-500">

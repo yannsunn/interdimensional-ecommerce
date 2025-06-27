@@ -8,7 +8,8 @@
 'use client'
 
 import React, { Component, ErrorInfo, ReactNode } from 'react'
-import { cn, gradients, typography, animations, effects, layout } from '@/lib/design-system'
+import { cn } from '@/lib/design-system'
+import { gradients, typography, animations, effects, layout } from '@/lib/design-system'
 
 interface Props {
   children: ReactNode
@@ -18,8 +19,8 @@ interface Props {
 
 interface State {
   hasError: boolean
-  error?: Error
-  errorInfo?: ErrorInfo
+  error?: Error | undefined
+  errorInfo?: ErrorInfo | undefined
 }
 
 export class ErrorBoundary extends Component<Props, State> {
@@ -76,7 +77,7 @@ export class ErrorBoundary extends Component<Props, State> {
       }
       
       // デフォルトのエラーUI
-      return <ErrorFallback error={this.state.error} onReset={this.handleReset} />
+      return <ErrorFallback error={this.state.error || new Error('Unknown error')} onReset={this.handleReset} />
     }
 
     return this.props.children
@@ -87,7 +88,7 @@ export class ErrorBoundary extends Component<Props, State> {
  * デフォルトエラーフォールバックUI
  */
 interface ErrorFallbackProps {
-  error?: Error
+  error: Error
   onReset: () => void
 }
 

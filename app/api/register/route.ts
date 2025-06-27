@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
     
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: error.errors[0].message },
+        { error: error.errors[0]?.message || 'バリデーションエラーが発生しました' },
         { status: 400 }
       )
     }

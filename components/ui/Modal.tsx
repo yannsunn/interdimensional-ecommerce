@@ -10,35 +10,35 @@ import { cn } from '@/lib/utils'
 export interface ModalProps {
   isOpen: boolean
   onClose: () => void
-  title?: string
-  description?: string
+  title?: string | undefined
+  description?: string | undefined
   children: React.ReactNode
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
-  variant?: 'default' | 'mystical' | 'danger'
-  showCloseButton?: boolean
-  closeOnOverlayClick?: boolean
-  closeOnEscape?: boolean
-  className?: string
-  overlayClassName?: string
-  panelClassName?: string
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full' | undefined
+  variant?: 'default' | 'mystical' | 'danger' | undefined
+  showCloseButton?: boolean | undefined
+  closeOnOverlayClick?: boolean | undefined
+  closeOnEscape?: boolean | undefined
+  className?: string | undefined
+  overlayClassName?: string | undefined
+  panelClassName?: string | undefined
 }
 
 export interface ModalHeaderProps {
-  title?: string
-  description?: string
-  onClose?: () => void
-  showCloseButton?: boolean
-  className?: string
+  title?: string | undefined
+  description?: string | undefined
+  onClose?: (() => void) | undefined
+  showCloseButton?: boolean | undefined
+  className?: string | undefined
 }
 
 export interface ModalFooterProps {
   children: React.ReactNode
-  className?: string
+  className?: string | undefined
 }
 
 export interface ModalBodyProps {
   children: React.ReactNode
-  className?: string
+  className?: string | undefined
 }
 
 // === Modal Size Variants ===

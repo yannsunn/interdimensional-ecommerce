@@ -1,24 +1,24 @@
 import { useState, useCallback, useMemo } from 'react'
-import { validateRequired, validateEmail, validatePassword, validateQuantity } from '@/lib/type-utils'
+import { validateRequired, validateEmail, validatePassword } from '@/lib/type-utils'
 
 // === Form Validation Types ===
 
 export interface ValidationRule<T = any> {
-  required?: boolean
-  email?: boolean
-  password?: boolean
-  min?: number
-  max?: number
-  minLength?: number
-  maxLength?: number
-  pattern?: RegExp
-  custom?: (value: T) => string | null
+  required?: boolean | undefined
+  email?: boolean | undefined
+  password?: boolean | undefined
+  min?: number | undefined
+  max?: number | undefined
+  minLength?: number | undefined
+  maxLength?: number | undefined
+  pattern?: RegExp | undefined
+  custom?: ((value: T) => string | null) | undefined
 }
 
 export interface FieldConfig<T = any> {
   name: keyof T
-  rules?: ValidationRule<T[keyof T]>
-  initialValue?: T[keyof T]
+  rules?: ValidationRule<T[keyof T]> | undefined
+  initialValue?: T[keyof T] | undefined
 }
 
 export interface FormState<T> {

@@ -2,7 +2,8 @@
  * ⚠️ WarningSection - 警告セクション
  */
 
-import { cn, gradients, typography, animations, effects, layout } from '@/lib/design-system'
+import { cn } from '@/lib/design-system'
+import { typography, animations, effects, layout } from '@/lib/design-system'
 
 export function WarningSection() {
   return (

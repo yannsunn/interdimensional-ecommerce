@@ -8,7 +8,7 @@
 'use client'
 
 import { useState, useEffect, useRef, ReactNode, ComponentType } from 'react'
-import { cn, animations, effects } from '@/lib/design-system'
+import { cn } from '@/lib/design-system'
 
 interface LazyLoadedProps {
   children: ReactNode
@@ -31,7 +31,7 @@ export function LazyLoaded({
   rootMargin = '50px',
   once = true,
   placeholder,
-  fallback,
+  fallback: _fallback,
   delay = 0,
 }: LazyLoadedProps) {
   const [isVisible, setIsVisible] = useState(false)
@@ -45,7 +45,7 @@ export function LazyLoaded({
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           if (delay > 0) {
             setTimeout(() => {
               setIsVisible(true)
@@ -144,7 +144,7 @@ export function useLazySection(options: {
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries
-        if (entry.isIntersecting && !hasAnimated) {
+        if (entry?.isIntersecting && !hasAnimated) {
           if (options.delay) {
             setTimeout(() => {
               setIsVisible(true)
@@ -201,7 +201,7 @@ export function StaggeredLazyLoad({
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           // スタッガードアニメーションで順次表示
           children.forEach((_, index) => {
             setTimeout(() => {
@@ -259,8 +259,8 @@ export function LazyImage({
   alt,
   className,
   placeholder,
-  quality = 75,
-  sizes,
+  quality: _quality = 75,
+  sizes: _sizes,
   priority = false,
 }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -280,7 +280,7 @@ export function LazyImage({
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setIsLoaded(true)
           observer.unobserve(img)
         }

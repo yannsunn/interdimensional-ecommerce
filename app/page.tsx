@@ -50,8 +50,8 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen bg-slate-900 text-white overflow-x-hidden">
       {/* Ultra-Sync Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 -z-50" />
-      <div className="fixed inset-0 bg-gradient-to-t from-purple-900/20 via-transparent to-transparent pointer-events-none -z-40" />
+      <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 -z-10" />
+      <div className="fixed inset-0 bg-gradient-to-t from-purple-900/20 via-transparent to-transparent pointer-events-none -z-10" />
       
       {/* Header */}
       <Header />

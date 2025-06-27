@@ -8,21 +8,21 @@ import { Input, InputProps, PasswordInput, EmailInput, NumberInput } from '@/com
 
 export interface FormFieldProps extends Omit<InputProps, 'error'> {
   name: string
-  errors?: string[]
-  touched?: boolean
-  showErrors?: boolean
+  errors?: string[] | undefined
+  touched?: boolean | undefined
+  showErrors?: boolean | undefined
 }
 
 export interface FormFieldWrapperProps {
   children: React.ReactNode
-  label?: string
+  label?: string | undefined
   name: string
-  errors?: string[]
-  touched?: boolean
-  showErrors?: boolean
-  required?: boolean
-  hint?: string
-  className?: string
+  errors?: string[] | undefined
+  touched?: boolean | undefined
+  showErrors?: boolean | undefined
+  required?: boolean | undefined
+  hint?: string | undefined
+  className?: string | undefined
 }
 
 // === Form Field Wrapper Component ===
@@ -130,7 +130,7 @@ FormField.displayName = 'FormField'
 // === Password Form Field ===
 
 export interface PasswordFormFieldProps extends Omit<FormFieldProps, 'type'> {
-  showPasswordToggle?: boolean
+  showPasswordToggle?: boolean | undefined
 }
 
 export const PasswordFormField = forwardRef<HTMLInputElement, PasswordFormFieldProps>(
@@ -224,10 +224,10 @@ EmailFormField.displayName = 'EmailFormField'
 // === Number Form Field ===
 
 export interface NumberFormFieldProps extends Omit<FormFieldProps, 'type' | 'onChange'> {
-  min?: number
-  max?: number
-  step?: number
-  onChange?: (value: number | null) => void
+  min?: number | undefined
+  max?: number | undefined
+  step?: number | undefined
+  onChange?: ((value: number | null) => void) | undefined
 }
 
 export const NumberFormField = forwardRef<HTMLInputElement, NumberFormFieldProps>(
@@ -282,14 +282,14 @@ NumberFormField.displayName = 'NumberFormField'
 
 export interface TextareaFormFieldProps extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'name' | 'id'> {
   name: string
-  errors?: string[]
-  touched?: boolean
-  showErrors?: boolean
-  label?: string
-  hint?: string
-  required?: boolean
-  rows?: number
-  resize?: boolean
+  errors?: string[] | undefined
+  touched?: boolean | undefined
+  showErrors?: boolean | undefined
+  label?: string | undefined
+  hint?: string | undefined
+  required?: boolean | undefined
+  rows?: number | undefined
+  resize?: boolean | undefined
 }
 
 export const TextareaFormField = forwardRef<HTMLTextAreaElement, TextareaFormFieldProps>(
@@ -353,12 +353,12 @@ TextareaFormField.displayName = 'TextareaFormField'
 export interface SelectOption {
   value: string
   label: string
-  disabled?: boolean
+  disabled?: boolean | undefined
 }
 
 export interface SelectFormFieldProps extends Omit<FormFieldProps, 'type'> {
   options: SelectOption[]
-  placeholder?: string
+  placeholder?: string | undefined
 }
 
 export const SelectFormField = forwardRef<HTMLSelectElement, SelectFormFieldProps>(
@@ -428,7 +428,7 @@ SelectFormField.displayName = 'SelectFormField'
 // === Checkbox Form Field ===
 
 export interface CheckboxFormFieldProps extends Omit<FormFieldProps, 'type'> {
-  checkboxLabel?: string
+  checkboxLabel?: string | undefined
 }
 
 export const CheckboxFormField = forwardRef<HTMLInputElement, CheckboxFormFieldProps>(

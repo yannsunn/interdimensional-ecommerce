@@ -192,7 +192,7 @@ export const ProductCard = memo(function ProductCard({
         {/* Testimonial Preview - featured版のみ */}
         {hasItems(product.testimonials) && variant === 'featured' && (
           <div className="mt-4 text-xs text-gray-400 italic">
-            "{uiUtils.truncateText(product.testimonials[0], 80)}..."
+            "{uiUtils.truncateText(product.testimonials?.[0] || '', 80)}..."
           </div>
         )}
       </div>

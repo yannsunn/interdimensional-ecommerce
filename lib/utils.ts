@@ -28,7 +28,7 @@ const MYSTERY_MESSAGES = [
 ] as const
 
 export function generateMysteryMessage(): string {
-  return MYSTERY_MESSAGES[Math.floor(Math.random() * MYSTERY_MESSAGES.length)]
+  return MYSTERY_MESSAGES[Math.floor(Math.random() * MYSTERY_MESSAGES.length)] ?? '神秘的な商品です'
 }
 
 // 神秘レベル設定（オブジェクトベースで高速化）

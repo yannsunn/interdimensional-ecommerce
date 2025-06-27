@@ -7,18 +7,18 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 // === Input Types ===
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string
-  error?: string
-  hint?: string
-  leftIcon?: React.ReactNode
-  rightIcon?: React.ReactNode
-  variant?: 'default' | 'ghost' | 'mystical'
-  inputSize?: 'sm' | 'md' | 'lg'
-  fullWidth?: boolean
+  label?: string | undefined
+  error?: string | undefined
+  hint?: string | undefined
+  leftIcon?: React.ReactNode | undefined
+  rightIcon?: React.ReactNode | undefined
+  variant?: 'default' | 'ghost' | 'mystical' | undefined
+  inputSize?: 'sm' | 'md' | 'lg' | undefined
+  fullWidth?: boolean | undefined
 }
 
 export interface PasswordInputProps extends Omit<InputProps, 'type'> {
-  showPasswordToggle?: boolean
+  showPasswordToggle?: boolean | undefined
 }
 
 // === Input Variants ===
@@ -190,8 +190,8 @@ EmailInput.displayName = 'EmailInput'
 // === Search Input Component ===
 
 export interface SearchInputProps extends Omit<InputProps, 'type'> {
-  onSearch?: (query: string) => void
-  searchDelay?: number
+  onSearch?: ((query: string) => void) | undefined
+  searchDelay?: number | undefined
 }
 
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
@@ -240,10 +240,10 @@ SearchInput.displayName = 'SearchInput'
 // === Number Input Component ===
 
 export interface NumberInputProps extends Omit<InputProps, 'type' | 'onChange'> {
-  min?: number
-  max?: number
-  step?: number
-  onChange?: (value: number | null) => void
+  min?: number | undefined
+  max?: number | undefined
+  step?: number | undefined
+  onChange?: ((value: number | null) => void) | undefined
 }
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(

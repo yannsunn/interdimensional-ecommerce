@@ -4,7 +4,8 @@
 
 import Link from 'next/link'
 import { ProductCard } from '@/components/shop/ProductCard'
-import { cn, gradients, typography, animations, effects, layout } from '@/lib/design-system'
+import { cn } from '@/lib/design-system'
+import { gradients, typography, animations, effects, layout } from '@/lib/design-system'
 import type { Product } from '@prisma/client'
 
 interface FeaturedProductsSectionProps {

@@ -10,10 +10,10 @@ const createUltraSyncedPrismaClient = () => {
   if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes('placeholder')) {
     console.warn('⚠️ DATABASE_URL not set - using mock client for build')
     return new Proxy({} as PrismaClient, {
-      get: (target, prop) => {
+      get: (_target, prop) => {
         if (prop === 'product' || prop === 'user' || prop === 'order' || prop === 'cart' || prop === 'cartItem') {
           return new Proxy({}, {
-            get: (modelTarget, method) => {
+            get: (_modelTarget, method) => {
               if (method === 'count') return () => Promise.resolve(0)
               if (method === 'findMany' || method === 'findFirst' || method === 'findUnique') return () => Promise.resolve([])
               if (method === 'aggregate') return () => Promise.resolve({ _sum: { total: 0 } })

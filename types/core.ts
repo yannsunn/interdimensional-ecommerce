@@ -22,9 +22,9 @@ export type ShippingMethod = 'STANDARD' | 'EXPRESS' | 'OVERNIGHT' | 'DIMENSIONAL
 // APIレスポンス基本型
 export interface ApiResponse<T = any> {
   success: boolean
-  data?: T
-  error?: string
-  message?: string
+  data?: T | undefined
+  error?: string | undefined
+  message?: string | undefined
 }
 
 // ページネーション

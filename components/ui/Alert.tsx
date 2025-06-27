@@ -14,21 +14,21 @@ import {
 // === Alert Types ===
 
 export interface AlertProps {
-  type?: 'info' | 'success' | 'warning' | 'error'
-  title?: string
+  type?: 'info' | 'success' | 'warning' | 'error' | undefined
+  title?: string | undefined
   message: string
-  variant?: 'default' | 'filled' | 'outlined' | 'mystical'
-  size?: 'sm' | 'md' | 'lg'
-  icon?: React.ReactNode | boolean
-  dismissible?: boolean
-  onDismiss?: () => void
-  autoHide?: boolean
-  autoHideDelay?: number
-  className?: string
+  variant?: 'default' | 'filled' | 'outlined' | 'mystical' | undefined
+  size?: 'sm' | 'md' | 'lg' | undefined
+  icon?: React.ReactNode | boolean | undefined
+  dismissible?: boolean | undefined
+  onDismiss?: (() => void) | undefined
+  autoHide?: boolean | undefined
+  autoHideDelay?: number | undefined
+  className?: string | undefined
   action?: {
     label: string
     onClick: () => void
-  }
+  } | undefined
 }
 
 export interface ToastProps extends AlertProps {
@@ -113,6 +113,7 @@ export function Alert({
       
       return () => clearTimeout(timer)
     }
+    return undefined
   }, [autoHide, autoHideDelay])
   
   const handleDismiss = () => {

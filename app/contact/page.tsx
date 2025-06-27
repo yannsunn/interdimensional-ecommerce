@@ -2,7 +2,10 @@
  * 📞 Contact Page - お問い合わせ
  */
 
-import { cn, gradients, typography, layout } from '@/lib/design-system'
+import { cn } from '@/lib/design-system'
+import { primary } from '@/lib/design-system/gradients'
+import { h1, h4, bodyLg, bodyMd, bodySm, bodyXs } from '@/lib/design-system/typography'
+import { sectionLg, containerLg } from '@/lib/design-system/layout'
 
 export const metadata = {
   title: 'お問い合わせ | 異次元通販',
@@ -15,20 +18,20 @@ export default function ContactPage() {
       {/* Background */}
       <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 -z-50" />
       
-      <main className={cn(layout.section.lg, 'relative')}>
-        <div className={cn(layout.container.lg)}>
+      <main className={cn(sectionLg, 'relative')}>
+        <div className={cn(containerLg)}>
           {/* Header */}
           <div className="text-center mb-16">
             <h1 className={cn(
-              typography.h1,
+              h1,
               'text-transparent bg-clip-text bg-gradient-to-r',
-              gradients.primary,
+              primary,
               'mb-6 leading-tight'
             )}>
               お問い合わせ
             </h1>
             <p className={cn(
-              typography.body.lg,
+              bodyLg,
               'text-gray-300 max-w-3xl mx-auto leading-relaxed'
             )}>
               宇宙レベルのサポートで、あらゆる次元からのご質問にお答えします
@@ -45,30 +48,30 @@ export default function ContactPage() {
                 'backdrop-blur-md border border-purple-500/30',
                 'rounded-3xl p-6 md:p-8'
               )}>
-                <h2 className={cn(typography.h4, 'text-purple-400 mb-6')}>
+                <h2 className={cn(h4, 'text-purple-400 mb-6')}>
                   🌌 基本お問い合わせ
                 </h2>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <div className="text-purple-400 text-xl">📧</div>
                     <div>
-                      <p className={cn(typography.body.sm, 'text-gray-400')}>メール</p>
-                      <p className={cn(typography.body.md, 'text-white')}>info@異次元通販.jp</p>
+                      <p className={cn(bodySm, 'text-gray-400')}>メール</p>
+                      <p className={cn(bodyMd, 'text-white')}>info@異次元通販.jp</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="text-purple-400 text-xl">📱</div>
                     <div>
-                      <p className={cn(typography.body.sm, 'text-gray-400')}>電話</p>
-                      <p className={cn(typography.body.md, 'text-white')}>0120-999-888</p>
-                      <p className={cn(typography.body.xs, 'text-gray-500')}>平日 9:00-18:00</p>
+                      <p className={cn(bodySm, 'text-gray-400')}>電話</p>
+                      <p className={cn(bodyMd, 'text-white')}>0120-999-888</p>
+                      <p className={cn(bodyXs, 'text-gray-500')}>平日 9:00-18:00</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="text-purple-400 text-xl">🏢</div>
                     <div>
-                      <p className={cn(typography.body.sm, 'text-gray-400')}>住所</p>
-                      <p className={cn(typography.body.md, 'text-white')}>
+                      <p className={cn(bodySm, 'text-gray-400')}>住所</p>
+                      <p className={cn(bodyMd, 'text-white')}>
                         東京都渋谷区異次元1-2-3<br />
                         宇宙ビル 龍神フロア
                       </p>
@@ -83,32 +86,32 @@ export default function ContactPage() {
                 'backdrop-blur-md border border-cyan-500/30',
                 'rounded-3xl p-6 md:p-8'
               )}>
-                <h2 className={cn(typography.h4, 'text-cyan-400 mb-6')}>
+                <h2 className={cn(h4, 'text-cyan-400 mb-6')}>
                   🔮 異次元専用サポート
                 </h2>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <div className="text-cyan-400 text-xl">🧠</div>
                     <div>
-                      <p className={cn(typography.body.sm, 'text-gray-400')}>テレパシー</p>
-                      <p className={cn(typography.body.md, 'text-white')}>波長 432.8Hz</p>
-                      <p className={cn(typography.body.xs, 'text-gray-500')}>24時間受信</p>
+                      <p className={cn(bodySm, 'text-gray-400')}>テレパシー</p>
+                      <p className={cn(bodyMd, 'text-white')}>波長 432.8Hz</p>
+                      <p className={cn(bodyXs, 'text-gray-500')}>24時間受信</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="text-cyan-400 text-xl">🐉</div>
                     <div>
-                      <p className={cn(typography.body.sm, 'text-gray-400')}>龍神ホットライン</p>
-                      <p className={cn(typography.body.md, 'text-white')}>夢の中でお呼びください</p>
-                      <p className={cn(typography.body.xs, 'text-gray-500')}>睡眠中のみ</p>
+                      <p className={cn(bodySm, 'text-gray-400')}>龍神ホットライン</p>
+                      <p className={cn(bodyMd, 'text-white')}>夢の中でお呼びください</p>
+                      <p className={cn(bodyXs, 'text-gray-500')}>睡眠中のみ</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="text-cyan-400 text-xl">🌟</div>
                     <div>
-                      <p className={cn(typography.body.sm, 'text-gray-400')}>宇宙メール</p>
-                      <p className={cn(typography.body.md, 'text-white')}>cosmic@universe.galaxy</p>
-                      <p className={cn(typography.body.xs, 'text-gray-500')}>光速配送</p>
+                      <p className={cn(bodySm, 'text-gray-400')}>宇宙メール</p>
+                      <p className={cn(bodyMd, 'text-white')}>cosmic@universe.galaxy</p>
+                      <p className={cn(bodyXs, 'text-gray-500')}>光速配送</p>
                     </div>
                   </div>
                 </div>
@@ -120,25 +123,25 @@ export default function ContactPage() {
                 'backdrop-blur-md border border-pink-500/30',
                 'rounded-3xl p-6 md:p-8'
               )}>
-                <h2 className={cn(typography.h4, 'text-pink-400 mb-6')}>
+                <h2 className={cn(h4, 'text-pink-400 mb-6')}>
                   ⏰ サポート時間
                 </h2>
                 <div className="space-y-3">
                   <div className="flex justify-between">
-                    <span className={cn(typography.body.md, 'text-gray-300')}>一般サポート</span>
-                    <span className={cn(typography.body.md, 'text-white')}>平日 9:00-18:00</span>
+                    <span className={cn(bodyMd, 'text-gray-300')}>一般サポート</span>
+                    <span className={cn(bodyMd, 'text-white')}>平日 9:00-18:00</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className={cn(typography.body.md, 'text-gray-300')}>緊急サポート</span>
-                    <span className={cn(typography.body.md, 'text-white')}>24時間365日</span>
+                    <span className={cn(bodyMd, 'text-gray-300')}>緊急サポート</span>
+                    <span className={cn(bodyMd, 'text-white')}>24時間365日</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className={cn(typography.body.md, 'text-gray-300')}>宇宙サポート</span>
-                    <span className={cn(typography.body.md, 'text-white')}>時空間問わず</span>
+                    <span className={cn(bodyMd, 'text-gray-300')}>宇宙サポート</span>
+                    <span className={cn(bodyMd, 'text-white')}>時空間問わず</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className={cn(typography.body.md, 'text-gray-300')}>龍神サポート</span>
-                    <span className={cn(typography.body.md, 'text-white')}>満月の夜</span>
+                    <span className={cn(bodyMd, 'text-gray-300')}>龍神サポート</span>
+                    <span className={cn(bodyMd, 'text-white')}>満月の夜</span>
                   </div>
                 </div>
               </section>
@@ -152,12 +155,12 @@ export default function ContactPage() {
                 'backdrop-blur-md border border-yellow-500/30',
                 'rounded-3xl p-6 md:p-8'
               )}>
-                <h2 className={cn(typography.h4, 'text-yellow-400 mb-6')}>
+                <h2 className={cn(h4, 'text-yellow-400 mb-6')}>
                   ✉️ お問い合わせフォーム
                 </h2>
                 <form className="space-y-6">
                   <div>
-                    <label className={cn(typography.body.md, 'text-gray-300 block mb-2')}>
+                    <label className={cn(bodyMd, 'text-gray-300 block mb-2')}>
                       お名前 *
                     </label>
                     <input
@@ -174,7 +177,7 @@ export default function ContactPage() {
                   </div>
                   
                   <div>
-                    <label className={cn(typography.body.md, 'text-gray-300 block mb-2')}>
+                    <label className={cn(bodyMd, 'text-gray-300 block mb-2')}>
                       メールアドレス *
                     </label>
                     <input
@@ -191,7 +194,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label className={cn(typography.body.md, 'text-gray-300 block mb-2')}>
+                    <label className={cn(bodyMd, 'text-gray-300 block mb-2')}>
                       お問い合わせ種別
                     </label>
                     <select className={cn(
@@ -212,7 +215,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label className={cn(typography.body.md, 'text-gray-300 block mb-2')}>
+                    <label className={cn(bodyMd, 'text-gray-300 block mb-2')}>
                       お問い合わせ内容 *
                     </label>
                     <textarea
@@ -250,31 +253,31 @@ export default function ContactPage() {
                 'backdrop-blur-md border border-green-500/30',
                 'rounded-3xl p-6 md:p-8'
               )}>
-                <h2 className={cn(typography.h4, 'text-green-400 mb-6')}>
+                <h2 className={cn(h4, 'text-green-400 mb-6')}>
                   ❓ よくあるご質問
                 </h2>
                 <div className="space-y-4">
                   <div>
-                    <h3 className={cn(typography.body.md, 'text-green-300 font-semibold mb-2')}>
+                    <h3 className={cn(bodyMd, 'text-green-300 font-semibold mb-2')}>
                       商品の効果はいつ現れますか？
                     </h3>
-                    <p className={cn(typography.body.sm, 'text-gray-300')}>
+                    <p className={cn(bodySm, 'text-gray-300')}>
                       個人差がありますが、宇宙エネルギーが同調するまで3-7日程度です。
                     </p>
                   </div>
                   <div>
-                    <h3 className={cn(typography.body.md, 'text-green-300 font-semibold mb-2')}>
+                    <h3 className={cn(bodyMd, 'text-green-300 font-semibold mb-2')}>
                       異次元への移動は安全ですか？
                     </h3>
-                    <p className={cn(typography.body.sm, 'text-gray-300')}>
+                    <p className={cn(bodySm, 'text-gray-300')}>
                       龍神の加護により、安全性は保証されています。
                     </p>
                   </div>
                   <div>
-                    <h3 className={cn(typography.body.md, 'text-green-300 font-semibold mb-2')}>
+                    <h3 className={cn(bodyMd, 'text-green-300 font-semibold mb-2')}>
                       返品・交換は可能ですか？
                     </h3>
-                    <p className={cn(typography.body.sm, 'text-gray-300')}>
+                    <p className={cn(bodySm, 'text-gray-300')}>
                       量子レベルで変化した商品の返品は、時空の歪みを生じる可能性があります。
                     </p>
                   </div>

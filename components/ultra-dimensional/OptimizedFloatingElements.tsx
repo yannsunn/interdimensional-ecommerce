@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { useMemo, useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 
 // Element pool with better performance
 const ELEMENT_POOL = ['🌟', '💫', '🔮', '✨', '🔯', '🌙', '⭐', '🪐'] as const
@@ -27,7 +27,7 @@ export function OptimizedFloatingElements() {
   const generateElements = useCallback((): FloatingElement[] => {
     return Array.from({ length: MAX_VISIBLE_ELEMENTS }, (_, index) => ({
       id: `element-${Date.now()}-${index}`,
-      element: ELEMENT_POOL[index % ELEMENT_POOL.length],
+      element: ELEMENT_POOL[index % ELEMENT_POOL.length] ?? '✨',
       delay: index * 4,
       duration: ANIMATION_DURATION + (index * 2),
       top: Math.random() * 70 + 10, // Keep elements in viewable area
@@ -40,7 +40,7 @@ export function OptimizedFloatingElements() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting)
+        setIsVisible(entry?.isIntersecting ?? false)
       },
       { threshold: 0.1 }
     )

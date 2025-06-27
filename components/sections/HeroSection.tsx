@@ -7,7 +7,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { cn, gradients, typography, animations, effects, layout } from '@/lib/design-system'
+import { cn } from '@/lib/design-system'
+import { gradients, typography, animations, effects, layout } from '@/lib/design-system'
 
 export function HeroSection() {
   return (
@@ -217,7 +218,7 @@ function CTAButtons() {
  */
 function HeroImage() {
   return (
-    <div className="order-1 lg:order-2 w-full flex justify-center relative -z-50">
+    <div className="order-1 lg:order-2 w-full flex justify-center relative z-0">
       <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
         {/* 多層背景エフェクト - 最背面 */}
         <div className="absolute -inset-8 md:-inset-12 lg:-inset-16">
@@ -253,7 +254,7 @@ function HeroImage() {
             'border border-white/5',
             'shadow-lg'
           )} />
-          <div className="relative w-full h-full rounded-3xl overflow-hidden opacity-40">
+          <div className="relative w-full h-full rounded-3xl overflow-hidden opacity-90">
             <Image
               src="/images/hero-main.jpg"
               alt="異次元通販 - 宇宙の叡智"

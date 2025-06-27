@@ -38,9 +38,6 @@ export const authOptions: NextAuthOptions = {
         }
         
         try {
-          // Rate limiting check
-          const email = credentials.email.toLowerCase().trim()
-          
           // Prevent timing attacks
           const start = Date.now()
 
@@ -61,6 +58,13 @@ export const authOptions: NextAuthOptions = {
 
           if (!isPasswordValid) {
             throw new Error('メールアドレスまたはパスワードが正しくありません')
+          }
+
+          // Ensure minimum response time to prevent timing attacks
+          const elapsed = Date.now() - start
+          const minTime = 200 // minimum 200ms
+          if (elapsed < minTime) {
+            await new Promise(resolve => setTimeout(resolve, minTime - elapsed))
           }
 
           return {

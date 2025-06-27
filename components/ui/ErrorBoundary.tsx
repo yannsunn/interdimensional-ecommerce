@@ -15,11 +15,11 @@ interface ErrorBoundaryState {
 
 interface ErrorBoundaryProps {
   children: ReactNode
-  fallback?: (error: Error, retry: () => void) => ReactNode
-  onError?: (error: Error, errorInfo: ErrorInfo) => void
-  maxRetries?: number
-  resetOnPropsChange?: boolean
-  resetKeys?: Array<string | number>
+  fallback?: ((error: Error, retry: () => void) => ReactNode) | undefined
+  onError?: ((error: Error, errorInfo: ErrorInfo) => void) | undefined
+  maxRetries?: number | undefined
+  resetOnPropsChange?: boolean | undefined
+  resetKeys?: Array<string | number> | undefined
 }
 
 // === Error Boundary Component ===
@@ -224,7 +224,7 @@ export function withErrorBoundary<P extends object>(
 // === Custom Error Fallbacks ===
 
 export function LoadingErrorFallback({ 
-  error, 
+  error: _error, 
   retry 
 }: { 
   error: Error
@@ -247,7 +247,7 @@ export function LoadingErrorFallback({
 }
 
 export function ProductErrorFallback({ 
-  error, 
+  error: _error, 
   retry 
 }: { 
   error: Error
@@ -269,7 +269,7 @@ export function ProductErrorFallback({
 }
 
 export function CartErrorFallback({ 
-  error, 
+  error: _error, 
   retry 
 }: { 
   error: Error

@@ -21,7 +21,7 @@ export function UltraDimensionalParticles() {
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
         size: Math.random() * 4 + 1,
-        color: ['#ff00ff', '#00ffff', '#ffff00', '#ff6600', '#8a2be2'][Math.floor(Math.random() * 5)],
+        color: ['#ff00ff', '#00ffff', '#ffff00', '#ff6600', '#8a2be2'][Math.floor(Math.random() * 5)] ?? '#ff00ff',
         speed: Math.random() * 2 + 0.5,
       }))
       setParticles(newParticles)
@@ -33,7 +33,7 @@ export function UltraDimensionalParticles() {
   }, [])
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-5">
+    <div className="fixed inset-0 pointer-events-none z-0">
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
@@ -64,7 +64,7 @@ export function UltraDimensionalParticles() {
 // 次元の裂け目エフェクト
 export function DimensionalRift() {
   return (
-    <div className="fixed inset-0 pointer-events-none z-5 overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       <motion.div
         className="absolute top-1/4 left-1/4 w-2 h-32 bg-gradient-to-b from-purple-500 via-pink-500 to-transparent"
         animate={{
@@ -107,7 +107,7 @@ export function DimensionalRift() {
 // 龍神のオーラエフェクト
 export function DragonAura() {
   return (
-    <div className="fixed inset-0 pointer-events-none z-5">
+    <div className="fixed inset-0 pointer-events-none z-0">
       <motion.div
         className="absolute inset-0 opacity-20"
         animate={{
@@ -131,7 +131,7 @@ export function DragonAura() {
 // 宇宙エネルギー波動エフェクト
 export function CosmicWaves() {
   return (
-    <div className="fixed inset-0 pointer-events-none z-5 overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       {Array.from({ length: 3 }).map((_, i) => (
         <motion.div
           key={i}
@@ -168,7 +168,7 @@ export function DigitalRain() {
   }, [])
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-5 overflow-hidden opacity-20">
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-20">
       {Array.from({ length: columns }).map((_, i) => (
         <motion.div
           key={i}
@@ -198,7 +198,7 @@ export function DigitalRain() {
 // 魔法陣エフェクト
 export function MagicCircle() {
   return (
-    <div className="fixed inset-0 pointer-events-none z-5 flex items-center justify-center">
+    <div className="fixed inset-0 pointer-events-none z-0 flex items-center justify-center">
       <motion.div
         className="relative w-96 h-96 opacity-30"
         animate={{ rotate: 360 }}

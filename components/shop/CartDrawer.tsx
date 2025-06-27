@@ -13,12 +13,10 @@ export function CartDrawer() {
     closeCart,
     updateQuantity,
     removeItem,
-    getTotalItems,
-    getTotalPrice,
+    getComputedValues,
   } = useCartStore()
 
-  const totalItems = getTotalItems()
-  const totalPrice = getTotalPrice()
+  const { totalItems, totalPrice } = getComputedValues()
 
   return (
     <AnimatePresence>
@@ -102,7 +100,9 @@ export function CartDrawer() {
 
                           {/* Remove Button */}
                           <button
-                            onClick={() => removeItem(item.productId)}
+                            onClick={() => {
+                              removeItem(item.productId).catch(console.error)
+                            }}
                             className="text-red-400 hover:text-red-300 p-1 hover:bg-red-500/20 rounded transition-colors"
                           >
                             <Trash2 size={16} />
@@ -113,7 +113,9 @@ export function CartDrawer() {
                         <div className="flex items-center justify-between mt-3">
                           <div className="flex items-center gap-2 bg-black/50 rounded-lg p-1">
                             <button
-                              onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                              onClick={() => {
+                                updateQuantity(item.productId, item.quantity - 1).catch(console.error)
+                              }}
                               className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white hover:bg-purple-500/30 rounded transition-colors"
                             >
                               <Minus size={16} />
@@ -122,7 +124,9 @@ export function CartDrawer() {
                               {item.quantity}
                             </span>
                             <button
-                              onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                              onClick={() => {
+                                updateQuantity(item.productId, item.quantity + 1).catch(console.error)
+                              }}
                               className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white hover:bg-purple-500/30 rounded transition-colors"
                             >
                               <Plus size={16} />

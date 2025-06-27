@@ -12,14 +12,11 @@ import { formatPrice, getMysteryLevelText, getMysteryLevelColor, generateMystery
 import { Product } from '@prisma/client'
 import { 
   ShoppingCart, 
-  Heart, 
   Star, 
   Shield, 
   Truck, 
   RotateCcw,
   Zap,
-  Eye,
-  ArrowLeft,
   Plus,
   Minus,
   AlertTriangle
@@ -50,7 +47,7 @@ export function ProductDetailClient({ product, relatedProducts }: ProductDetailC
         name: product.name,
         price: product.price,
         mysteryLevel: product.mysteryLevel,
-        image: product.images[0],
+        image: product.images?.[0] || '',
       })
     }
 

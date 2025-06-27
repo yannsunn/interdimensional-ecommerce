@@ -25,8 +25,15 @@
   
   main {
     position: relative;
-    z-index: 1;
+    z-index: 10;
   }
+  
+  /* Z-index階層の体系的な定義 */
+  /* 背景層: -10 to -1 */
+  /* エフェクト層: 0 to 5 */
+  /* コンテンツ層: 10 to 20 */
+  /* インタラクティブ層: 30 to 40 */
+  /* モーダル層: 50+ */
   
   img {
     max-width: 100%;

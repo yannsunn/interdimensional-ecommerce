@@ -5,12 +5,12 @@ import { cn } from '@/lib/utils'
 // === Loading Spinner Types ===
 
 export interface LoadingSpinnerProps {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  variant?: 'default' | 'mystical' | 'dots' | 'pulse' | 'bounce'
-  color?: 'white' | 'purple' | 'pink' | 'blue' | 'green'
-  className?: string
-  fullScreen?: boolean
-  text?: string
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined
+  variant?: 'default' | 'mystical' | 'dots' | 'pulse' | 'bounce' | undefined
+  color?: 'white' | 'purple' | 'pink' | 'blue' | 'green' | undefined
+  className?: string | undefined
+  fullScreen?: boolean | undefined
+  text?: string | undefined
 }
 
 // === Size Variants ===

@@ -13,11 +13,11 @@ import { CreditCard, Lock, Zap } from 'lucide-react'
 export default function CheckoutPage() {
   const router = useRouter()
   const { data: session } = useSession()
-  const { items, getTotalPrice } = useCartStore()
+  const { items, getComputedValues } = useCartStore()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const subtotal = getTotalPrice()
+  const { totalPrice: subtotal } = getComputedValues()
   const tax = Math.floor(subtotal * 0.1)
   const shipping = subtotal >= 10000 ? 0 : 500
   const total = subtotal + tax + shipping
