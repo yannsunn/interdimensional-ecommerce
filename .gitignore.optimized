@@ -1,0 +1,97 @@
+# 最適化された.gitignore - 重複除去・セキュリティ強化版
+
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.pnpm-store/
+
+# Testing
+/coverage
+
+# Next.js
+/.next/
+/out/
+
+# Production builds
+/build
+/dist
+
+# Environment files
+.env
+.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime files
+*.pid
+*.pid.lock
+*.seed
+*.tgz
+
+# Cache directories
+.npm
+.eslintcache
+.stylelintcache
+.cache
+.parcel-cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Modern build tools
+.turbo/
+.swc/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Security files
+*.pem
+*.key
+*.crt
+*.p12
+.aws/
+.gcp/
+secrets.json
+
+# Optional dependencies
+.node_repl_history
+.yarn-integrity
+.fusebox/
+.dynamodb/
+.tern-port
+.serverless/
+.docusaurus

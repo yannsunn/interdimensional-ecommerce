@@ -1,11 +1,48 @@
+# Documentation (except README)
 *.md
 !README.md
+docs/
+
+# Development files
 .env*
 *.log
 .DS_Store
 Thumbs.db
+
+# Testing
 *.test.*
 *.spec.*
 test/
 tests/
+__tests__/
+coverage/
+
+# Development scripts
 scripts/
+.github/
+
+# IDE
+.vscode/
+.idea/
+
+# Cache and temporary
+.cache/
+tmp/
+temp/
+
+# Source maps (if not needed in production)
+*.map
+
+# Development tools
+.eslintrc*
+.prettierrc*
+tsconfig.json
+tailwind.config.ts
+
+# Build info
+*.tsbuildinfo
+
+# Package files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
