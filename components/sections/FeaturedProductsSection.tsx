@@ -9,10 +9,10 @@ import { gradients, typography, animations, effects, layout } from '@/lib/design
 import type { Product } from '@prisma/client'
 
 interface FeaturedProductsSectionProps {
-  products: Product[]
+  products?: Product[]
 }
 
-export function FeaturedProductsSection({ products }: FeaturedProductsSectionProps) {
+export function FeaturedProductsSection({ products = [] }: FeaturedProductsSectionProps) {
   return (
     <section id="products" className={cn('relative', layout.section.base)}>
       {/* 背景エフェクト */}
