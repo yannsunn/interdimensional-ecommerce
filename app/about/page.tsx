@@ -2,10 +2,10 @@
  * 🌟 About Page - 異次元通販について
  */
 
-import { cn } from '../lib/design-system'
-import { primary } from '../lib/design-system/gradients'
-import { h1, h3, h5, bodyLg, bodyMd, bodySm } from '../lib/design-system/typography'
-import { sectionLg, containerLg } from '../lib/design-system/layout'
+import { cn } from '../../lib/design-system'
+import { primary } from '../../lib/design-system/gradients'
+import { h1, h3, h5, bodyLg, bodyMd, bodySm } from '../../lib/design-system/typography'
+import { sectionLg, containerLg } from '../../lib/design-system/layout'
 
 export const metadata = {
   title: '異次元通販について | 宇宙と古代の叡智',

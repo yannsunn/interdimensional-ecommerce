@@ -3,12 +3,12 @@
 import { signIn, getSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Portal } from '../components/ultra-dimensional/Portal'
-import { GlowingText } from '../components/ultra-dimensional/GlowingText'
-import { EmailFormField, PasswordFormField } from '../components/forms/FormField'
-import { LoadingButton } from '../components/ui/LoadingSpinner'
-import { Alert } from '../components/ui/Alert'
-import { useFormValidation, createEmailField, createPasswordField } from '../hooks/useFormValidation'
+import { Portal } from '../../components/ultra-dimensional/Portal'
+import { GlowingText } from '../../components/ultra-dimensional/GlowingText'
+import { EmailFormField, PasswordFormField } from '../../components/forms/FormField'
+import { LoadingButton } from '../../components/ui/LoadingSpinner'
+import { Alert } from '../../components/ui/Alert'
+import { useFormValidation, createEmailField, createPasswordField } from '../../hooks/useFormValidation'
 
 interface LoginFormData {
   email: string

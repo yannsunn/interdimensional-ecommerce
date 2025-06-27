@@ -2,10 +2,10 @@
  * 📞 Contact Page - お問い合わせ
  */
 
-import { cn } from '../lib/design-system'
-import { primary } from '../lib/design-system/gradients'
-import { h1, h4, bodyLg, bodyMd, bodySm, bodyXs } from '../lib/design-system/typography'
-import { sectionLg, containerLg } from '../lib/design-system/layout'
+import { cn } from '../../lib/design-system'
+import { primary } from '../../lib/design-system/gradients'
+import { h1, h4, bodyLg, bodyMd, bodySm, bodyXs } from '../../lib/design-system/typography'
+import { sectionLg, containerLg } from '../../lib/design-system/layout'
 
 export const metadata = {
   title: 'お問い合わせ | 異次元通販',
