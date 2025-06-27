@@ -34,7 +34,14 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   
   // 静的アセットの長期キャッシュ
-  if (pathname.startsWith('/_next/static') || pathname.startsWith('/images')) {
+  if (pathname.startsWith('/_next/static')) {
+    if (pathname.includes('.css')) {
+      response.headers.set('Content-Type', 'text/css; charset=utf-8')
+    } else if (pathname.includes('.js')) {
+      response.headers.set('Content-Type', 'application/javascript; charset=utf-8')
+    }
+    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
+  } else if (pathname.startsWith('/images')) {
     response.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
   }
   
@@ -57,10 +64,13 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
+     * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * - images (public images)
+     * - robots.txt, sitemap.xml (SEO files)
      */
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|images|robots.txt|sitemap.xml).*)',
   ],
 }

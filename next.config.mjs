@@ -87,7 +87,24 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Type',
-            value: 'text/css'
+            value: 'text/css; charset=utf-8'
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          }
+        ],
+      },
+      {
+        source: '/_next/static/js/:path*',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/javascript; charset=utf-8'
           },
           {
             key: 'Cache-Control',
