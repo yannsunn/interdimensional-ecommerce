@@ -3,140 +3,86 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
-}
-
-@layer base {
+  /* 🎯 Reset and core optimization */
   * {
-    @apply border-border;
+    box-sizing: border-box;
   }
-  body {
-    @apply bg-background text-foreground;
-    overflow-x: hidden;
-  }
+  
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
   }
   
-  /* Fix layout issues and ensure proper stacking */
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
+    background: #0f172a;
+    color: white;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
   main {
     position: relative;
     z-index: 1;
   }
   
-  /* Prevent horizontal scroll */
-  body, html {
-    max-width: 100vw;
-  }
-  
-  /* Improve image rendering */
   img {
     max-width: 100%;
     height: auto;
+    display: block;
   }
   
-  /* XS breakpoint custom classes */
+  /* 📱 XS breakpoint (475px+) - Ultra responsive */
   @media (min-width: 475px) {
     .xs\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
     .xs\:text-lg { font-size: 1.125rem; line-height: 1.75rem; }
     .xs\:text-base { font-size: 1rem; line-height: 1.5rem; }
+    .xs\:text-sm { font-size: 0.875rem; line-height: 1.25rem; }
     .xs\:px-8 { padding-left: 2rem; padding-right: 2rem; }
     .xs\:py-4 { padding-top: 1rem; padding-bottom: 1rem; }
-    .xs\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-    .xs\:py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+    .xs\:px-10 { padding-left: 2.5rem; padding-right: 2.5rem; }
+    .xs\:py-5 { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+    .xs\:flex-row { flex-direction: row; }
     .xs\:gap-4 { gap: 1rem; }
     .xs\:space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
-    .xs\:flex-row { flex-direction: row; }
   }
   
-  /* Modern animations and effects */
+  /* 🎭 Essential animations - GPU optimized */
   .animate-spin-slow {
     animation: spin 60s linear infinite;
+    will-change: transform;
   }
   
   .animate-glow {
     animation: glow 3s ease-in-out infinite alternate;
+    will-change: filter;
   }
   
   .animate-float {
     animation: float 4s ease-in-out infinite;
+    will-change: transform;
   }
   
   @keyframes glow {
-    from {
-      filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.4));
-    }
-    to {
-      filter: drop-shadow(0 0 40px rgba(168, 85, 247, 0.8));
-    }
+    from { filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.4)); }
+    to { filter: drop-shadow(0 0 40px rgba(168, 85, 247, 0.8)); }
   }
   
   @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
   }
   
-  /* Enhanced glass morphism */
+  /* 🔮 Glass morphism effect - Ultra optimized */
   .glass {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
   
-  /* Smooth transitions */
-  * {
-    scroll-behavior: smooth;
-  }
-  
-  /* Hardware acceleration for better performance */
+  /* 🚀 Performance optimizations */
   .will-change-transform {
     will-change: transform;
   }
@@ -144,27 +90,18 @@
   .will-change-opacity {
     will-change: opacity;
   }
-
-  /* PC-specific optimizations */
+  
+  /* Container responsive spacing */
   @media (min-width: 1024px) {
-    .container {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
+    .container { padding-left: 2rem; padding-right: 2rem; }
   }
   
   @media (min-width: 1280px) {
-    .container {
-      padding-left: 3rem;
-      padding-right: 3rem;
-    }
+    .container { padding-left: 3rem; padding-right: 3rem; }
   }
   
   @media (min-width: 1536px) {
-    .container {
-      padding-left: 4rem;
-      padding-right: 4rem;
-    }
+    .container { padding-left: 4rem; padding-right: 4rem; }
   }
 }
 

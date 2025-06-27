@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 // import { Inter, Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
+import { ErrorBoundary } from '@/components/error/ErrorBoundary'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 
@@ -155,20 +156,22 @@ export default function RootLayout({
         className="font-sans antialiased bg-black text-white selection:bg-purple-500/30 selection:text-purple-200"
         suppressHydrationWarning
       >
-        <Providers>
-          {/* Skip to main content for accessibility */}
-          <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-purple-600 text-white px-4 py-2 rounded-md z-50">
-            メインコンテンツへスキップ
-          </a>
-          
-          <main id="main-content" className="relative min-h-screen">
-            {children}
-          </main>
-          
-          {/* Performance monitoring */}
-          <SpeedInsights />
-          <Analytics />
-        </Providers>
+        <ErrorBoundary>
+          <Providers>
+            {/* Skip to main content for accessibility */}
+            <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-purple-600 text-white px-4 py-2 rounded-md z-50">
+              メインコンテンツへスキップ
+            </a>
+            
+            <main id="main-content" className="relative min-h-screen">
+              {children}
+            </main>
+            
+            {/* Performance monitoring */}
+            <SpeedInsights />
+            <Analytics />
+          </Providers>
+        </ErrorBoundary>
       </body>
     </html>
   )
