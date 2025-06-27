@@ -24,6 +24,7 @@ const nextConfig = {
   // 実験的機能（最小限に設定）
   experimental: {
     serverComponentsExternalPackages: ['@prisma/client'],
+    optimizePackageImports: ['framer-motion', 'lucide-react'],
   },
   
   // バンドル最適化

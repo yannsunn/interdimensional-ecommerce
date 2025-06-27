@@ -1,21 +1,16 @@
-import { DefaultSession } from 'next-auth'
-
+// TypeScript module declarations for next-auth
 declare module 'next-auth' {
-  interface User {
-    role?: string
-  }
-
-  interface Session {
-    user: {
-      id: string
-      role: string
-    } & DefaultSession['user']
-  }
+  export * from 'next-auth'
 }
 
-declare module 'next-auth/jwt' {
-  interface JWT {
-    id: string
-    role: string
-  }
+declare module 'next-auth/react' {
+  export * from 'next-auth/react'
+}
+
+declare module 'next-auth/providers/credentials' {
+  export * from 'next-auth/providers/credentials'
+}
+
+declare module 'framer-motion' {
+  export * from 'framer-motion'
 }
