@@ -18,10 +18,13 @@ export function HeroSection() {
           {/* レスポンシブグリッドレイアウト */}
           <div className={cn(layout.grid.cols2, 'gap-8 md:gap-12 lg:gap-20 items-center')}>
             
+            {/* ヒーロー画像 - 最背面レイヤー */}
+            <HeroImage />
+            
             {/* ヒーローコンテンツ - 前面レイヤー */}
             <div className="text-center lg:text-left space-y-6 md:space-y-8 order-2 lg:order-1 relative z-50">
               {/* 半透明背景で可読性確保 */}
-              <div className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-3xl -z-10" />
+              <div className="absolute inset-0 bg-black/30 backdrop-blur-sm rounded-3xl -z-10" />
               
               {/* メインタイトル */}
               <TitleSection />
@@ -35,9 +38,6 @@ export function HeroSection() {
               {/* CTAボタン */}
               <CTAButtons />
             </div>
-            
-            {/* ヒーロー画像 - 最背面レイヤー */}
-            <HeroImage />
             
           </div>
         </div>
@@ -218,50 +218,50 @@ function CTAButtons() {
  */
 function HeroImage() {
   return (
-    <div className="order-1 lg:order-2 w-full flex justify-center relative z-0">
+    <div className="order-1 lg:order-2 w-full flex justify-center relative -z-10">
       <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
         {/* 多層背景エフェクト - 最背面 */}
-        <div className="absolute -inset-8 md:-inset-12 lg:-inset-16">
+        <div className="absolute -inset-8 md:-inset-12 lg:-inset-16 -z-20">
           <div className={cn(
             'absolute inset-0',
             'bg-gradient-to-r', gradients.glow,
             'rounded-full', effects.blur['3xl'],
-            'opacity-30', animations.pulse
+            'opacity-20', animations.pulse
           )} />
           <div className={cn(
             'absolute inset-0',
-            'bg-gradient-to-br from-yellow-400/10 via-transparent to-blue-500/10',
+            'bg-gradient-to-br from-yellow-400/8 via-transparent to-blue-500/8',
             'rounded-full', effects.blur['2xl'],
-            'opacity-20'
+            'opacity-15'
           )} />
           <div
             className={cn(
               'absolute inset-0',
-              'bg-gradient-to-tl from-green-400/5 via-transparent to-purple-400/5',
+              'bg-gradient-to-tl from-green-400/3 via-transparent to-purple-400/3',
               'rounded-full', effects.blur.xl,
-              'opacity-15', animations.pulse
+              'opacity-10', animations.pulse
             )}
             style={{ animationDelay: '1s' }}
           />
         </div>
         
         {/* プレミアム画像コンテナ - 最背面 */}
-        <div className="relative aspect-square w-full group">
+        <div className="relative aspect-square w-full group -z-10">
           <div className={cn(
             'absolute inset-0',
-            'bg-gradient-to-br from-white/2 to-white/5',
+            'bg-gradient-to-br from-white/1 to-white/3',
             'rounded-3xl backdrop-blur-sm',
-            'border border-white/5',
+            'border border-white/3',
             'shadow-lg'
           )} />
-          <div className="relative w-full h-full rounded-3xl overflow-hidden opacity-90">
+          <div className="relative w-full h-full rounded-3xl overflow-hidden opacity-70">
             <Image
               src="/images/hero-main.jpg"
               alt="異次元通販 - 宇宙の叡智"
               fill
               className={cn(
                 'object-contain filter',
-                'group-hover:opacity-50',
+                'group-hover:opacity-40',
                 animations.transition.ultra
               )}
               priority
@@ -271,9 +271,9 @@ function HeroImage() {
         </div>
         
         {/* フローティングオーブ - 最背面 */}
-        <FloatingOrb className="-top-4 -right-4 hidden lg:block" size="lg" color="from-yellow-400/15 to-orange-500/15" />
-        <FloatingOrb className="-bottom-8 -left-8 hidden lg:block" size="md" color="from-cyan-400/15 to-blue-500/15" delay="2s" />
-        <FloatingOrb className="top-1/2 -right-8 hidden lg:block" size="sm" color="from-pink-400/15 to-purple-500/15" delay="3s" />
+        <FloatingOrb className="-top-4 -right-4 hidden lg:block -z-30" size="lg" color="from-yellow-400/10 to-orange-500/10" />
+        <FloatingOrb className="-bottom-8 -left-8 hidden lg:block -z-30" size="md" color="from-cyan-400/10 to-blue-500/10" delay="2s" />
+        <FloatingOrb className="top-1/2 -right-8 hidden lg:block -z-30" size="sm" color="from-pink-400/10 to-purple-500/10" delay="3s" />
       </div>
     </div>
   )

@@ -10,7 +10,7 @@
  * - Prepared statement validation
  */
 
-import { Prisma } from '@prisma/client'
+import { Prisma, PrismaClient } from '@prisma/client'
 
 // === Configuration ===
 
@@ -182,7 +182,20 @@ export class SafeQueryBuilder {
       }
     }
 
-    return detectSQLInjection(queryString)
+    const analysis = detectSQLInjection(queryString)
+    
+    // Check complexity against configured limit
+    if (analysis.complexity > this.options.maxComplexity) {
+      analysis.isSafe = false
+      analysis.threats.push(`Query complexity (${analysis.complexity}) exceeds limit (${this.options.maxComplexity})`)
+    }
+    
+    // Log queries if enabled
+    if (this.options.logQueries) {
+      console.log('Query Analysis:', { query: queryString, analysis })
+    }
+
+    return analysis
   }
 
   buildWhereClause(
@@ -284,7 +297,7 @@ export class SafeQueryBuilder {
       const sanitizedObject: Record<string, any> = {}
       
       for (const [operator, operatorValue] of Object.entries(value)) {
-        if (!SQL_SECURITY_CONFIG.allowedOperators.includes(operator)) {
+        if (!SQL_SECURITY_CONFIG.allowedOperators.includes(operator as any)) {
           throw new Error(`Operator '${operator}' is not allowed`)
         }
         
@@ -300,7 +313,7 @@ export class SafeQueryBuilder {
 
 // === Prisma Extensions ===
 
-export function createSafePrismaClient<T extends Prisma.PrismaClient>(prisma: T) {
+export function createSafePrismaClient<T extends PrismaClient>(prisma: T) {
   const queryBuilder = new SafeQueryBuilder()
 
   return {

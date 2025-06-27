@@ -167,7 +167,7 @@ export const securitySchemas = {
       line2: z.string().max(100).optional(),
       city: z.string().min(1).max(50),
       postalCode: z.string().regex(/^\d{3}-?\d{4}$/, '無効な郵便番号です'),
-      country: z.enum(['JP'], '日本のみ対応しています')
+      country: z.enum(['JP'], { message: '日本のみ対応しています' })
     }),
     paymentMethod: z.enum(['card', 'bank_transfer', 'cod'])
   })
@@ -209,9 +209,7 @@ export function sanitizeHtml(html: string): string {
     ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'ul', 'ol', 'li'],
     ALLOWED_ATTR: ['class'],
     ALLOW_DATA_ATTR: false,
-    FORBID_SCRIPT: true,
-    FORBID_TAGS: ['script', 'object', 'embed', 'link', 'style', 'iframe'],
-    STRIP_COMMENTS: true
+    FORBID_TAGS: ['script', 'object', 'embed', 'link', 'style', 'iframe']
   })
 }
 

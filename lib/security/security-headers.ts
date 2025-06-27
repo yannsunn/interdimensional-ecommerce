@@ -174,11 +174,12 @@ export class SecurityHeadersManager {
 
     // Content Security Policy
     if (this.config.csp.enabled) {
+      const cspOptions: { nonce?: string; reportUri?: string } = {}
+      if (nonce) cspOptions.nonce = nonce
+      if (this.config.csp.reportUri) cspOptions.reportUri = this.config.csp.reportUri
+      
       headers[this.config.csp.reportOnly ? 'Content-Security-Policy-Report-Only' : 'Content-Security-Policy'] = 
-        this.buildCSPHeader(this.config.csp.directives, {
-          nonce,
-          reportUri: this.config.csp.reportUri
-        })
+        this.buildCSPHeader(this.config.csp.directives, cspOptions)
     }
 
     // HTTP Strict Transport Security
@@ -298,12 +299,18 @@ export class SecurityHeadersManager {
   }
 
   addCSPDirective(directive: keyof CSPDirectives, values: string[]): void {
+    // Only allow string array directives
+    if (directive === 'upgrade-insecure-requests' || directive === 'block-all-mixed-content') {
+      console.warn(`Cannot add string values to boolean directive: ${directive}`)
+      return
+    }
+    
     if (!this.config.csp.directives[directive]) {
-      this.config.csp.directives[directive] = []
+      (this.config.csp.directives as any)[directive] = []
     }
     
     const currentValues = this.config.csp.directives[directive] as string[]
-    this.config.csp.directives[directive] = [...new Set([...currentValues, ...values])]
+    (this.config.csp.directives as any)[directive] = [...new Set([...currentValues, ...values])]
   }
 
   removeCSPDirective(directive: keyof CSPDirectives): void {
@@ -472,15 +479,15 @@ export function analyzeSecurityHeaders(headers: Record<string, string>): Securit
     score += 20
     const csp = headers['Content-Security-Policy'] || headers['Content-Security-Policy-Report-Only']
     
-    if (csp.includes("'unsafe-eval'")) {
+    if (csp && csp.includes("'unsafe-eval'")) {
       warnings.push("CSP allows 'unsafe-eval' which can be dangerous")
     }
     
-    if (csp.includes("'unsafe-inline'")) {
+    if (csp && csp.includes("'unsafe-inline'")) {
       warnings.push("CSP allows 'unsafe-inline' which reduces XSS protection")
     }
     
-    if (!csp.includes('upgrade-insecure-requests')) {
+    if (csp && !csp.includes('upgrade-insecure-requests')) {
       recommendations.push('Add upgrade-insecure-requests to CSP')
     }
   } else {

@@ -142,7 +142,6 @@ export function validateOrigin(request: NextRequest): boolean {
 
   // Same-origin check
   if (origin) {
-    const originUrl = new URL(origin)
     const expectedOrigin = `${request.nextUrl.protocol}//${host}`
     
     if (origin !== expectedOrigin) {
@@ -280,7 +279,7 @@ export function useCSRFToken() {
 
     // Try to get from cookie (for client-side access)
     const cookieMatch = document.cookie.match(new RegExp(`${CSRF_CONFIG.cookieName}=([^;]+)`))
-    if (cookieMatch) {
+    if (cookieMatch && cookieMatch[1]) {
       const [tokenValue] = cookieMatch[1].split('.')
       return tokenValue || null
     }

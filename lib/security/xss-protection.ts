@@ -152,14 +152,13 @@ export class UltraSanitizer {
     const { allowedTags, allowedAttributes, strict = false } = options || {}
 
     const config = {
-      ...this.config,
-      ...(allowedTags && { ALLOWED_TAGS: allowedTags }),
-      ...(allowedAttributes && { ALLOWED_ATTR: allowedAttributes }),
-      ...(strict && {
-        ALLOWED_TAGS: ['p', 'br', 'strong', 'em'],
-        ALLOWED_ATTR: [],
-        KEEP_CONTENT: true
-      })
+      ALLOWED_TAGS: allowedTags || (strict ? ['p', 'br', 'strong', 'em'] : [...this.config.ALLOWED_TAGS]),
+      ALLOWED_ATTR: allowedAttributes || (strict ? [] : [...this.config.ALLOWED_ATTR]),
+      ALLOWED_URI_REGEXP: this.config.ALLOWED_URI_REGEXP,
+      FORBID_TAGS: [...this.config.FORBID_TAGS],
+      FORBID_ATTR: [...this.config.FORBID_ATTR],
+      ALLOW_DATA_ATTR: this.config.ALLOW_DATA_ATTR,
+      KEEP_CONTENT: strict ? true : this.config.KEEP_CONTENT
     }
 
     try {
@@ -288,7 +287,7 @@ export class CSPManager {
     reportUri?: string
     reportOnly?: boolean
   }): string {
-    const { nonce, reportUri, reportOnly = false } = options || {}
+    const { nonce, reportUri } = options || {}
     const cspDirectives: string[] = []
 
     // Build directive strings
@@ -320,11 +319,10 @@ export class CSPManager {
       cspDirectives.push(`report-uri ${reportUri}`)
     }
 
-    const headerName = reportOnly ? 'Content-Security-Policy-Report-Only' : 'Content-Security-Policy'
     return cspDirectives.join('; ')
   }
 
-  getStrictCSP(nonce?: string): CSPDirectives {
+  getStrictCSP(): CSPDirectives {
     return {
       'default-src': ["'none'"],
       'script-src': ["'self'", "'unsafe-inline'"], // Will add nonce in buildCSPHeader
@@ -425,7 +423,7 @@ export function createXSSProtectionMiddleware(options?: {
   reportUri?: string
   reportOnly?: boolean
 }) {
-  return (request: Request): Record<string, string> => {
+  return (): Record<string, string> => {
     const nonce = cspManager.generateNonce()
     const headers: Record<string, string> = {}
 
@@ -441,8 +439,8 @@ export function createXSSProtectionMiddleware(options?: {
         options.csp,
         {
           nonce,
-          reportUri: options.reportUri,
-          reportOnly: options.reportOnly
+          ...(options.reportUri && { reportUri: options.reportUri }),
+          ...(options.reportOnly !== undefined && { reportOnly: options.reportOnly })
         }
       )
     }

@@ -164,11 +164,12 @@ export class AdvancedRateLimit {
     }
 
     // Add current attempt
+    const userAgent = request.headers.get('user-agent')
     const attempt: AuthAttempt = {
       ip: getClientIP(request),
       timestamp: now,
       success: false, // Will be updated after auth
-      userAgent: request.headers.get('user-agent') || undefined
+      ...(userAgent && { userAgent })
     }
 
     entry.attempts.push(attempt)
