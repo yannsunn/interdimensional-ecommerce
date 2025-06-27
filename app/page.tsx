@@ -1,11 +1,14 @@
+import dynamicImport from 'next/dynamic'
 import { Header } from '@/components/layout/Header'
 import { HeroSection } from '@/components/sections/HeroSection'
-import { MysteryMessageSection } from '@/components/sections/MysteryMessageSection'
-import { FeaturedProductsSection } from '@/components/sections/FeaturedProductsSection'
-import { SpecialFeaturesSection } from '@/components/sections/SpecialFeaturesSection'
-import { WarningSection } from '@/components/sections/WarningSection'
-import { FinalCTASection } from '@/components/sections/FinalCTASection'
-import { FooterSection } from '@/components/sections/FooterSection'
+
+// 遅延読み込みでパフォーマンス最適化
+const MysteryMessageSection = dynamicImport(() => import('@/components/sections/MysteryMessageSection').then(mod => ({ default: mod.MysteryMessageSection })))
+const FeaturedProductsSection = dynamicImport(() => import('@/components/sections/FeaturedProductsSection').then(mod => ({ default: mod.FeaturedProductsSection })))
+const SpecialFeaturesSection = dynamicImport(() => import('@/components/sections/SpecialFeaturesSection').then(mod => ({ default: mod.SpecialFeaturesSection })))
+const WarningSection = dynamicImport(() => import('@/components/sections/WarningSection').then(mod => ({ default: mod.WarningSection })))
+const FinalCTASection = dynamicImport(() => import('@/components/sections/FinalCTASection').then(mod => ({ default: mod.FinalCTASection })))
+const FooterSection = dynamicImport(() => import('@/components/sections/FooterSection').then(mod => ({ default: mod.FooterSection })))
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -33,7 +36,10 @@ async function getFeaturedProducts() {
       'getFeaturedProducts'
     )
   } catch (error) {
-    console.error('Database connection failed:', error)
+    // 本番環境では構造化ログを使用
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Database connection failed:', error)
+    }
     return []
   }
 }

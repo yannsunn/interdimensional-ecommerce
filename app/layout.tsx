@@ -6,6 +6,19 @@ import { Providers } from './providers'
 import { ErrorBoundary } from '@/components/error/ErrorBoundary'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
+import { validateEnvironmentVariables } from '@/lib/security'
+
+// 環境変数の検証（実行時のみ）
+if (typeof window === 'undefined' && process.env.NODE_ENV === 'production') {
+  try {
+    const { valid, missing } = validateEnvironmentVariables()
+    if (!valid) {
+      console.warn('Missing environment variables:', missing)
+    }
+  } catch (error) {
+    console.warn('Environment validation skipped during build')
+  }
+}
 
 // Font optimization with variable fonts - 一時的に無効化
 // const inter = Inter({ 

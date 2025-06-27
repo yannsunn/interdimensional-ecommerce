@@ -33,13 +33,8 @@ export function middleware(request: NextRequest) {
   // キャッシュ戦略
   const pathname = request.nextUrl.pathname
   
-  // 静的アセットの長期キャッシュ
+  // 静的アセットの長期キャッシュ（MIMEタイプ設定なし）
   if (pathname.startsWith('/_next/static')) {
-    if (pathname.includes('.css')) {
-      response.headers.set('Content-Type', 'text/css; charset=utf-8')
-    } else if (pathname.includes('.js')) {
-      response.headers.set('Content-Type', 'application/javascript; charset=utf-8')
-    }
     response.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
   } else if (pathname.startsWith('/images')) {
     response.headers.set('Cache-Control', 'public, max-age=31536000, immutable')

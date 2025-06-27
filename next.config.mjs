@@ -6,14 +6,19 @@ const nextConfig = {
   swcMinify: true,
   compress: true,
   
-  // 画像最適化（超高速化）
+  // 画像最適化（セキュア高速化）
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31536000, // 1年
-    dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    domains: ['localhost'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.vercel.app',
+      },
+    ],
   },
   
   // 実験的機能（エッジ最適化）
@@ -45,7 +50,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/:path*',
+        source: '/((?!_next/static).*)',
         headers: [
           {
             key: 'X-DNS-Prefetch-Control',
@@ -54,10 +59,6 @@ const nextConfig = {
           {
             key: 'Strict-Transport-Security',
             value: 'max-age=63072000; includeSubDomains; preload'
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
           },
           {
             key: 'X-Frame-Options',
@@ -92,10 +93,6 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable'
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
           }
         ],
       },
