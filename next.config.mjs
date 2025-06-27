@@ -21,23 +21,9 @@ const nextConfig = {
     ],
   },
   
-  // 実験的機能（エッジ最適化）
+  // 実験的機能（最小限に設定）
   experimental: {
     serverComponentsExternalPackages: ['@prisma/client'],
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
-    serverActions: {
-      bodySizeLimit: '2mb',
-    },
-    optimizeCss: false,
-    optimizeServerReact: true,
   },
   
   // バンドル最適化
@@ -141,11 +127,6 @@ const nextConfig = {
       }
     }
     
-    // SVG最適化
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack'],
-    })
     
     return config
   },

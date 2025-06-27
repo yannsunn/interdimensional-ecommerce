@@ -16,9 +16,16 @@ export function middleware(request: NextRequest) {
     })
   }
   
+  const pathname = request.nextUrl.pathname
+  
+  // 静的アセットの場合は処理をスキップ
+  if (pathname.startsWith('/_next/static') || pathname.startsWith('/_next/css')) {
+    return NextResponse.next()
+  }
+  
   const response = NextResponse.next()
   
-  // Security headers
+  // Security headers (静的ファイル以外)
   Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
     response.headers.set(key, value)
   })
@@ -30,16 +37,6 @@ export function middleware(request: NextRequest) {
   // Edge Runtime optimization
   response.headers.set('X-Powered-By', 'Ultra-Edge-Runtime')
   
-  // キャッシュ戦略
-  const pathname = request.nextUrl.pathname
-  
-  // 静的アセットの長期キャッシュ（MIMEタイプ設定なし）
-  if (pathname.startsWith('/_next/static')) {
-    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
-  } else if (pathname.startsWith('/images')) {
-    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
-  }
-  
   // APIルートのキャッシュ
   if (pathname.startsWith('/api/products')) {
     response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300')
@@ -49,8 +46,7 @@ export function middleware(request: NextRequest) {
   const country = request.geo?.country || 'US'
   response.headers.set('X-User-Country', country)
   
-  // パフォーマンスヒント
-  response.headers.set('Link', '</_next/static/css>; rel=preload; as=style')
+  // パフォーマンスヒント - CSS preload removed to avoid directory reference
   
   return response
 }
@@ -59,13 +55,10 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * - images (public images)
      * - robots.txt, sitemap.xml (SEO files)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|images|robots.txt|sitemap.xml).*)',
+    '/((?!_next/image|favicon.ico|robots.txt|sitemap.xml).*)',
   ],
 }
