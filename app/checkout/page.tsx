@@ -3,11 +3,11 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import { Portal } from '@/components/ultra-dimensional/Portal'
-import { GlowingText } from '@/components/ultra-dimensional/GlowingText'
-import { Header } from '@/components/layout/Header'
-import { useCartStore } from '@/store/cartStore'
-import { formatPrice } from '@/lib/utils'
+import { Portal } from '../../components/ultra-dimensional/Portal'
+import { GlowingText } from '../../components/ultra-dimensional/GlowingText'
+import { Header } from '../../components/layout/Header'
+import { useCartStore } from '../../store/cartStore'
+import { formatPrice } from '../../lib/utils'
 import { CreditCard, Lock, Zap } from 'lucide-react'
 
 // 静的生成をスキップし、動的レンダリング強制

@@ -1,8 +1,8 @@
-import { ProductCard } from '@/components/shop/ProductCard'
-import { Portal } from '@/components/ultra-dimensional/Portal'
-import { OptimizedFloatingElements } from '@/components/ultra-dimensional/OptimizedFloatingElements'
-import { GlowingText } from '@/components/ultra-dimensional/GlowingText'
-import { Header } from '@/components/layout/Header'
+import { ProductCard } from '../components/shop/ProductCard'
+import { Portal } from '../components/ultra-dimensional/Portal'
+import { OptimizedFloatingElements } from '../components/ultra-dimensional/OptimizedFloatingElements'
+import { GlowingText } from '../components/ultra-dimensional/GlowingText'
+import { Header } from '../components/layout/Header'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -13,7 +13,7 @@ async function getProducts() {
   }
   
   try {
-    const { prisma } = await import('@/lib/db')
+    const { prisma } = await import('../lib/db')
     return await prisma.product.findMany({
       orderBy: [
         { featured: 'desc' },
@@ -33,7 +33,7 @@ async function getCategories() {
   }
   
   try {
-    const { prisma } = await import('@/lib/db')
+    const { prisma } = await import('../lib/db')
     const categories = await prisma.product.groupBy({
       by: ['category'],
       _count: { category: true },

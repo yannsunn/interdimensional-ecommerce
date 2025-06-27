@@ -108,8 +108,20 @@ const nextConfig = {
     ]
   },
   
-  // Webpackカスタマイズ
+  // Webpackカスタマイズ（エイリアス強化）
   webpack: (config, { isServer, dev }) => {
+    // パスエイリアスの明示的設定
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': '.',
+      '@/components': './components',
+      '@/lib': './lib',
+      '@/store': './store',
+      '@/types': './types',
+      '@/hooks': './hooks',
+      '@/app': './app'
+    }
+    
     // バンドル分析
     if (!dev && !isServer) {
       config.optimization.splitChunks.cacheGroups = {
@@ -127,7 +139,6 @@ const nextConfig = {
         },
       }
     }
-    
     
     return config
   },

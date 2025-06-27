@@ -36,8 +36,8 @@ temp/
 # Development tools
 .eslintrc*
 .prettierrc*
-tsconfig.json
-tailwind.config.ts
+# tsconfig.json - REQUIRED for path resolution
+# tailwind.config.ts - REQUIRED for styles
 
 # Build info
 *.tsbuildinfo

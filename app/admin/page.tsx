@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/db'
-import { GlowingText } from '@/components/ultra-dimensional/GlowingText'
+import { prisma } from '../../lib/db'
+import { GlowingText } from '../../components/ultra-dimensional/GlowingText'
 import { 
   Package, 
   ShoppingCart, 
@@ -10,7 +10,7 @@ import {
   AlertTriangle,
   Crown
 } from 'lucide-react'
-import { formatPrice } from '@/lib/utils'
+import { formatPrice } from '../../lib/utils'
 
 async function getDashboardData() {
   const [

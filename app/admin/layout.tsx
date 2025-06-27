@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
-import { getSession } from '@/lib/auth'
-import { AdminSidebar } from '@/components/admin/AdminSidebar'
-import { Portal } from '@/components/ultra-dimensional/Portal'
+import { getSession } from '../../lib/auth'
+import { AdminSidebar } from '../../components/admin/AdminSidebar'
+import { Portal } from '../../components/ultra-dimensional/Portal'
 
 export default async function AdminLayout({
   children,

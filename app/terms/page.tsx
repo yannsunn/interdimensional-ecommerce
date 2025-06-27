@@ -2,10 +2,10 @@
  * ⚖️ Terms of Service - 利用規約
  */
 
-import { cn } from '@/lib/design-system'
-import { primary } from '@/lib/design-system/gradients'
-import { h1, h4, bodyLg, bodyMd, bodySm } from '@/lib/design-system/typography'
-import { sectionLg, containerMd } from '@/lib/design-system/layout'
+import { cn } from '../lib/design-system'
+import { primary } from '../lib/design-system/gradients'
+import { h1, h4, bodyLg, bodyMd, bodySm } from '../lib/design-system/typography'
+import { sectionLg, containerMd } from '../lib/design-system/layout'
 
 export const metadata = {
   title: '利用規約 | 異次元通販',
