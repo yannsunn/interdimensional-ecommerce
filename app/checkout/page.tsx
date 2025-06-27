@@ -10,9 +10,12 @@ import { useCartStore } from '@/store/cartStore'
 import { formatPrice } from '@/lib/utils'
 import { CreditCard, Lock, Zap } from 'lucide-react'
 
+// 静的生成をスキップし、動的レンダリング強制
+export const dynamic = 'force-dynamic'
+
 export default function CheckoutPage() {
   const router = useRouter()
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const { items, getComputedValues } = useCartStore()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
@@ -60,6 +63,20 @@ export default function CheckoutPage() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  // セッション読み込み中またはログインしていない場合
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400 mx-auto mb-4"></div>
+          <GlowingText className="text-xl">
+            異次元からの認証情報を確認中...
+          </GlowingText>
+        </div>
+      </div>
+    )
   }
 
   if (!session) {
