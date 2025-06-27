@@ -49,3 +49,5 @@ export function WarningSection() {
     </section>
   )
 }
+// デフォルトエクスポートを追加
+export default WarningSection

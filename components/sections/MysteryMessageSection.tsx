@@ -59,3 +59,6 @@ export function MysteryMessageSection() {
     </section>
   )
 }
+
+// デフォルトエクスポートを追加
+export default MysteryMessageSection

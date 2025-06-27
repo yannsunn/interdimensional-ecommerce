@@ -210,3 +210,6 @@ function ViewAllProductsCTA() {
     </div>
   )
 }
+
+// デフォルトエクスポートを追加
+export default FeaturedProductsSection

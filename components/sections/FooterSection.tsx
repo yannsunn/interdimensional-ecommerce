@@ -133,3 +133,5 @@ function Copyright() {
     </div>
   )
 }
+// デフォルトエクスポートを追加
+export default FooterSection

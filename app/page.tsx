@@ -2,13 +2,25 @@ import dynamicImport from 'next/dynamic'
 import { Header } from '@/components/layout/Header'
 import { HeroSection } from '@/components/sections/HeroSection'
 
-// 遅延読み込みでパフォーマンス最適化
-const MysteryMessageSection = dynamicImport(() => import('@/components/sections/MysteryMessageSection').then(mod => ({ default: mod.MysteryMessageSection })))
-const FeaturedProductsSection = dynamicImport(() => import('@/components/sections/FeaturedProductsSection').then(mod => ({ default: mod.FeaturedProductsSection })))
-const SpecialFeaturesSection = dynamicImport(() => import('@/components/sections/SpecialFeaturesSection').then(mod => ({ default: mod.SpecialFeaturesSection })))
-const WarningSection = dynamicImport(() => import('@/components/sections/WarningSection').then(mod => ({ default: mod.WarningSection })))
-const FinalCTASection = dynamicImport(() => import('@/components/sections/FinalCTASection').then(mod => ({ default: mod.FinalCTASection })))
-const FooterSection = dynamicImport(() => import('@/components/sections/FooterSection').then(mod => ({ default: mod.FooterSection })))
+// 遅延読み込みでパフォーマンス最適化 - 名前付きエクスポートに対応
+const MysteryMessageSection = dynamicImport(() => import('@/components/sections/MysteryMessageSection'), {
+  loading: () => <div className="h-40 animate-pulse bg-purple-900/20" />
+})
+const FeaturedProductsSection = dynamicImport(() => import('@/components/sections/FeaturedProductsSection'), {
+  loading: () => <div className="h-96 animate-pulse bg-purple-900/20" />
+})
+const SpecialFeaturesSection = dynamicImport(() => import('@/components/sections/SpecialFeaturesSection'), {
+  loading: () => <div className="h-80 animate-pulse bg-purple-900/20" />
+})
+const WarningSection = dynamicImport(() => import('@/components/sections/WarningSection'), {
+  loading: () => <div className="h-60 animate-pulse bg-red-900/20" />
+})
+const FinalCTASection = dynamicImport(() => import('@/components/sections/FinalCTASection'), {
+  loading: () => <div className="h-80 animate-pulse bg-purple-900/20" />
+})
+const FooterSection = dynamicImport(() => import('@/components/sections/FooterSection'), {
+  loading: () => <div className="h-60 animate-pulse bg-gray-900/20" />
+})
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'

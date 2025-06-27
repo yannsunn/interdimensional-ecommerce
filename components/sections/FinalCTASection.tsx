@@ -158,3 +158,5 @@ function GiftOffer() {
     </div>
   )
 }
+// デフォルトエクスポートを追加
+export default FinalCTASection

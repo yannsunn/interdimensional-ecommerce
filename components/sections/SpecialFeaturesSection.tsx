@@ -229,3 +229,5 @@ function TrustIndicators() {
     </div>
   )
 }
+// デフォルトエクスポートを追加
+export default SpecialFeaturesSection
