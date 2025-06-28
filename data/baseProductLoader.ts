@@ -31,19 +31,19 @@ export function convertBaseProductToNewProduct(baseProduct: BaseProduct) {
     id: baseProduct.id,
     name: baseProduct.title,
     price: baseProduct.price,
-    originalPrice: baseProduct.originalPrice || null,
+    originalPrice: baseProduct.originalPrice,
     description: baseProduct.description,
     images: [baseProduct.imageUrl],
     mysteryLevel: baseProduct.mysteryLevel,
     stock: baseProduct.stock,
     category: baseProduct.category,
-    featured: baseProduct.featured || false,
+    featured: baseProduct.featured,
     slug: baseProduct.slug,
-    effects: baseProduct.effects,
-    testimonials: [], // BASE商品には口コミがないため空配列
-    wholesalePrice: Math.floor(baseProduct.price * 0.5), // 仮の下代価格
+    wholesalePrice: Math.floor(baseProduct.price * 0.5),
     isLimited: baseProduct.stock < 20,
     limitedQuantity: baseProduct.stock < 20 ? baseProduct.stock : undefined,
+    effects: baseProduct.effects,
+    testimonials: []
   }
 }
 

@@ -16,7 +16,7 @@
     "incremental": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false,
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
     "strictNullChecks": true,

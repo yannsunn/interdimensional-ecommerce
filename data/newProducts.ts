@@ -14,6 +14,8 @@ export interface NewProduct {
   wholesalePrice: number
   isLimited?: boolean
   limitedQuantity?: number
+  effects?: string[]
+  testimonials?: string[]
 }
 
 export const newProducts: NewProduct[] = [
@@ -32,7 +34,9 @@ export const newProducts: NewProduct[] = [
     slug: 'turquoise-victory',
     wholesalePrice: 1100,
     isLimited: true,
-    limitedQuantity: 2
+    limitedQuantity: 2,
+    effects: ['勝負運向上', 'エネルギー浄化', '精神安定'],
+    testimonials: ['勝負に勝てるようになった', '気持ちが落ち着く']
   },
   {
     id: 'tigereye-victory',
