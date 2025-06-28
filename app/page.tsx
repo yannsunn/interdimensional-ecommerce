@@ -7,7 +7,7 @@ import { SpecialFeaturesSection } from '../components/sections/SpecialFeaturesSe
 import { WarningSection } from '../components/sections/WarningSection'
 import { FinalCTASection } from '../components/sections/FinalCTASection'
 import { FooterSection } from '../components/sections/FooterSection'
-import { getFeaturedProducts, getProductsByCategory, getAllCategories } from '../data/newProducts'
+import { getFeaturedProducts, getProductsByCategory } from '../data/newProducts'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
