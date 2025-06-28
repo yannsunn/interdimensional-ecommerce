@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ProductCard } from '../shop/ProductCard'
-import { Filter, Grid, List, SortAsc } from 'lucide-react'
+import { Filter, Grid, List } from 'lucide-react'
 
 interface Product {
   id: string
