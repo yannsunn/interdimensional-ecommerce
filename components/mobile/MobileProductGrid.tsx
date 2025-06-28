@@ -44,7 +44,7 @@ export function MobileProductGrid({
 
   // Get unique categories
   const categories = useMemo(() => {
-    const cats = Array.from(new Set(products.map(p => p.category).filter(Boolean)))
+    const cats = Array.from(new Set(products.map(p => p.category).filter((cat): cat is string => Boolean(cat))))
     return ['all', ...cats]
   }, [products])
 
