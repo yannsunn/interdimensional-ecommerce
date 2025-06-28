@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { createSelectors, withPerformanceMonitoring } from '@/lib/zustand-utils'
+import { createSelectors, withPerformanceMonitoring } from '../lib/zustand-utils'
 
 export interface CartItem {
   productId: string

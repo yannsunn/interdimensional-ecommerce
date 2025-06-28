@@ -2,8 +2,8 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react'
-import { useCartStore } from '@/store/cartStore'
-import { formatPrice } from '@/lib/utils'
+import { useCartStore } from '../../store/cartStore'
+import { formatPrice } from '../../lib/utils'
 import Link from 'next/link'
 
 export function CartDrawer() {

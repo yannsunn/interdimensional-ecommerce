@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { ApiResponse } from '@/types/core'
+import { ApiResponse } from '../types/core'
 
 // API共通レスポンス作成
 export function createApiResponse<T>(

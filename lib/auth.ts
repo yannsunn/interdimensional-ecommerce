@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' }
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         // Build-time or missing database handling
         if (!process.env.DATABASE_URL) {
           console.warn('⚠️ NextAuth: DATABASE_URL not set - authentication disabled')

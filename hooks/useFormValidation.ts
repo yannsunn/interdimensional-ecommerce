@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react'
-import { validateRequired, validateEmail, validatePassword } from '@/lib/type-utils'
+import { validateRequired, validateEmail, validatePassword } from '../lib/type-utils'
 
 // === Form Validation Types ===
 
