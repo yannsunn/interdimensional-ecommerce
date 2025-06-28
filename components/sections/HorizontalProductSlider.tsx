@@ -33,7 +33,6 @@ const HorizontalProductSlider = memo(function HorizontalProductSlider({ title, p
     if (!scrollContainerRef.current) return
 
     const visibleItems = Math.floor(scrollContainerRef.current.clientWidth / itemWidth)
-    const scrollAmount = itemWidth * visibleItems
 
     if (direction === 'prev') {
       const newIndex = Math.max(0, currentIndex - visibleItems)
@@ -86,11 +85,17 @@ const HorizontalProductSlider = memo(function HorizontalProductSlider({ title, p
   // タッチイベントハンドラー
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null)
-    setTouchStart(e.targetTouches[0].clientX)
+    const touch = e.targetTouches[0]
+    if (touch) {
+      setTouchStart(touch.clientX)
+    }
   }
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX)
+    const touch = e.targetTouches[0]
+    if (touch) {
+      setTouchEnd(touch.clientX)
+    }
   }
 
   const handleTouchEnd = () => {
@@ -280,26 +285,3 @@ const HorizontalProductSlider = memo(function HorizontalProductSlider({ title, p
 })
 
 export { HorizontalProductSlider }
-
-// CSS隠しスクロールバー用のスタイル
-const style = `
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-`
-
-if (typeof document !== 'undefined') {
-  const styleElement = document.createElement('style')
-  styleElement.textContent = style
-  document.head.appendChild(styleElement)
-}

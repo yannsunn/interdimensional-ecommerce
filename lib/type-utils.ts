@@ -1,5 +1,5 @@
 // Type utility functions for enhanced type safety
-import type { ProductId, UserId, OrderId } from '../types'
+import type { ProductId, UserId, OrderId } from '../types/core'
 
 // === Image Handling ===
 
