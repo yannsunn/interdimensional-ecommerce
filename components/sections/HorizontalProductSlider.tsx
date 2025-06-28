@@ -80,6 +80,7 @@ const HorizontalProductSlider = memo(function HorizontalProductSlider({ title, p
       
       return () => container.removeEventListener('scroll', updateScrollState)
     }
+    return undefined
   }, [])
 
   // タッチイベントハンドラー
