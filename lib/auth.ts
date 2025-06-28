@@ -1,4 +1,5 @@
 import { NextAuthOptions, getServerSession } from 'next-auth'
+import type { User } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { prisma } from './db'
@@ -26,7 +27,7 @@ export const authOptions: NextAuthOptions = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' }
       },
-      async authorize(credentials, req) {
+      async authorize(credentials, req): Promise<User | null> {
         // Build-time or missing database handling
         if (!process.env.DATABASE_URL) {
           console.warn('⚠️ NextAuth: DATABASE_URL not set - authentication disabled')
@@ -71,8 +72,7 @@ export const authOptions: NextAuthOptions = {
             id: user.id,
             email: user.email,
             name: user.name,
-            role: user.role,
-          }
+          } as User
         } catch (error) {
           console.error('NextAuth authorize error:', error)
           if (error instanceof Error) {
@@ -87,7 +87,21 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id
-        token.role = user.role || 'USER'
+        // roleは直接userから取得できないため、データベースから取得する必要がある
+        if (process.env.DATABASE_URL && user.email) {
+          try {
+            const dbUser = await prisma.user.findUnique({
+              where: { email: user.email },
+              select: { role: true }
+            })
+            token.role = dbUser?.role || 'USER'
+          } catch (error) {
+            console.error('Error fetching user role:', error)
+            token.role = 'USER'
+          }
+        } else {
+          token.role = 'USER'
+        }
       }
       return token
     },
