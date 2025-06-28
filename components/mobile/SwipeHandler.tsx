@@ -30,6 +30,8 @@ export function SwipeHandler({
 
     const handleTouchStart = (e: TouchEvent) => {
       const touch = e.touches[0]
+      if (!touch) return
+      
       touchStartRef.current = {
         x: touch.clientX,
         y: touch.clientY
@@ -40,6 +42,8 @@ export function SwipeHandler({
       if (!touchStartRef.current) return
 
       const touch = e.changedTouches[0]
+      if (!touch) return
+      
       const deltaX = touch.clientX - touchStartRef.current.x
       const deltaY = touch.clientY - touchStartRef.current.y
 
@@ -110,12 +114,16 @@ export function useSwipeGesture(
 
     const handleTouchStart = (e: TouchEvent) => {
       const touch = e.touches[0]
+      if (!touch) return
+      
       touchStartX = touch.clientX
       touchStartY = touch.clientY
     }
 
     const handleTouchEnd = (e: TouchEvent) => {
       const touch = e.changedTouches[0]
+      if (!touch) return
+      
       const deltaX = touch.clientX - touchStartX
       const deltaY = touch.clientY - touchStartY
 
