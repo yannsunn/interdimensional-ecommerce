@@ -2,314 +2,167 @@
  * 🌟 HeroSection - 異次元通販のヒーローセクション
  * 
  * メインビジュアルとCTAを含む最重要セクション
- * デザインシステムを活用し、パフォーマンスを最適化
+ * 画像を上部、テキストを下部に配置
  */
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { cn } from '@/lib/design-system'
-import { gradients, typography, animations, effects, layout } from '@/lib/design-system'
+
+// Simple cn utility for this component
+const cn = (...classes: (string | undefined | null | false)[]) => 
+  classes.filter(Boolean).join(' ')
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden min-h-screen">      
-      <div className={cn(layout.section.lg, 'relative min-h-screen flex items-center')}>
-        <div className={layout.container.lg}>
-          {/* レスポンシブグリッドレイアウト */}
-          <div className={cn(layout.grid.cols2, 'gap-8 md:gap-12 lg:gap-20 items-center')}>
-            
-            {/* ヒーロー画像 - 最背面レイヤー */}
-            <HeroImage />
-            
-            {/* ヒーローコンテンツ - 前面レイヤー */}
-            <div className="text-center lg:text-left space-y-6 md:space-y-8 order-2 lg:order-1 relative z-50">
-              {/* 半透明背景で可読性確保 */}
-              <div className="absolute inset-0 bg-black/50 backdrop-blur-md rounded-3xl -z-10" />
-              
-              {/* メインタイトル */}
-              <TitleSection />
-              
-              {/* プレミアムアラートバナー */}
-              <AlertBanner />
-              
-              {/* 説明文 */}
-              <DescriptionSection />
-              
-              {/* CTAボタン */}
-              <CTAButtons />
+    <section className="relative overflow-hidden">
+      {/* Hero Image Section - Top */}
+      <div className="relative w-full h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] bg-gradient-to-br from-purple-900/20 via-black to-pink-900/20">
+        {/* Background Effects */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-pink-600/10 animate-pulse" />
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/5 via-transparent to-blue-500/5" />
+        </div>
+        
+        {/* Main Hero Image */}
+        <div className="relative w-full h-full">
+          <Image
+            src="/images/hero-main.jpg"
+            alt="異次元通販 - 宇宙の叡智"
+            fill
+            className="object-contain object-center"
+            priority
+            sizes="100vw"
+            quality={90}
+          />
+          
+          {/* Gradient Overlay at bottom for smooth transition */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black via-black/80 to-transparent" />
+        </div>
+
+        {/* Floating Elements */}
+        <div className="absolute top-8 right-8 w-20 h-20 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 rounded-full blur-xl animate-bounce" />
+        <div className="absolute bottom-16 left-8 w-16 h-16 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-full blur-xl animate-pulse" />
+      </div>
+
+      {/* Text Content Section - Bottom */}
+      <div className="relative bg-black">
+        <div className="container mx-auto px-4 py-12 sm:py-16 md:py-20 lg:py-24">
+          <div className="max-w-4xl mx-auto text-center space-y-8 md:space-y-10">
+            {/* Title Section */}
+            <div className="space-y-4 md:space-y-6">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-cyan-400 leading-tight">
+                異次元通販
+              </h1>
+              <p className="text-lg sm:text-xl md:text-2xl text-gray-300 font-semibold">
+                〜 宇宙と古代の叡智があなたの運命を変える！ 〜
+              </p>
             </div>
-            
+
+            {/* Alert Banner */}
+            <div className="relative mx-auto max-w-2xl">
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl blur-lg opacity-50 animate-pulse" />
+              <div className="relative bg-gradient-to-r from-yellow-400 to-orange-500 text-black py-4 px-6 sm:py-5 sm:px-8 rounded-xl md:rounded-2xl font-bold shadow-2xl">
+                <div className="text-base sm:text-lg md:text-xl flex items-center justify-center gap-2">
+                  <span className="animate-pulse text-2xl">⚡</span>
+                  <span>緊急放送中！！本日限り、特別価格でご提供！！</span>
+                  <span className="animate-pulse text-2xl">⚡</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Description */}
+            <div className="space-y-6 md:space-y-8">
+              <p className="text-xl sm:text-2xl md:text-3xl text-gray-100 font-medium leading-relaxed">
+                量子レベルで人生を変える商品を異次元からお届け。
+              </p>
+              
+              {/* Feature Badges */}
+              <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+                <Badge icon="🐉" text="龍神の加護" gradient="from-yellow-400/20 to-orange-500/20" borderColor="border-yellow-400/30" textColor="text-yellow-300" />
+                <Badge icon="⚡" text="宇宙エネルギー" gradient="from-cyan-400/20 to-blue-500/20" borderColor="border-cyan-400/30" textColor="text-cyan-300" />
+                <Badge icon="🔮" text="古代の叡智" gradient="from-pink-400/20 to-purple-500/20" borderColor="border-pink-400/30" textColor="text-pink-300" />
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center pt-8">
+              <Link
+                href="#products"
+                className={cn(
+                  'group relative overflow-hidden',
+                  'bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-700',
+                  'hover:from-purple-700 hover:via-purple-800 hover:to-indigo-800',
+                  'text-white px-8 py-4 sm:px-10 sm:py-5 md:px-12 md:py-6',
+                  'rounded-xl md:rounded-2xl font-bold text-base sm:text-lg md:text-xl',
+                  'transition-all duration-300 shadow-2xl',
+                  'transform hover:scale-105 hover:-translate-y-1'
+                )}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative flex items-center justify-center gap-2">
+                  <span className="text-2xl">🔮</span>
+                  <span>運命の商品を見つける！</span>
+                  <span className="text-2xl">✨</span>
+                </span>
+              </Link>
+              
+              <Link
+                href="/products"
+                className={cn(
+                  'group relative overflow-hidden',
+                  'border-2 border-cyan-400',
+                  'bg-cyan-400/10 text-cyan-300',
+                  'hover:bg-cyan-400/20 hover:text-white hover:border-cyan-300',
+                  'px-8 py-4 sm:px-10 sm:py-5 md:px-12 md:py-6',
+                  'rounded-xl md:rounded-2xl font-bold text-base sm:text-lg md:text-xl',
+                  'transition-all duration-300 shadow-xl',
+                  'transform hover:scale-105 hover:-translate-y-1',
+                  'backdrop-blur-sm'
+                )}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative flex items-center justify-center gap-2">
+                  <span className="text-2xl">🌌</span>
+                  <span>全商品を見る</span>
+                  <span>→</span>
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
+
+        {/* Bottom Decoration */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
       </div>
     </section>
   )
 }
 
 /**
- * タイトルセクション
+ * Badge Component
  */
-function TitleSection() {
-  return (
-    <div className="space-y-4 md:space-y-6 relative">
-      <div className="relative">
-        <h1 className={cn(
-          typography.h1,
-          'text-transparent bg-clip-text bg-gradient-to-r',
-          gradients.primary,
-          'leading-tight tracking-tight'
-        )}>
-          異次元通販
-        </h1>
-        <div className={cn(
-          'absolute inset-0',
-          typography.h1,
-          'text-white opacity-20 blur-sm leading-tight tracking-tight'
-        )}>
-          異次元通販
-        </div>
-      </div>
-      
-      <p className={cn(
-        typography.body.lg,
-        'bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent',
-        'font-semibold leading-relaxed'
-      )}>
-        〜 宇宙と古代の叡智があなたの運命を変える！ 〜
-      </p>
-    </div>
-  )
+interface BadgeProps {
+  icon: string
+  text: string
+  gradient: string
+  borderColor: string
+  textColor: string
 }
 
-/**
- * アラートバナー
- */
-function AlertBanner() {
+function Badge({ icon, text, gradient, borderColor, textColor }: BadgeProps) {
   return (
-    <div className="relative group">
-      <div className={cn(
-        'absolute inset-0 bg-gradient-to-r',
-        gradients.dragon,
-        'rounded-2xl blur-lg opacity-75',
-        'group-hover:opacity-100',
-        animations.transition.all
-      )} />
-      <div className={cn(
-        'relative bg-gradient-to-r',
-        gradients.dragon,
-        'text-white py-3 px-6 sm:py-4 sm:px-8 md:py-5 md:px-10',
-        'rounded-xl md:rounded-2xl',
-        'border border-yellow-400/50',
-        effects.shadow['2xl'],
-        'backdrop-blur-sm'
-      )}>
-        <div className={cn(typography.body.md, 'font-bold leading-tight text-center')}>
-          <span className={animations.pulse}>⚡</span> 
-          {' '}緊急放送中！！本日限り、特別価格でご提供！！{' '}
-          <span className={animations.pulse}>⚡</span>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-/**
- * 説明セクション
- */
-function DescriptionSection() {
-  const badges = [
-    { icon: '🐉', text: '龍神の加護', gradient: 'dragon' },
-    { icon: '⚡', text: '宇宙エネルギー', gradient: 'quantum' },
-    { icon: '🔮', text: '古代の叡智', gradient: 'mystic' },
-  ] as const
-  
-  return (
-    <div className="space-y-4 md:space-y-6">
-      <p className={cn(
-        typography.body.xl,
-        'text-gray-100 leading-relaxed',
-        'max-w-3xl mx-auto lg:mx-0 font-medium'
-      )}>
-        量子レベルで人生を変える商品を異次元からお届け。
-      </p>
-      
-      <div className="flex flex-wrap justify-center lg:justify-start gap-2 md:gap-4">
-        {badges.map((badge) => (
-          <span
-            key={badge.text}
-            className={cn(
-              'inline-flex items-center px-4 py-2',
-              `bg-gradient-to-r ${
-                badge.gradient === 'dragon' ? 'from-yellow-400/20 to-orange-500/20 text-yellow-300 border-yellow-400/30' :
-                badge.gradient === 'quantum' ? 'from-cyan-400/20 to-blue-500/20 text-cyan-300 border-cyan-400/30' :
-                'from-pink-400/20 to-purple-500/20 text-pink-300 border-pink-400/30'
-              }`,
-              'font-bold text-sm md:text-base lg:text-lg',
-              'rounded-full border backdrop-blur-sm'
-            )}
-          >
-            {badge.icon} {badge.text}
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/**
- * CTAボタン
- */
-function CTAButtons() {
-  return (
-    <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center lg:justify-start pt-6">
-      <Link
-        href="#products"
-        className={cn(
-          'group relative overflow-hidden',
-          'bg-gradient-to-r', gradients.cosmic,
-          'hover:from-purple-700 hover:via-purple-800 hover:to-indigo-800',
-          'text-white px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 lg:px-12 lg:py-6',
-          'rounded-xl md:rounded-2xl font-bold',
-          typography.body.md,
-          animations.transition.slow,
-          effects.shadow['2xl'],
-          'transform', animations.hover.scale, animations.hover.lift
-        )}
-      >
-        <div className={cn(
-          'absolute inset-0',
-          'bg-gradient-to-r from-purple-400/20 to-cyan-400/20',
-          'opacity-0 group-hover:opacity-100',
-          animations.transition.slow
-        )} />
-        <span className="relative">🔮 運命の商品を見つける！ ✨</span>
-      </Link>
-      
-      <Link
-        href="/products"
-        className={cn(
-          'group relative overflow-hidden',
-          'border-2 border-cyan-400/70',
-          'bg-cyan-400/10 text-cyan-300',
-          'hover:text-white hover:bg-cyan-400/80',
-          'px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 lg:px-12 lg:py-6',
-          'rounded-xl md:rounded-2xl font-bold',
-          typography.body.md,
-          animations.transition.slow,
-          effects.shadow['2xl'],
-          'transform', animations.hover.scale, animations.hover.lift,
-          'backdrop-blur-sm'
-        )}
-      >
-        <div className={cn(
-          'absolute inset-0',
-          'bg-gradient-to-r from-cyan-400/0 to-cyan-400/20',
-          'opacity-0 group-hover:opacity-100',
-          animations.transition.slow
-        )} />
-        <span className="relative">🌌 全商品を見る →</span>
-      </Link>
-    </div>
-  )
-}
-
-/**
- * ヒーロー画像 - 最背面配置
- */
-function HeroImage() {
-  return (
-    <div className="order-1 lg:order-2 w-full flex justify-center relative -z-20">
-      <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
-        {/* 多層背景エフェクト - 最背面 */}
-        <div className="absolute -inset-8 md:-inset-12 lg:-inset-16 -z-30">
-          <div className={cn(
-            'absolute inset-0',
-            'bg-gradient-to-r', gradients.glow,
-            'rounded-full', effects.blur['3xl'],
-            'opacity-10', animations.pulse
-          )} />
-          <div className={cn(
-            'absolute inset-0',
-            'bg-gradient-to-br from-yellow-400/4 via-transparent to-blue-500/4',
-            'rounded-full', effects.blur['2xl'],
-            'opacity-8'
-          )} />
-          <div
-            className={cn(
-              'absolute inset-0',
-              'bg-gradient-to-tl from-green-400/2 via-transparent to-purple-400/2',
-              'rounded-full', effects.blur.xl,
-              'opacity-5', animations.pulse
-            )}
-            style={{ animationDelay: '1s' }}
-          />
-        </div>
-        
-        {/* プレミアム画像コンテナ - 最背面 */}
-        <div className="relative aspect-square w-full group -z-20">
-          <div className={cn(
-            'absolute inset-0',
-            'bg-gradient-to-br from-white/0.5 to-white/1',
-            'rounded-3xl backdrop-blur-sm',
-            'border border-white/1',
-            'shadow-sm'
-          )} />
-          <div className="relative w-full h-full rounded-3xl overflow-hidden opacity-20">
-            <Image
-              src="/images/hero-main.jpg"
-              alt="異次元通販 - 宇宙の叡智"
-              fill
-              className={cn(
-                'object-contain filter',
-                'group-hover:opacity-10',
-                animations.transition.ultra,
-                'grayscale-[50%] brightness-50'
-              )}
-              priority
-              sizes="(max-width: 640px) 90vw, (max-width: 768px) 80vw, (max-width: 1024px) 50vw, 40vw"
-            />
-          </div>
-        </div>
-        
-        {/* フローティングオーブ - 最背面 */}
-        <FloatingOrb className="-top-4 -right-4 hidden lg:block -z-40" size="lg" color="from-yellow-400/5 to-orange-500/5" />
-        <FloatingOrb className="-bottom-8 -left-8 hidden lg:block -z-40" size="md" color="from-cyan-400/5 to-blue-500/5" delay="2s" />
-        <FloatingOrb className="top-1/2 -right-8 hidden lg:block -z-40" size="sm" color="from-pink-400/5 to-purple-500/5" delay="3s" />
-      </div>
-    </div>
-  )
-}
-
-/**
- * フローティングオーブコンポーネント
- */
-interface FloatingOrbProps {
-  className?: string
-  size?: 'sm' | 'md' | 'lg'
-  color: string
-  delay?: string
-}
-
-function FloatingOrb({ className, size = 'md', color, delay }: FloatingOrbProps) {
-  const sizeClasses = {
-    sm: 'w-16 h-16',
-    md: 'w-20 h-20',
-    lg: 'w-24 h-24',
-  }
-  
-  return (
-    <div
+    <span
       className={cn(
-        'absolute',
-        sizeClasses[size],
-        'bg-gradient-to-br',
-        color,
-        'rounded-full',
-        effects.blur.xl,
-        animations.bounce,
-        className
+        'inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5',
+        `bg-gradient-to-r ${gradient}`,
+        'font-bold text-sm sm:text-base md:text-lg',
+        `rounded-full border ${borderColor} ${textColor}`,
+        'backdrop-blur-sm shadow-lg',
+        'transform hover:scale-105 transition-all duration-300'
       )}
-      style={{ animationDelay: delay }}
-    />
+    >
+      <span className="text-xl sm:text-2xl">{icon}</span>
+      <span>{text}</span>
+    </span>
   )
 }
