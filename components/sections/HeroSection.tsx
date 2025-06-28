@@ -97,7 +97,7 @@ function AlertBanner() {
       <div className={cn(
         'relative bg-gradient-to-r',
         gradients.dragon,
-        'text-white py-3 px-6 xs:py-4 xs:px-8 md:py-5 md:px-10',
+        'text-white py-3 px-6 sm:py-4 sm:px-8 md:py-5 md:px-10',
         'rounded-xl md:rounded-2xl',
         'border border-yellow-400/50',
         effects.shadow['2xl'],
@@ -161,14 +161,14 @@ function DescriptionSection() {
  */
 function CTAButtons() {
   return (
-    <div className="flex flex-col xs:flex-row gap-4 md:gap-6 justify-center lg:justify-start pt-6">
+    <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center lg:justify-start pt-6">
       <Link
         href="#products"
         className={cn(
           'group relative overflow-hidden',
           'bg-gradient-to-r', gradients.cosmic,
           'hover:from-purple-700 hover:via-purple-800 hover:to-indigo-800',
-          'text-white px-8 py-4 xs:px-10 xs:py-5 md:px-12 md:py-6',
+          'text-white px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 lg:px-12 lg:py-6',
           'rounded-xl md:rounded-2xl font-bold',
           typography.body.md,
           animations.transition.slow,
@@ -192,7 +192,7 @@ function CTAButtons() {
           'border-2 border-cyan-400/70',
           'bg-cyan-400/10 text-cyan-300',
           'hover:text-white hover:bg-cyan-400/80',
-          'px-8 py-4 xs:px-10 xs:py-5 md:px-12 md:py-6',
+          'px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 lg:px-12 lg:py-6',
           'rounded-xl md:rounded-2xl font-bold',
           typography.body.md,
           animations.transition.slow,

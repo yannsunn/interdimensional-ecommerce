@@ -3,6 +3,7 @@ import './globals.css'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import { Providers } from '../components/Providers'
+import { BottomNavigation } from '../components/mobile/BottomNavigation'
 
 // クリーンなメタデータ設定
 export const metadata: Metadata = {
@@ -79,6 +80,8 @@ export default function RootLayout({
         <main id="main-content" className="relative min-h-screen">
           <Providers>
             {children}
+            {/* Mobile Bottom Navigation */}
+            <BottomNavigation />
           </Providers>
         </main>
         

@@ -1,8 +1,11 @@
 'use client'
 
 import { forwardRef } from 'react'
-import { cn } from '@/lib/utils'
-import { Input, InputProps, PasswordInput, EmailInput, NumberInput } from '@/components/ui/Input'
+import { Input, InputProps, PasswordInput, EmailInput, NumberInput } from '../ui/Input'
+
+// Mobile-optimized utility function
+const cn = (...classes: (string | undefined | null | false)[]) => 
+  classes.filter(Boolean).join(' ')
 
 // === Form Field Types ===
 
@@ -327,7 +330,9 @@ export const TextareaFormField = forwardRef<HTMLTextAreaElement, TextareaFormFie
           rows={rows}
           className={cn(
             // Base styles
-            'w-full border rounded-lg backdrop-blur-sm transition-all duration-200 px-4 py-3',
+            'w-full border rounded-lg backdrop-blur-sm transition-all duration-200 px-4 py-3 sm:py-3',
+            'text-base sm:text-sm', // Prevent zoom on iOS
+            'min-h-[44px]', // Mobile touch target
             'focus:outline-none focus:ring-2',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             // Theme styles
@@ -395,7 +400,9 @@ export const SelectFormField = forwardRef<HTMLSelectElement, SelectFormFieldProp
           name={name}
           className={cn(
             // Base styles
-            'w-full border rounded-lg backdrop-blur-sm transition-all duration-200 px-4 py-3',
+            'w-full border rounded-lg backdrop-blur-sm transition-all duration-200 px-4 py-3 sm:py-3',
+            'text-base sm:text-sm', // Prevent zoom on iOS
+            'min-h-[44px]', // Mobile touch target
             'focus:outline-none focus:ring-2',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             // Theme styles
@@ -463,7 +470,8 @@ export const CheckboxFormField = forwardRef<HTMLInputElement, CheckboxFormFieldP
             id={fieldId}
             name={name}
             className={cn(
-              'mt-1 h-4 w-4 rounded border-gray-600 bg-gray-900 text-purple-600',
+              'mt-1 w-5 h-5 sm:w-4 sm:h-4 rounded border-gray-600 bg-gray-900 text-purple-600',
+              'min-w-[20px] min-h-[20px] sm:min-w-[16px] sm:min-h-[16px]', // Better mobile touch target
               'focus:ring-purple-500 focus:ring-offset-gray-900',
               hasErrors && 'border-red-500'
             )}
