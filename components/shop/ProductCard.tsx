@@ -3,7 +3,7 @@
 import { memo, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ShoppingCart, Heart, Eye, Star } from 'lucide-react'
+import { ShoppingCart, Heart, Eye } from 'lucide-react'
 import { useCartStore } from '../../store/cartStore'
 
 // Simplified interfaces and types for mobile optimization
