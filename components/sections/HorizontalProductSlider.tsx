@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback, memo } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
 import { NewProduct } from '../../data/newProducts'
+import { BaseProductImage } from '../ui/BaseProductImage'
 import Link from 'next/link'
 
 interface HorizontalProductSliderProps {
@@ -200,13 +201,14 @@ const HorizontalProductSlider = memo(function HorizontalProductSlider({ title, p
                   <Link href={`/products/${product.slug}`}>
                     {/* 商品画像 */}
                     <div className="relative h-48 bg-gradient-to-br from-purple-600/20 to-pink-600/20 overflow-hidden">
-                      {/* プレースホルダー画像 */}
-                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/30 to-pink-500/30">
-                        <div className="text-center">
-                          <Sparkles className="mx-auto mb-2 text-yellow-400" size={32} />
-                          <span className="text-white text-sm font-medium">{product.name}</span>
-                        </div>
-                      </div>
+                      <BaseProductImage
+                        src={product.images[0] || '/images/placeholder.jpg'}
+                        alt={product.name}
+                        width={300}
+                        height={192}
+                        className="w-full h-full"
+                        sizes="(max-width: 640px) 220px, (max-width: 768px) 250px, (max-width: 1024px) 280px, 300px"
+                      />
                       
                       {/* バッジ */}
                       <div className="absolute top-2 left-2 right-2 flex justify-between items-start">
