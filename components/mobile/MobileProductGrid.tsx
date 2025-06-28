@@ -9,7 +9,7 @@ interface Product {
   id: string
   name: string
   price: number
-  originalPrice?: number
+  originalPrice?: number | null
   description: string
   images: string[]
   mysteryLevel: number

@@ -2,13 +2,13 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Portal } from '@/components/ultra-dimensional/Portal'
-import { OptimizedFloatingElements } from '@/components/ultra-dimensional/OptimizedFloatingElements'
-import { GlowingText, GlitchText } from '@/components/ultra-dimensional/GlowingText'
-import { Header } from '@/components/layout/Header'
-import { ProductCard } from '@/components/shop/ProductCard'
-import { useCartStore } from '@/store/cartStore'
-import { formatPrice, getMysteryLevelText, getMysteryLevelColor, generateMysteryMessage } from '@/lib/utils'
+import { Portal } from '../ultra-dimensional/Portal'
+import { OptimizedFloatingElements } from '../ultra-dimensional/OptimizedFloatingElements'
+import { GlowingText, GlitchText } from '../ultra-dimensional/GlowingText'
+import { Header } from '../layout/Header'
+import { ProductCard } from './ProductCard'
+import { useCartStore } from '../../store/cartStore'
+import { formatPrice, getMysteryLevelText, getMysteryLevelColor, generateMysteryMessage } from '../../lib/utils'
 import { Product } from '@prisma/client'
 import { 
   ShoppingCart, 
@@ -34,7 +34,7 @@ export function ProductDetailClient({ product, relatedProducts }: ProductDetailC
   const [selectedImage, setSelectedImage] = useState(0)
   const [isAddingToCart, setIsAddingToCart] = useState(false)
 
-  const discountPercentage = product.originalPrice 
+  const discountPercentage = product.originalPrice && product.originalPrice > 0
     ? Math.round((1 - product.price / product.originalPrice) * 100)
     : 0
 
@@ -165,7 +165,7 @@ export function ProductDetailClient({ product, relatedProducts }: ProductDetailC
               className="bg-gradient-to-r from-red-900/30 to-orange-900/30 border-2 border-dashed border-red-400 rounded-xl p-6"
             >
               <div className="flex items-center justify-between mb-4">
-                {product.originalPrice && (
+                {product.originalPrice && product.originalPrice > 0 && (
                   <span className="text-gray-400 line-through text-xl">
                     {formatPrice(product.originalPrice)}
                   </span>

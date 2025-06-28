@@ -12,7 +12,7 @@ interface ProductCardProps {
     id: string
     name: string
     price: number
-    originalPrice?: number
+    originalPrice?: number | null
     description: string
     images: string[]
     mysteryLevel: number
@@ -55,7 +55,7 @@ export const ProductCard = memo(function ProductCard({
   // Product calculations
   const productImage = product.images?.[0] || '/placeholder-product.jpg'
   const mysteryLevel = getMysteryLevel(product.mysteryLevel)
-  const discountPercentage = product.originalPrice 
+  const discountPercentage = product.originalPrice && product.originalPrice > 0
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0
   const isOutOfStock = product.stock <= 0
@@ -235,7 +235,7 @@ export const ProductCard = memo(function ProductCard({
 
         {/* Price Section */}
         <div className="bg-gradient-to-r from-red-900/30 to-orange-900/30 border border-red-400/50 rounded-lg p-2 sm:p-3">
-          {product.originalPrice && (
+          {product.originalPrice && product.originalPrice > 0 && (
             <div className="flex items-center justify-between mb-1">
               <span className="text-gray-400 line-through text-sm sm:text-base">
                 {formatPrice(product.originalPrice)}
