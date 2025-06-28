@@ -14,17 +14,9 @@ import { getBaseProductsByCategory, getFeaturedBaseProducts } from '../data/base
 export const dynamic = 'force-dynamic'
 
 export default function HomePage() {
-  // 新商品データの取得
+  // 軽量化：必要最小限のデータのみ取得
   const featuredProducts = getFeaturedProducts()
   const talismanProducts = getProductsByCategory('天然石お守り')
-  const muramTechProducts = getProductsByCategory('ミューラムテクノロジー')
-  const iyashirochiProducts = getProductsByCategory('イヤシロチシリーズ')
-  const specialProducts = getProductsByCategory('スペシャルアイテム')
-  
-  // BASE商品データの取得
-  const baseHealthProducts = getBaseProductsByCategory('健康食品')
-  const baseBeautyProducts = getBaseProductsByCategory('美容機器')
-  const baseSpiritualProducts = getBaseProductsByCategory('神具・スピリチュアル')
   const featuredBaseProducts = getFeaturedBaseProducts()
 
   return (
@@ -45,66 +37,25 @@ export default function HomePage() {
       {/* BASE厳選おすすめ商品 */}
       <HorizontalProductSlider 
         title="🌟 BASE厳選おすすめ商品"
-        products={featuredBaseProducts}
-      />
-
-      {/* BASE健康食品シリーズ */}
-      <HorizontalProductSlider 
-        title="🌿 体の内側から健康に「健康食品」"
-        products={baseHealthProducts}
-        category="健康食品"
-      />
-
-      {/* BASE美容機器シリーズ */}
-      <HorizontalProductSlider 
-        title="✨ 自宅でエステ体験「美容機器」"
-        products={baseBeautyProducts}
-        category="美容機器"
+        products={featuredBaseProducts.slice(0, 4)}
       />
 
       {/* 新着おすすめ商品 */}
       <HorizontalProductSlider 
         title="🔮 異次元限定商品"
-        products={featuredProducts}
+        products={featuredProducts.slice(0, 4)}
       />
 
       {/* 天然石お守りシリーズ */}
       <HorizontalProductSlider 
         title="🔮 天然石×お守りシリーズ"
-        products={talismanProducts}
+        products={talismanProducts.slice(0, 3)}
         category="天然石お守り"
-      />
-
-      {/* ミューラムテクノロジー */}
-      <HorizontalProductSlider 
-        title="🌌 ミューラムテクノロジー"
-        products={muramTechProducts}
-        category="ミューラムテクノロジー"
-      />
-
-      {/* BASE神具・スピリチュアル */}
-      <HorizontalProductSlider 
-        title="⛩️ 神具・スピリチュアル"
-        products={baseSpiritualProducts}
-        category="神具・スピリチュアル"
       />
 
       {/* Featured Products Section */}
       <FeaturedProductsSection />
 
-      {/* イヤシロチシリーズ */}
-      <HorizontalProductSlider 
-        title="🏯 究極の浄化「イヤシロチシリーズ」"
-        products={iyashirochiProducts}
-        category="イヤシロチシリーズ"
-      />
-
-      {/* スペシャルアイテム */}
-      <HorizontalProductSlider 
-        title="👑 スペシャルアイテム"
-        products={specialProducts}
-        category="スペシャルアイテム"
-      />
 
       {/* Special Features Section */}
       <SpecialFeaturesSection />
