@@ -8,8 +8,8 @@
 'use client'
 
 import React, { Component, ErrorInfo, ReactNode } from 'react'
-import { cn } from '@/lib/design-system'
-import { gradients, typography, animations, effects, layout } from '@/lib/design-system'
+import { cn } from '../../lib/design-system'
+import { gradients, typography, animations, effects, layout } from '../../lib/design-system'
 
 interface Props {
   children: ReactNode

@@ -6,8 +6,8 @@
 'use client'
 
 import { Suspense, type ReactNode } from 'react'
-import { ErrorBoundary } from '@/components/error/ErrorBoundary'
-import { cn } from '@/lib/design-system'
+import { ErrorBoundary } from '../error/ErrorBoundary'
+import { cn } from '../../lib/design-system'
 
 interface SuspenseWrapperProps {
   children: ReactNode

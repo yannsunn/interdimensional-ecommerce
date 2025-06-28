@@ -12,7 +12,7 @@
 
 import { NextRequest } from 'next/server'
 import { createHash, randomBytes } from 'crypto'
-import { getClientIP } from '@/lib/api-utils'
+import { getClientIP } from '../api-utils'
 
 // === Configuration ===
 

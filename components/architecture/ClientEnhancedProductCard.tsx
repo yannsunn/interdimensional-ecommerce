@@ -13,9 +13,9 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import { motion, useAnimation, useInView } from 'framer-motion'
 import { Product } from '@prisma/client'
-import { useCartStore } from '@/store/cartStore'
-import { formatPrice, getMysteryLevelText, getMysteryLevelColor } from '@/lib/utils'
-import { cn } from '@/lib/design-system'
+import { useCartStore } from '../../store/cartStore'
+import { formatPrice, getMysteryLevelText, getMysteryLevelColor } from '../../lib/utils'
+import { cn } from '../../lib/design-system'
 import { 
   ShoppingCartIcon, 
   HeartIcon, 

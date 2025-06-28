@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback, memo } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
 import { NewProduct } from '../../data/newProducts'
@@ -12,12 +12,14 @@ interface HorizontalProductSliderProps {
   category?: string
 }
 
-export function HorizontalProductSlider({ title, products, category }: HorizontalProductSliderProps) {
+const HorizontalProductSlider = memo(function HorizontalProductSlider({ title, products, category }: HorizontalProductSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAtStart, setIsAtStart] = useState(true)
   const [isAtEnd, setIsAtEnd] = useState(false)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const itemWidth = 280 // 商品カード幅 + マージン
+  const [itemWidth, setItemWidth] = useState(280) // 商品カード幅 + マージン
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
 
   const updateScrollState = () => {
     if (scrollContainerRef.current) {
@@ -27,7 +29,7 @@ export function HorizontalProductSlider({ title, products, category }: Horizonta
     }
   }
 
-  const scrollTo = (direction: 'prev' | 'next') => {
+  const scrollTo = useCallback((direction: 'prev' | 'next') => {
     if (!scrollContainerRef.current) return
 
     const visibleItems = Math.floor(scrollContainerRef.current.clientWidth / itemWidth)
@@ -49,7 +51,27 @@ export function HorizontalProductSlider({ title, products, category }: Horizonta
         behavior: 'smooth'
       })
     }
-  }
+  }, [currentIndex, itemWidth])
+
+  // レスポンシブなitemWidth計算
+  useEffect(() => {
+    const updateItemWidth = () => {
+      const screenWidth = window.innerWidth
+      if (screenWidth < 640) { // モバイル
+        setItemWidth(220) // 小さめ
+      } else if (screenWidth < 768) { // タブレット小
+        setItemWidth(250)
+      } else if (screenWidth < 1024) { // タブレット大
+        setItemWidth(280)
+      } else { // デスクトップ
+        setItemWidth(300)
+      }
+    }
+
+    updateItemWidth()
+    window.addEventListener('resize', updateItemWidth)
+    return () => window.removeEventListener('resize', updateItemWidth)
+  }, [])
 
   useEffect(() => {
     const container = scrollContainerRef.current
@@ -60,6 +82,30 @@ export function HorizontalProductSlider({ title, products, category }: Horizonta
       return () => container.removeEventListener('scroll', updateScrollState)
     }
   }, [])
+
+  // タッチイベントハンドラー
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe) {
+      scrollTo('next')
+    } else if (isRightSwipe) {
+      scrollTo('prev')
+    }
+  }
 
   const formatPrice = (price: number) => `¥${price.toLocaleString()}`
   
@@ -102,33 +148,36 @@ export function HorizontalProductSlider({ title, products, category }: Horizonta
           <button
             onClick={() => scrollTo('prev')}
             disabled={isAtStart}
-            className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+            className={`absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
               isAtStart 
                 ? 'bg-gray-800/50 text-gray-600 cursor-not-allowed' 
-                : 'bg-purple-600/80 hover:bg-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-110'
+                : 'bg-purple-600/80 hover:bg-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-110 active:scale-95'
             }`}
           >
-            <ChevronLeft size={24} />
+            <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
           </button>
 
           {/* 右矢印 */}
           <button
             onClick={() => scrollTo('next')}
             disabled={isAtEnd}
-            className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+            className={`absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
               isAtEnd 
                 ? 'bg-gray-800/50 text-gray-600 cursor-not-allowed' 
-                : 'bg-purple-600/80 hover:bg-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-110'
+                : 'bg-purple-600/80 hover:bg-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-110 active:scale-95'
             }`}
           >
-            <ChevronRight size={24} />
+            <ChevronRight size={20} className="sm:w-6 sm:h-6" />
           </button>
 
           {/* 商品スライダー */}
           <div
             ref={scrollContainerRef}
-            className="flex gap-6 overflow-x-auto scrollbar-hide px-16"
+            className="flex gap-3 sm:gap-4 md:gap-6 overflow-x-auto scrollbar-hide px-8 sm:px-12 md:px-16"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             {products.map((product, index) => {
               const mysteryLevel = getMysteryLevelText(product.mysteryLevel)
@@ -139,7 +188,8 @@ export function HorizontalProductSlider({ title, products, category }: Horizonta
                   initial={{ opacity: 0, x: 50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex-none w-64 bg-gradient-to-br from-gray-900/80 via-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-2xl border border-purple-500/30 overflow-hidden group hover:border-purple-400/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20"
+                  className="flex-none w-52 sm:w-56 md:w-64 lg:w-72 bg-gradient-to-br from-gray-900/80 via-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-2xl border border-purple-500/30 overflow-hidden group hover:border-purple-400/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20"
+                  style={{ minWidth: itemWidth }}
                 >
                   <Link href={`/products/${product.slug}`}>
                     {/* 商品画像 */}
@@ -227,7 +277,9 @@ export function HorizontalProductSlider({ title, products, category }: Horizonta
       </div>
     </section>
   )
-}
+})
+
+export { HorizontalProductSlider }
 
 // CSS隠しスクロールバー用のスタイル
 const style = `

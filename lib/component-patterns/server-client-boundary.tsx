@@ -10,7 +10,7 @@
 'use client'
 
 import { ComponentType, ReactNode, Suspense, lazy, useState, useEffect, useRef, useCallback } from 'react'
-import { ErrorBoundary } from '@/components/ui/ErrorBoundary'
+import { ErrorBoundary } from '../../components/ui/ErrorBoundary'
 
 // === Server Component Markers ===
 

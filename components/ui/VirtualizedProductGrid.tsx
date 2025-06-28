@@ -7,10 +7,10 @@
 
 import { memo, useMemo, useCallback } from 'react'
 import { FixedSizeGrid as Grid } from 'react-window'
-import { useResizeObserver } from '@/hooks/useResizeObserver'
+import { useResizeObserver } from '../../hooks/useResizeObserver'
 import { Product } from '@prisma/client'
-import { ProductCard } from '@/components/shop/ProductCard'
-import { cn } from '@/lib/design-system'
+import { ProductCard } from '../shop/ProductCard'
+import { cn } from '../../lib/design-system'
 
 interface VirtualizedProductGridProps {
   products: Product[]

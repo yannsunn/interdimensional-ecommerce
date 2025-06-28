@@ -9,7 +9,7 @@
  */
 
 import { Product } from '@prisma/client'
-import { withProgressiveEnhancement } from '@/lib/component-patterns/server-client-boundary'
+import { withProgressiveEnhancement } from '../../lib/component-patterns/server-client-boundary'
 import { ServerOptimizedProductCard } from './ServerOptimizedProductCard'
 import { ClientEnhancedProductCard } from './ClientEnhancedProductCard'
 

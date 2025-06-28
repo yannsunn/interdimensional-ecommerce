@@ -2,9 +2,9 @@
  * 🔮 MysteryMessageSection - 神秘的なメッセージセクション
  */
 
-import { generateMysteryMessage } from '@/lib/utils'
-import { cn } from '@/lib/design-system'
-import { typography, animations, effects, layout } from '@/lib/design-system'
+import { generateMysteryMessage } from '../../lib/utils'
+import { cn } from '../../lib/design-system'
+import { typography, animations, effects, layout } from '../../lib/design-system'
 
 export function MysteryMessageSection() {
   return (

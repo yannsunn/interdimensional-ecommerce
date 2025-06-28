@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
-import { Portal } from '@/components/ultra-dimensional/Portal'
-import { OptimizedFloatingElements } from '@/components/ultra-dimensional/OptimizedFloatingElements'
-import { Header } from '@/components/layout/Header'
+import { Portal } from '../ultra-dimensional/Portal'
+import { OptimizedFloatingElements } from '../ultra-dimensional/OptimizedFloatingElements'
+import { Header } from './Header'
 import Image from 'next/image'
 
 interface PageLayoutProps {

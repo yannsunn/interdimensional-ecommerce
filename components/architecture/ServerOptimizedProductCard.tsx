@@ -8,10 +8,10 @@
  */
 
 import { Product } from '@prisma/client'
-import { formatPrice, getMysteryLevelText, getMysteryLevelColor } from '@/lib/utils'
+import { formatPrice, getMysteryLevelText, getMysteryLevelColor } from '../../lib/utils'
 import Link from 'next/link'
 import Image from 'next/image'
-import { cn } from '@/lib/design-system'
+import { cn } from '../../lib/design-system'
 
 // === Server Component Interface ===
 

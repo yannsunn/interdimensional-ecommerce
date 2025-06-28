@@ -2,8 +2,8 @@
  * 🔮 SpecialFeaturesSection - 特別機能セクション
  */
 
-import { cn } from '@/lib/design-system'
-import { gradients, typography, animations, effects, layout } from '@/lib/design-system'
+import { cn } from '../../lib/design-system'
+import { gradients, typography, animations, effects, layout } from '../../lib/design-system'
 
 const features = [
   {

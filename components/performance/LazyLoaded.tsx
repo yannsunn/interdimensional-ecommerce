@@ -8,7 +8,7 @@
 'use client'
 
 import { useState, useEffect, useRef, ReactNode, ComponentType } from 'react'
-import { cn } from '@/lib/design-system'
+import { cn } from '../../lib/design-system'
 
 interface LazyLoadedProps {
   children: ReactNode

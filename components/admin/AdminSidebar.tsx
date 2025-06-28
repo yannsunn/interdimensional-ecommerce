@@ -14,8 +14,8 @@ import {
   TrendingUp,
   Eye
 } from 'lucide-react'
-import { GlowingText } from '@/components/ultra-dimensional/GlowingText'
-import { cn } from '@/lib/utils'
+import { GlowingText } from '../ultra-dimensional/GlowingText'
+import { cn } from '../../lib/utils'
 
 const navigation = [
   { name: 'ダッシュボード', href: '/admin', icon: LayoutDashboard },
