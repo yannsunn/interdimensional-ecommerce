@@ -194,7 +194,7 @@ export function MobileProductGrid({
               : 'grid-cols-1'
           }`}
         >
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence mode="wait">
             {filteredAndSortedProducts.map((product, index) => (
               <motion.div
                 key={product.id}

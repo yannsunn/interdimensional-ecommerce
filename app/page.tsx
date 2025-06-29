@@ -8,7 +8,7 @@ import { WarningSection } from '../components/sections/WarningSection'
 import { FinalCTASection } from '../components/sections/FinalCTASection'
 import { FooterSection } from '../components/sections/FooterSection'
 import { getFeaturedProducts, getProductsByCategory } from '../data/newProducts'
-import { getBaseProductsByCategory, getFeaturedBaseProducts } from '../data/baseProductLoader'
+import { getFeaturedBaseProducts } from '../data/baseProductLoader'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'

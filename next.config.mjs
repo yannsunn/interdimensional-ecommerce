@@ -41,6 +41,7 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['@prisma/client'],
     optimizePackageImports: ['framer-motion', 'lucide-react'],
+    optimizeCss: true,
   },
   
   // バンドル最適化

@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
-import productsData from '../products-data.json'
+import { newProducts } from '../data/newProducts'
 
 const prisma = new PrismaClient()
 
@@ -51,26 +51,23 @@ async function main() {
   console.log('👤 テストユーザーを作成しました:', testUser.email)
 
   // Create products
-  for (const product of productsData.products) {
+  for (const product of newProducts) {
     const createdProduct = await prisma.product.create({
       data: {
         name: product.name,
         description: product.description,
-        story: product.story,
-        effects: product.effects,
-        warnings: product.warnings,
-        testimonials: product.testimonials,
+        story: '',
+        effects: product.effects || [],
+        warnings: [],
+        testimonials: product.testimonials || [],
         price: product.price,
-        originalPrice: product.originalPrice,
+        originalPrice: product.originalPrice || product.price,
         stock: product.stock,
         category: product.category,
         mysteryLevel: product.mysteryLevel,
-        slug: createSlug(product.name),
-        images: [
-          `/images/products/${product.id}-1.jpg`,
-          `/images/products/${product.id}-2.jpg`,
-        ],
-        featured: product.mysteryLevel >= 9,
+        slug: product.slug,
+        images: product.images,
+        featured: product.featured || false,
       },
     })
     console.log(`✨ 商品を作成しました: ${createdProduct.name}`)

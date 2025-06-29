@@ -81,7 +81,7 @@ export function OptimizedFloatingElements() {
       role="presentation"
       aria-hidden="true"
     >
-      <AnimatePresence mode="popLayout">
+      <AnimatePresence mode="wait">
         {isVisible && elements.map((element) => (
           <motion.div
             key={element.id}

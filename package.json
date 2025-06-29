@@ -26,7 +26,7 @@
     "@vercel/speed-insights": "^1.2.0",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.0.0",
-    "framer-motion": "^10.16.16",
+    "framer-motion": "^10.18.0",
     "isomorphic-dompurify": "^2.25.0",
     "lucide-react": "^0.303.0",
     "next": "^14.2.30",

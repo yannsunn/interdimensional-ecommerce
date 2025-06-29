@@ -298,7 +298,7 @@ export function ToastContainer({
       positionClasses[position],
       className
     )}>
-      <AnimatePresence mode="popLayout">
+      <AnimatePresence mode="wait">
         {visibleToasts.map((toast) => (
           <motion.div
             key={toast.id}
