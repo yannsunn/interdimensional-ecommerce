@@ -8,7 +8,6 @@ import { WarningSection } from '../components/sections/WarningSection'
 import { FinalCTASection } from '../components/sections/FinalCTASection'
 import { FooterSection } from '../components/sections/FooterSection'
 import { getFeaturedProducts, getProductsByCategory } from '../data/newProducts'
-import { getFeaturedBaseProducts } from '../data/baseProductLoader'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -17,7 +16,6 @@ export default function HomePage() {
   // 軽量化：必要最小限のデータのみ取得
   const featuredProducts = getFeaturedProducts()
   const talismanProducts = getProductsByCategory('天然石お守り')
-  const featuredBaseProducts = getFeaturedBaseProducts()
 
   return (
     <div className="min-h-screen bg-slate-900 text-white overflow-x-hidden">
@@ -34,11 +32,6 @@ export default function HomePage() {
       {/* Mystery Message Section */}
       <MysteryMessageSection />
 
-      {/* BASE厳選おすすめ商品 */}
-      <HorizontalProductSlider 
-        title="🌟 BASE厳選おすすめ商品"
-        products={featuredBaseProducts.slice(0, 4)}
-      />
 
       {/* 新着おすすめ商品 */}
       <HorizontalProductSlider 
