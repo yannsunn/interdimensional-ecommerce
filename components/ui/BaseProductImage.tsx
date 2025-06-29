@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { Sparkles } from 'lucide-react'
+import { ImagePlaceholder } from './ImagePlaceholder'
 
 interface BaseProductImageProps {
   src: string
@@ -32,7 +33,6 @@ export function BaseProductImage({
   const handleError = () => {
     setHasError(true)
     setIsLoading(false)
-    setImgSrc('/images/placeholder.jpg')
   }
 
   const handleLoad = () => {
@@ -52,33 +52,30 @@ export function BaseProductImage({
         </div>
       )}
 
-      {/* エラー状態 */}
-      {hasError && (
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-600/20 to-gray-800/20 flex items-center justify-center">
-          <div className="text-center">
-            <Sparkles className="mx-auto mb-2 text-gray-400" size={32} />
-            <span className="text-gray-400 text-sm font-medium">画像を読み込めませんでした</span>
-          </div>
-        </div>
+      {/* エラー状態または画像が存在しない場合 */}
+      {(hasError || !imgSrc || imgSrc.includes('placeholder')) && (
+        <ImagePlaceholder className="absolute inset-0" />
       )}
 
-      {/* 実際の画像 */}
-      <Image
-        src={imgSrc}
-        alt={alt}
-        width={width}
-        height={height}
-        className={`object-cover transition-opacity duration-300 ${
-          isLoading ? 'opacity-0' : 'opacity-100'
-        }`}
-        onError={handleError}
-        onLoad={handleLoad}
-        priority={priority}
-        sizes={sizes}
-        quality={quality}
-        placeholder="blur"
-        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-      />
+      {/* 実際の画像（エラー時やplaceholderの場合は表示しない） */}
+      {!hasError && imgSrc && !imgSrc.includes('placeholder') && (
+        <Image
+          src={imgSrc}
+          alt={alt}
+          width={width}
+          height={height}
+          className={`object-cover transition-opacity duration-300 ${
+            isLoading ? 'opacity-0' : 'opacity-100'
+          }`}
+          onError={handleError}
+          onLoad={handleLoad}
+          priority={priority}
+          sizes={sizes}
+          quality={quality}
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+        />
+      )}
     </div>
   )
 }
@@ -118,7 +115,7 @@ export function ProductCardImage({
   }
   className?: string
 }) {
-  const imageUrl = product.images?.[0] || '/images/placeholder.jpg'
+  const imageUrl = product.images?.[0] || ''
   
   return (
     <BaseProductImage
